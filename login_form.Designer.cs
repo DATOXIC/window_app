@@ -42,7 +42,7 @@
             login_button.Name = "login_button";
             login_button.Size = new Size(94, 29);
             login_button.TabIndex = 0;
-            login_button.Text = "button1";
+            login_button.Text = "Login";
             login_button.UseVisualStyleBackColor = true;
             login_button.Click += login_button_Click;
             // 
@@ -52,7 +52,7 @@
             cancel_button.Name = "cancel_button";
             cancel_button.Size = new Size(94, 29);
             cancel_button.TabIndex = 1;
-            cancel_button.Text = "button2";
+            cancel_button.Text = "Cancel";
             cancel_button.UseVisualStyleBackColor = true;
             // 
             // user_tb
@@ -72,7 +72,7 @@
             // user_lb
             // 
             user_lb.AutoSize = true;
-            user_lb.Location = new Point(118, 104);
+            user_lb.Location = new Point(173, 104);
             user_lb.Name = "user_lb";
             user_lb.Size = new Size(73, 20);
             user_lb.TabIndex = 4;
@@ -81,7 +81,7 @@
             // pass_lb
             // 
             pass_lb.AutoSize = true;
-            pass_lb.Location = new Point(119, 190);
+            pass_lb.Location = new Point(173, 190);
             pass_lb.Name = "pass_lb";
             pass_lb.Size = new Size(72, 20);
             pass_lb.TabIndex = 5;
@@ -99,7 +99,7 @@
             Controls.Add(cancel_button);
             Controls.Add(login_button);
             Name = "login_form";
-            Text = "Form1";
+            Text = "LOGIN";
             ResumeLayout(false);
             PerformLayout();
         }

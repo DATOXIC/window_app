@@ -9,7 +9,7 @@ namespace window_app
     internal class myDB
     {
         // Sử dụng |DataDirectory| để máy nào cũng tìm thấy file database
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\dtb_login.mdf;Integrated Security=True";
+        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\dtb_login.mdf;Integrated Security=True;Connect Timeout=30;Pooling=False";
 
         // Hàm băm mật khẩu SHA256 sẵn có của C#
         public string HashPassword(string rawPassword)
