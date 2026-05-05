@@ -14,5 +14,9 @@ namespace window_app
         {
             InitializeComponent();
         }
+    private void BacktoLogInBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

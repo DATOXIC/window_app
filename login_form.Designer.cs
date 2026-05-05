@@ -41,7 +41,7 @@
             // 
             // login_button
             // 
-            login_button.Location = new Point(355, 217);
+            login_button.Location = new Point(356, 209);
             login_button.Margin = new Padding(3, 2, 3, 2);
             login_button.Name = "login_button";
             login_button.Size = new Size(82, 27);
@@ -52,7 +52,7 @@
             // 
             // cancel_button
             // 
-            cancel_button.Location = new Point(267, 217);
+            cancel_button.Location = new Point(268, 209);
             cancel_button.Margin = new Padding(3, 2, 3, 2);
             cancel_button.Name = "cancel_button";
             cancel_button.Size = new Size(82, 27);
@@ -97,7 +97,7 @@
             // 
             // signup_button
             // 
-            signup_button.Location = new Point(355, 248);
+            signup_button.Location = new Point(356, 240);
             signup_button.Margin = new Padding(3, 2, 3, 2);
             signup_button.Name = "signup_button";
             signup_button.Size = new Size(82, 27);
