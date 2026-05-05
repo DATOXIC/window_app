@@ -31,11 +31,12 @@ namespace window_app
             {
                 conn.Open();
                 string sql = "SELECT password FROM [Table] WHERE username = @user";
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@user", username);
-
-                object result = cmd.ExecuteScalar();
-                return result?.ToString();
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@user", username);
+                    object result = cmd.ExecuteScalar();
+                    return result?.ToString();
+                }
             }
         }
     }
