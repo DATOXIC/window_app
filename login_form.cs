@@ -35,8 +35,10 @@ namespace window_app
 
         private void signup_button_Click(object sender, EventArgs e)
         {
+            this.Hide();
             signup_form sg = new signup_form();
             sg.ShowDialog();
+            this.Show();
         }
 
         private void cancel_button_Click(object sender, EventArgs e)

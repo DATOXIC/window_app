@@ -61,5 +61,9 @@ namespace window_app
                 MessageBox.Show("Lỗi hệ thống: " + ex.Message);
             }
         }
+    private void BacktoLogInBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
