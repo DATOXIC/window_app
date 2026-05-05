@@ -27,6 +27,7 @@ namespace window_app
         // Truy vấn dùng Parameter để chống SQL Injection
         public string GetHashedPassword(string username)
         {
+            // Cấu trúc này đảm bảo kết nối luôn được đóng tự động
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -37,7 +38,7 @@ namespace window_app
                     object result = cmd.ExecuteScalar();
                     return result?.ToString();
                 }
-            }
+            } // Kết nối tự động đóng tại đây
         }
     }
 }
