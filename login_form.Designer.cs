@@ -41,7 +41,7 @@
             // 
             // login_button
             // 
-            login_button.Location = new Point(354, 217);
+            login_button.Location = new Point(355, 217);
             login_button.Margin = new Padding(3, 2, 3, 2);
             login_button.Name = "login_button";
             login_button.Size = new Size(82, 27);
@@ -52,7 +52,7 @@
             // 
             // cancel_button
             // 
-            cancel_button.Location = new Point(266, 217);
+            cancel_button.Location = new Point(267, 217);
             cancel_button.Margin = new Padding(3, 2, 3, 2);
             cancel_button.Name = "cancel_button";
             cancel_button.Size = new Size(82, 27);
@@ -63,24 +63,24 @@
             // 
             // user_tb
             // 
-            user_tb.Location = new Point(310, 106);
+            user_tb.Location = new Point(312, 121);
             user_tb.Margin = new Padding(3, 2, 3, 2);
             user_tb.Name = "user_tb";
-            user_tb.Size = new Size(140, 23);
+            user_tb.Size = new Size(146, 23);
             user_tb.TabIndex = 2;
             // 
             // pass_tb
             // 
-            pass_tb.Location = new Point(310, 168);
+            pass_tb.Location = new Point(312, 163);
             pass_tb.Margin = new Padding(3, 2, 3, 2);
             pass_tb.Name = "pass_tb";
-            pass_tb.Size = new Size(140, 23);
+            pass_tb.Size = new Size(146, 23);
             pass_tb.TabIndex = 3;
             // 
             // user_lb
             // 
             user_lb.AutoSize = true;
-            user_lb.Location = new Point(247, 109);
+            user_lb.Location = new Point(249, 124);
             user_lb.Name = "user_lb";
             user_lb.Size = new Size(60, 15);
             user_lb.TabIndex = 4;
@@ -89,7 +89,7 @@
             // pass_lb
             // 
             pass_lb.AutoSize = true;
-            pass_lb.Location = new Point(247, 171);
+            pass_lb.Location = new Point(249, 166);
             pass_lb.Name = "pass_lb";
             pass_lb.Size = new Size(57, 15);
             pass_lb.TabIndex = 5;
@@ -97,7 +97,7 @@
             // 
             // signup_button
             // 
-            signup_button.Location = new Point(354, 248);
+            signup_button.Location = new Point(355, 248);
             signup_button.Margin = new Padding(3, 2, 3, 2);
             signup_button.Name = "signup_button";
             signup_button.Size = new Size(82, 27);
@@ -109,7 +109,7 @@
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.account_icon;
-            pictureBox1.Location = new Point(319, 24);
+            pictureBox1.Location = new Point(325, 34);
             pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(69, 64);
