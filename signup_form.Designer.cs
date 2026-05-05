@@ -42,7 +42,7 @@
             // 
             // createAccount_button
             // 
-<<<<<<< HEAD
+
             createAccount_button.BackColor = SystemColors.ActiveCaption;
             createAccount_button.Font = new Font("Segoe UI", 13F);
             createAccount_button.ForeColor = SystemColors.ButtonHighlight;
@@ -53,27 +53,13 @@
             createAccount_button.TabIndex = 0;
             createAccount_button.Text = "Create account";
             createAccount_button.UseVisualStyleBackColor = false;
-=======
-            button1.BackColor = SystemColors.ActiveCaption;
-            button1.Font = new Font("Segoe UI", 13F);
-            button1.ForeColor = SystemColors.ButtonHighlight;
-            button1.Location = new Point(297, 286);
-            button1.Name = "button1";
-            button1.Size = new Size(229, 35);
-            button1.TabIndex = 0;
-            button1.Text = "Create account";
-            button1.UseVisualStyleBackColor = false;
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F);
-<<<<<<< HEAD
+
             label1.Location = new Point(288, 204);
-=======
-            label1.Location = new Point(233, 125);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             label1.Name = "label1";
             label1.Size = new Size(87, 23);
             label1.TabIndex = 1;
@@ -83,11 +69,8 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F);
-<<<<<<< HEAD
+
             label2.Location = new Point(288, 273);
-=======
-            label2.Location = new Point(233, 177);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             label2.Name = "label2";
             label2.Size = new Size(80, 23);
             label2.TabIndex = 2;
@@ -97,11 +80,8 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10F);
-<<<<<<< HEAD
+
             label3.Location = new Point(288, 343);
-=======
-            label3.Location = new Point(233, 229);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             label3.Name = "label3";
             label3.Size = new Size(138, 23);
             label3.TabIndex = 3;
@@ -109,36 +89,27 @@
             // 
             // textBox1
             // 
-<<<<<<< HEAD
+
             textBox1.Location = new Point(426, 204);
             textBox1.Margin = new Padding(3, 4, 3, 4);
-=======
-            textBox1.Location = new Point(354, 125);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(263, 27);
             textBox1.TabIndex = 4;
             // 
             // textBox2
             // 
-<<<<<<< HEAD
+
             textBox2.Location = new Point(426, 272);
             textBox2.Margin = new Padding(3, 4, 3, 4);
-=======
-            textBox2.Location = new Point(354, 176);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(263, 27);
             textBox2.TabIndex = 5;
             // 
             // textBox3
             // 
-<<<<<<< HEAD
+
             textBox3.Location = new Point(426, 341);
             textBox3.Margin = new Padding(3, 4, 3, 4);
-=======
-            textBox3.Location = new Point(354, 228);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             textBox3.Name = "textBox3";
             textBox3.Size = new Size(263, 27);
             textBox3.TabIndex = 6;
@@ -148,11 +119,8 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.Desktop;
-<<<<<<< HEAD
+
             label4.Location = new Point(426, 115);
-=======
-            label4.Location = new Point(367, 57);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             label4.Name = "label4";
             label4.Size = new Size(117, 40);
             label4.TabIndex = 7;
@@ -162,11 +130,8 @@
             // label5
             // 
             label5.AutoSize = true;
-<<<<<<< HEAD
+
             label5.Location = new Point(346, 481);
-=======
-            label5.Location = new Point(302, 331);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             label5.Name = "label5";
             label5.Size = new Size(178, 20);
             label5.TabIndex = 8;
@@ -179,12 +144,9 @@
             button2.BackgroundImageLayout = ImageLayout.Stretch;
             button2.FlatStyle = FlatStyle.System;
             button2.ForeColor = Color.Transparent;
-<<<<<<< HEAD
+
             button2.Location = new Point(501, 476);
             button2.Margin = new Padding(3, 4, 3, 4);
-=======
-            button2.Location = new Point(441, 327);
->>>>>>> b459f2ef16863f2b4b6e9e49374916ea6bad9d81
             button2.Name = "button2";
             button2.Size = new Size(86, 31);
             button2.TabIndex = 9;
