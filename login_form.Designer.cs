@@ -35,6 +35,8 @@
             user_lb = new Label();
             pass_lb = new Label();
             signup_button = new Button();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // login_button
@@ -98,11 +100,22 @@
             signup_button.UseVisualStyleBackColor = true;
             signup_button.Click += signup_button_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = Properties.Resources.account_icon;
+            pictureBox1.Location = new Point(31, 53);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(99, 102);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox1.TabIndex = 7;
+            pictureBox1.TabStop = false;
+            // 
             // login_form
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(pictureBox1);
             Controls.Add(signup_button);
             Controls.Add(pass_lb);
             Controls.Add(user_lb);
@@ -112,6 +125,7 @@
             Controls.Add(login_button);
             Name = "login_form";
             Text = "LOGIN";
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -125,5 +139,6 @@
         private Label user_lb;
         private Label pass_lb;
         private Button signup_button;
+        private PictureBox pictureBox1;
     }
 }
