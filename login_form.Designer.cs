@@ -34,6 +34,7 @@
             pass_tb = new TextBox();
             user_lb = new Label();
             pass_lb = new Label();
+            signup_button = new Button();
             SuspendLayout();
             // 
             // login_button
@@ -87,11 +88,22 @@
             pass_lb.TabIndex = 5;
             pass_lb.Text = "password";
             // 
+            // signup_button
+            // 
+            signup_button.Location = new Point(459, 239);
+            signup_button.Name = "signup_button";
+            signup_button.Size = new Size(94, 29);
+            signup_button.TabIndex = 6;
+            signup_button.Text = "sign up";
+            signup_button.UseVisualStyleBackColor = true;
+            signup_button.Click += signup_button_Click;
+            // 
             // login_form
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(signup_button);
             Controls.Add(pass_lb);
             Controls.Add(user_lb);
             Controls.Add(pass_tb);
@@ -112,5 +124,6 @@
         private TextBox pass_tb;
         private Label user_lb;
         private Label pass_lb;
+        private Button signup_button;
     }
 }
