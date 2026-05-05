@@ -41,9 +41,10 @@
             // 
             // login_button
             // 
-            login_button.Location = new Point(409, 322);
+            login_button.Location = new Point(354, 217);
+            login_button.Margin = new Padding(3, 2, 3, 2);
             login_button.Name = "login_button";
-            login_button.Size = new Size(94, 29);
+            login_button.Size = new Size(82, 27);
             login_button.TabIndex = 0;
             login_button.Text = "Login";
             login_button.UseVisualStyleBackColor = true;
@@ -51,70 +52,76 @@
             // 
             // cancel_button
             // 
-            cancel_button.Location = new Point(152, 322);
+            cancel_button.Location = new Point(266, 217);
+            cancel_button.Margin = new Padding(3, 2, 3, 2);
             cancel_button.Name = "cancel_button";
-            cancel_button.Size = new Size(94, 29);
+            cancel_button.Size = new Size(82, 27);
             cancel_button.TabIndex = 1;
             cancel_button.Text = "Cancel";
             cancel_button.UseVisualStyleBackColor = true;
+            cancel_button.Click += cancel_button_Click;
             // 
             // user_tb
             // 
-            user_tb.Location = new Point(314, 104);
+            user_tb.Location = new Point(310, 106);
+            user_tb.Margin = new Padding(3, 2, 3, 2);
             user_tb.Name = "user_tb";
-            user_tb.Size = new Size(125, 27);
+            user_tb.Size = new Size(140, 23);
             user_tb.TabIndex = 2;
             // 
             // pass_tb
             // 
-            pass_tb.Location = new Point(314, 187);
+            pass_tb.Location = new Point(310, 168);
+            pass_tb.Margin = new Padding(3, 2, 3, 2);
             pass_tb.Name = "pass_tb";
-            pass_tb.Size = new Size(125, 27);
+            pass_tb.Size = new Size(140, 23);
             pass_tb.TabIndex = 3;
             // 
             // user_lb
             // 
             user_lb.AutoSize = true;
-            user_lb.Location = new Point(173, 104);
+            user_lb.Location = new Point(247, 109);
             user_lb.Name = "user_lb";
-            user_lb.Size = new Size(73, 20);
+            user_lb.Size = new Size(60, 15);
             user_lb.TabIndex = 4;
-            user_lb.Text = "username";
+            user_lb.Text = "Username";
             // 
             // pass_lb
             // 
             pass_lb.AutoSize = true;
-            pass_lb.Location = new Point(173, 190);
+            pass_lb.Location = new Point(247, 171);
             pass_lb.Name = "pass_lb";
-            pass_lb.Size = new Size(72, 20);
+            pass_lb.Size = new Size(57, 15);
             pass_lb.TabIndex = 5;
-            pass_lb.Text = "password";
+            pass_lb.Text = "Password";
             // 
             // signup_button
             // 
-            signup_button.Location = new Point(459, 239);
+            signup_button.Location = new Point(354, 248);
+            signup_button.Margin = new Padding(3, 2, 3, 2);
             signup_button.Name = "signup_button";
-            signup_button.Size = new Size(94, 29);
+            signup_button.Size = new Size(82, 27);
             signup_button.TabIndex = 6;
-            signup_button.Text = "sign up";
+            signup_button.Text = "Sign up";
             signup_button.UseVisualStyleBackColor = true;
             signup_button.Click += signup_button_Click;
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources.account_icon;
-            pictureBox1.Location = new Point(31, 53);
+            pictureBox1.Location = new Point(319, 24);
+            pictureBox1.Margin = new Padding(3, 2, 3, 2);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(99, 102);
+            pictureBox1.Size = new Size(69, 64);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 7;
             pictureBox1.TabStop = false;
             // 
             // login_form
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(700, 338);
             Controls.Add(pictureBox1);
             Controls.Add(signup_button);
             Controls.Add(pass_lb);
@@ -123,6 +130,7 @@
             Controls.Add(user_tb);
             Controls.Add(cancel_button);
             Controls.Add(login_button);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "login_form";
             Text = "LOGIN";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

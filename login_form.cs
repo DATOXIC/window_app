@@ -32,11 +32,16 @@ namespace window_app
                 MessageBox.Show("Lỗi kết nối: " + ex.Message);
             }
         }
-        
+
         private void signup_button_Click(object sender, EventArgs e)
         {
             signup_form sg = new signup_form();
             sg.ShowDialog();
+        }
+
+        private void cancel_button_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
