@@ -45,5 +45,13 @@ namespace window_app
         {
             Application.Exit();
         }
+        private void forgetPassword_button_Click(object sender, EventArgs e)
+        {
+            // Khởi tạo instance của ForgotPassForm đã có trong project
+            ForgotPassForm fpf = new ForgotPassForm();
+            
+            // Hiển thị form dưới dạng hội thoại (người dùng phải đóng form này mới quay lại được login)
+            fpf.ShowDialog(); 
+        }
     }
 }
