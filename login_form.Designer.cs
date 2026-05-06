@@ -114,7 +114,7 @@
             // 
             // forgetPassword_button
             // 
-            forgetPassword_button.Location = new Point(594, 268);
+            forgetPassword_button.Location = new Point(553, 279);
             forgetPassword_button.Name = "forgetPassword_button";
             forgetPassword_button.Size = new Size(149, 29);
             forgetPassword_button.TabIndex = 8;

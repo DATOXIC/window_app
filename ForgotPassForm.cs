@@ -24,5 +24,10 @@ namespace window_app
         {
             this.Close();
         }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
