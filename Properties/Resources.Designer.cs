@@ -69,5 +69,15 @@ namespace window_app.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap circle_arrow_left_solid_full {
+            get {
+                object obj = ResourceManager.GetObject("circle-arrow-left-solid-full", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

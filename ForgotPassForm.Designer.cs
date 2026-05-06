@@ -44,9 +44,11 @@
             groupBox1 = new GroupBox();
             groupBox2 = new GroupBox();
             groupBox3 = new GroupBox();
+            returnPB = new PictureBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)returnPB).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -211,11 +213,23 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Change Password";
             // 
+            // returnPB
+            // 
+            returnPB.Image = Properties.Resources.circle_arrow_left_solid_full;
+            returnPB.Location = new Point(12, 12);
+            returnPB.Name = "returnPB";
+            returnPB.Size = new Size(42, 31);
+            returnPB.SizeMode = PictureBoxSizeMode.Zoom;
+            returnPB.TabIndex = 12;
+            returnPB.TabStop = false;
+            returnPB.Click += pictureBox1_Click;
+            // 
             // ForgotPassForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(returnPB);
             Controls.Add(textBox7);
             Controls.Add(textBox5);
             Controls.Add(groupBox1);
@@ -229,6 +243,7 @@
             groupBox2.PerformLayout();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)returnPB).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -252,5 +267,6 @@
         private GroupBox groupBox1;
         private GroupBox groupBox2;
         private GroupBox groupBox3;
+        private PictureBox returnPB;
     }
 }
