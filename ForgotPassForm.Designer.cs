@@ -44,6 +44,8 @@
             comboBox1 = new ComboBox();
             comboBox2 = new ComboBox();
             groupBox2 = new GroupBox();
+            searchButton = new Button();
+            confirmButton = new Button();
             groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)returnPB).BeginInit();
             groupBox2.SuspendLayout();
@@ -129,7 +131,7 @@
             textBox4.Name = "textBox4";
             textBox4.Size = new Size(290, 27);
             textBox4.TabIndex = 9;
-            textBox4.Text = "Which one do you prefer ?";
+            textBox4.Text = "What is your favorite animal ?";
             textBox4.UseWaitCursor = true;
             // 
             // label4
@@ -148,7 +150,7 @@
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(290, 27);
             textBox2.TabIndex = 7;
-            textBox2.Text = "Do you love Phung Thanh Do ?";
+            textBox2.Text = "What color do you like ?";
             // 
             // label3
             // 
@@ -183,7 +185,7 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Yes, I love watching Phung Thanh Do", "No, I love watching Tu Sena" });
+            comboBox1.Items.AddRange(new object[] { "Black", "", "Blue", "", "Brown", "", "Green", "", "Grey", "", "Orange", "", "Pink", "", "Red", "", "White", "", "Yellow" });
             comboBox1.Location = new Point(140, 151);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(290, 28);
@@ -192,7 +194,7 @@
             // comboBox2
             // 
             comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "Missav", "Pornhub" });
+            comboBox2.Items.AddRange(new object[] { "Ant", "", "Bear", "", "Cat", "", "Dog", "", "Elephant", "", "Fish", "", "Giraffe", "", "Horse", "", "Iguana", "", "Jellyfish" });
             comboBox2.Location = new Point(140, 244);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(290, 28);
@@ -200,6 +202,8 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(confirmButton);
+            groupBox2.Controls.Add(searchButton);
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(comboBox2);
             groupBox2.Controls.Add(textBox1);
@@ -217,6 +221,24 @@
             groupBox2.TabIndex = 15;
             groupBox2.TabStop = false;
             groupBox2.Text = "Security Questions and Answers";
+            // 
+            // searchButton
+            // 
+            searchButton.Location = new Point(471, 35);
+            searchButton.Name = "searchButton";
+            searchButton.Size = new Size(94, 29);
+            searchButton.TabIndex = 14;
+            searchButton.Text = "Search";
+            searchButton.UseVisualStyleBackColor = true;
+            // 
+            // confirmButton
+            // 
+            confirmButton.Location = new Point(471, 243);
+            confirmButton.Name = "confirmButton";
+            confirmButton.Size = new Size(94, 29);
+            confirmButton.TabIndex = 15;
+            confirmButton.Text = "Confirm";
+            confirmButton.UseVisualStyleBackColor = true;
             // 
             // ForgotPassForm
             // 
@@ -258,5 +280,7 @@
         private ComboBox comboBox1;
         private ComboBox comboBox2;
         private GroupBox groupBox2;
+        private Button confirmButton;
+        private Button searchButton;
     }
 }
