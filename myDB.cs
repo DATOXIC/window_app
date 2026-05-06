@@ -41,16 +41,16 @@ namespace window_app
             } // Kết nối tự động đóng tại đây
         }
 
-        public bool AddUser(string username, string password)
+        public bool AddUser(string username, string password, string email)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                // SQL: position=1 (Sinh viên), VALID=0 (Chờ duyệt) theo UC-02
-                string sql = "INSERT INTO [Table] (username, password) VALUES (@user, @pass)";
+                string sql = "INSERT INTO [Table] (username, password, email) VALUES (@user, @pass, @mail)";
                 using (SqlCommand cmd = new SqlCommand(sql, conn))
                 {
                     cmd.Parameters.AddWithValue("@user", username);
                     cmd.Parameters.AddWithValue("@pass", password);
+                    cmd.Parameters.AddWithValue("@mail", email);
 
                     conn.Open();
                     return cmd.ExecuteNonQuery() > 0;
