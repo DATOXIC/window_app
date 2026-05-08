@@ -7,14 +7,11 @@ namespace window_app
 {
     internal class Student
     {
+        public int MSSV { get; set; }
         public int Id { get; set; }
-        public string Fname { get; set; }
-        public string Lname { get; set; }
-        public DateTime Bdate { get; set; }
-        public string Gender { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
         public string Phone { get; set; }
-        public string Address { get; set; }
-        public MemoryStream Picture { get; set; }
 
         // Các phương thức nghiệp vụ theo lộ trình [cite: 67]
         public bool insertStudent() { /* Logic sẽ thêm sau */ return true; }
