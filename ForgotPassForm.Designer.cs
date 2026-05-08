@@ -29,24 +29,25 @@
         {
             label1 = new Label();
             label6 = new Label();
-            textBox1 = new TextBox();
-            textBox5 = new TextBox();
-            textBox7 = new TextBox();
+            txtUsername = new TextBox();
+            txtConfirmPass = new TextBox();
             label7 = new Label();
-            groupBox3 = new GroupBox();
+            grbChangePass = new GroupBox();
+            btnChange = new Button();
+            txtNewPass = new TextBox();
             returnPB = new PictureBox();
-            textBox4 = new TextBox();
             label4 = new Label();
-            textBox2 = new TextBox();
             label3 = new Label();
             label5 = new Label();
             label2 = new Label();
-            comboBox1 = new ComboBox();
-            comboBox2 = new ComboBox();
+            cbbAnswer1 = new ComboBox();
+            cbbAnswer2 = new ComboBox();
             groupBox2 = new GroupBox();
-            searchButton = new Button();
-            confirmButton = new Button();
-            groupBox3.SuspendLayout();
+            lblQuestion2 = new Label();
+            lblQuestion1 = new Label();
+            btnConfirm = new Button();
+            btnSearch = new Button();
+            grbChangePass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)returnPB).BeginInit();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -71,26 +72,20 @@
             label6.TabIndex = 5;
             label6.Text = "New Password";
             // 
-            // textBox1
+            // txtUsername
             // 
-            textBox1.Location = new Point(140, 37);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(290, 27);
-            textBox1.TabIndex = 6;
+            txtUsername.Location = new Point(140, 37);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(290, 27);
+            txtUsername.TabIndex = 6;
             // 
-            // textBox5
+            // txtConfirmPass
             // 
-            textBox5.Location = new Point(255, 348);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(290, 27);
-            textBox5.TabIndex = 10;
-            // 
-            // textBox7
-            // 
-            textBox7.Location = new Point(255, 394);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(290, 27);
-            textBox7.TabIndex = 12;
+            txtConfirmPass.Location = new Point(140, 81);
+            txtConfirmPass.Name = "txtConfirmPass";
+            txtConfirmPass.Size = new Size(290, 27);
+            txtConfirmPass.TabIndex = 12;
+            txtConfirmPass.UseSystemPasswordChar = true;
             // 
             // label7
             // 
@@ -102,17 +97,38 @@
             label7.TabIndex = 13;
             label7.Text = "Confirm";
             // 
-            // groupBox3
+            // grbChangePass
             // 
-            groupBox3.Controls.Add(label7);
-            groupBox3.Controls.Add(label6);
-            groupBox3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupBox3.Location = new Point(115, 313);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(580, 125);
-            groupBox3.TabIndex = 16;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Change Password";
+            grbChangePass.Controls.Add(btnChange);
+            grbChangePass.Controls.Add(label7);
+            grbChangePass.Controls.Add(txtConfirmPass);
+            grbChangePass.Controls.Add(label6);
+            grbChangePass.Controls.Add(txtNewPass);
+            grbChangePass.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            grbChangePass.Location = new Point(115, 322);
+            grbChangePass.Name = "grbChangePass";
+            grbChangePass.Size = new Size(580, 125);
+            grbChangePass.TabIndex = 16;
+            grbChangePass.TabStop = false;
+            grbChangePass.Text = "Change Password";
+            // 
+            // btnChange
+            // 
+            btnChange.Location = new Point(471, 77);
+            btnChange.Name = "btnChange";
+            btnChange.Size = new Size(94, 31);
+            btnChange.TabIndex = 14;
+            btnChange.Text = "Change";
+            btnChange.UseVisualStyleBackColor = true;
+            btnChange.Click += btnChange_Click;
+            // 
+            // txtNewPass
+            // 
+            txtNewPass.Location = new Point(140, 39);
+            txtNewPass.Name = "txtNewPass";
+            txtNewPass.Size = new Size(290, 27);
+            txtNewPass.TabIndex = 10;
+            txtNewPass.UseSystemPasswordChar = true;
             // 
             // returnPB
             // 
@@ -125,15 +141,6 @@
             returnPB.TabStop = false;
             returnPB.Click += pictureBox1_Click;
             // 
-            // textBox4
-            // 
-            textBox4.Location = new Point(140, 199);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(290, 27);
-            textBox4.TabIndex = 9;
-            textBox4.Text = "What is your favorite animal ?";
-            textBox4.UseWaitCursor = true;
-            // 
             // label4
             // 
             label4.AutoSize = true;
@@ -143,14 +150,6 @@
             label4.Size = new Size(77, 20);
             label4.TabIndex = 3;
             label4.Text = "Question 2";
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(140, 104);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(290, 27);
-            textBox2.TabIndex = 7;
-            textBox2.Text = "What color do you like ?";
             // 
             // label3
             // 
@@ -182,38 +181,38 @@
             label2.TabIndex = 1;
             label2.Text = "Question 1";
             // 
-            // comboBox1
+            // cbbAnswer1
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Black", "", "Blue", "", "Brown", "", "Green", "", "Grey", "", "Orange", "", "Pink", "", "Red", "", "White", "", "Yellow" });
-            comboBox1.Location = new Point(140, 151);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(290, 28);
-            comboBox1.TabIndex = 12;
+            cbbAnswer1.FormattingEnabled = true;
+            cbbAnswer1.Items.AddRange(new object[] { "Black", "Blue", "Brown", "Green", "Grey", "Orange", "Pink", "Red", "White", "Yellow" });
+            cbbAnswer1.Location = new Point(140, 151);
+            cbbAnswer1.Name = "cbbAnswer1";
+            cbbAnswer1.Size = new Size(290, 28);
+            cbbAnswer1.TabIndex = 12;
             // 
-            // comboBox2
+            // cbbAnswer2
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "Ant", "", "Bear", "", "Cat", "", "Dog", "", "Elephant", "", "Fish", "", "Giraffe", "", "Horse", "", "Iguana", "", "Jellyfish" });
-            comboBox2.Location = new Point(140, 244);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(290, 28);
-            comboBox2.TabIndex = 13;
+            cbbAnswer2.FormattingEnabled = true;
+            cbbAnswer2.Items.AddRange(new object[] { "Ant", "Bear", "Cat", "Dog", "Elephant", "Fish", "Giraffe", "Horse", "Iguana", "Jellyfish" });
+            cbbAnswer2.Location = new Point(140, 244);
+            cbbAnswer2.Name = "cbbAnswer2";
+            cbbAnswer2.Size = new Size(290, 28);
+            cbbAnswer2.TabIndex = 13;
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(confirmButton);
-            groupBox2.Controls.Add(searchButton);
+            groupBox2.Controls.Add(lblQuestion2);
+            groupBox2.Controls.Add(lblQuestion1);
+            groupBox2.Controls.Add(btnConfirm);
+            groupBox2.Controls.Add(btnSearch);
             groupBox2.Controls.Add(label1);
-            groupBox2.Controls.Add(comboBox2);
-            groupBox2.Controls.Add(textBox1);
-            groupBox2.Controls.Add(comboBox1);
+            groupBox2.Controls.Add(cbbAnswer2);
+            groupBox2.Controls.Add(txtUsername);
+            groupBox2.Controls.Add(cbbAnswer1);
             groupBox2.Controls.Add(label2);
             groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(label3);
-            groupBox2.Controls.Add(textBox2);
             groupBox2.Controls.Add(label4);
-            groupBox2.Controls.Add(textBox4);
             groupBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             groupBox2.Location = new Point(115, 12);
             groupBox2.Name = "groupBox2";
@@ -222,65 +221,84 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Security Questions and Answers";
             // 
-            // searchButton
+            // lblQuestion2
             // 
-            searchButton.Location = new Point(471, 35);
-            searchButton.Name = "searchButton";
-            searchButton.Size = new Size(94, 29);
-            searchButton.TabIndex = 14;
-            searchButton.Text = "Search";
-            searchButton.UseVisualStyleBackColor = true;
+            lblQuestion2.AutoSize = true;
+            lblQuestion2.Location = new Point(140, 206);
+            lblQuestion2.Name = "lblQuestion2";
+            lblQuestion2.Size = new Size(161, 20);
+            lblQuestion2.TabIndex = 17;
+            lblQuestion2.Text = "Waiting for question..";
             // 
-            // confirmButton
+            // lblQuestion1
             // 
-            confirmButton.Location = new Point(471, 243);
-            confirmButton.Name = "confirmButton";
-            confirmButton.Size = new Size(94, 29);
-            confirmButton.TabIndex = 15;
-            confirmButton.Text = "Confirm";
-            confirmButton.UseVisualStyleBackColor = true;
+            lblQuestion1.AutoSize = true;
+            lblQuestion1.Location = new Point(140, 107);
+            lblQuestion1.Name = "lblQuestion1";
+            lblQuestion1.Size = new Size(165, 20);
+            lblQuestion1.TabIndex = 16;
+            lblQuestion1.Text = "Waiting for question...";
+            // 
+            // btnConfirm
+            // 
+            btnConfirm.Location = new Point(471, 243);
+            btnConfirm.Name = "btnConfirm";
+            btnConfirm.Size = new Size(94, 29);
+            btnConfirm.TabIndex = 15;
+            btnConfirm.Text = "Confirm";
+            btnConfirm.UseVisualStyleBackColor = true;
+            btnConfirm.Click += btnConfirm_Click;
+            // 
+            // btnSearch
+            // 
+            btnSearch.Location = new Point(471, 35);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(94, 29);
+            btnSearch.TabIndex = 14;
+            btnSearch.Text = "Search";
+            btnSearch.UseVisualStyleBackColor = true;
+            btnSearch.Click += searchButton_Click;
             // 
             // ForgotPassForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(grbChangePass);
             Controls.Add(returnPB);
-            Controls.Add(textBox7);
-            Controls.Add(textBox5);
             Controls.Add(groupBox2);
-            Controls.Add(groupBox3);
             Name = "ForgotPassForm";
             Text = "ForgotPassForm";
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
+            Load += ForgotPassForm_Load;
+            grbChangePass.ResumeLayout(false);
+            grbChangePass.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)returnPB).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
         private Label label1;
         private Label label6;
-        private TextBox textBox1;
-        private TextBox textBox5;
-        private TextBox textBox7;
+        private TextBox txtUsername;
+        private TextBox txtConfirmPass;
         private Label label7;
-        private GroupBox groupBox3;
+        private GroupBox grbChangePass;
         private PictureBox returnPB;
-        private TextBox textBox4;
         private Label label4;
-        private TextBox textBox2;
         private Label label3;
         private Label label5;
         private Label label2;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
+        private ComboBox cbbAnswer1;
+        private ComboBox cbbAnswer2;
         private GroupBox groupBox2;
-        private Button confirmButton;
-        private Button searchButton;
+        private Button btnConfirm;
+        private Button btnSearch;
+        private Label lblQuestion2;
+        private Label lblQuestion1;
+        private TextBox txtNewPass;
+        private Button btnChange;
     }
 }
