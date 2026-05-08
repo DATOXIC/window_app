@@ -15,7 +15,7 @@ namespace window_app
             myDB db = new myDB();
             try
             {
-                string hashedInDB = db.GetHashedPassword(user);
+                string? hashedInDB = db.GetHashedPassword(user);
                 string hashedInput = db.HashPassword(pass);
 
                 if (hashedInDB != null && hashedInDB == hashedInput)

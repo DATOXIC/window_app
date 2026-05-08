@@ -9,7 +9,8 @@ namespace window_app
     internal class myDB
     {
         // Sử dụng |DataDirectory| để máy nào cũng tìm thấy file database
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\dtb_login.mdf;Integrated Security=True;Connect Timeout=30;Pooling=False";
+        private readonly string connectionString =
+            @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\dtb_login.mdf;Integrated Security=True;Connect Timeout=30;Pooling=False";
 
         // Hàm băm mật khẩu SHA256 sẵn có của C#
         public string HashPassword(string rawPassword)
@@ -25,7 +26,7 @@ namespace window_app
         }
 
         // Truy vấn dùng Parameter để chống SQL Injection
-        public string GetHashedPassword(string username)
+        public string? GetHashedPassword(string username)
         {
             // Cấu trúc này đảm bảo kết nối luôn được đóng tự động
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -36,7 +37,8 @@ namespace window_app
                 {
                     cmd.Parameters.AddWithValue("@user", username);
                     object result = cmd.ExecuteScalar();
-                    return result?.ToString();
+                    if (result is null || result is DBNull) return null;
+                    return Convert.ToString(result);
                 }
             } // Kết nối tự động đóng tại đây
         }
