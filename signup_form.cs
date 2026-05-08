@@ -22,10 +22,10 @@ namespace window_app
             string user = textBox1.Text.Trim(); // Username[cite: 3]
             string pass = textBox2.Text.Trim(); // Password[cite: 3]
             string rePass = textBox3.Text.Trim(); // Retype password[cite: 3]
-            string Email = textBox4.Text.Trim(); // Email [cite: 3]
+            string email = textBox4.Text.Trim(); // Email [cite: 3]
 
             // 1. Kiểm tra không được để trống
-            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass)|| string.IsNullOrEmpty(Email))
+            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass)|| string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ Email, Username và Password!");
                 return;
@@ -38,30 +38,30 @@ namespace window_app
                 return;
             }
 
-            myDB db = new myDB();
-
+            Account acc = new Account();
             try
             {
-                // 3. Kiểm tra trùng Username (Sử dụng hàm GetHashedPassword có sẵn)[cite: 6]
-                if (db.GetHashedPassword(user) != null)
+                // Chúng ta cần hứng kết quả trả về (bool) từ hàm Register
+                if (acc.Register(user, pass, email))
                 {
-                    MessageBox.Show("Username này đã tồn tại. Vui lòng đặt tên khác!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    MessageBox.Show("Đăng ký thành công! Vui lòng chờ Admin phê duyệt.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Dọn dẹp các TextBox sau khi đăng ký xong
+                    textBox1.Clear();
+                    textBox2.Clear();
+                    textBox3.Clear();
+                    textBox4.Clear();
                 }
-
-                // 4. Nếu hợp lệ, tiến hành mã hóa và đăng ký
-                string hashedPass = db.HashPassword(pass); // Mã hóa SHA256[cite: 6]
-
-                if (db.AddUser(user, hashedPass, Email))
+                else
                 {
-                    MessageBox.Show("Đăng ký thành công! Vui lòng chờ Admin phê duyệt tài khoản.", "Thành công");
-                    this.Close(); // Đóng form sau khi xong[cite: 1]
+                    MessageBox.Show("Đăng ký thất bại. Tên đăng nhập có thể đã tồn tại!", "Thất bại", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi hệ thống: " + ex.Message);
+                MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
     private void BacktoLogInBtn_Click(object sender, EventArgs e)
         {

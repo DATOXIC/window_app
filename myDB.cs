@@ -1,16 +1,64 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using Microsoft.Data.SqlClient;
 using System.Security.Cryptography;
-using Npgsql;
 
 namespace window_app
 {
     internal class myDB
     {
-        // Sử dụng |DataDirectory| để máy nào cũng tìm thấy file database
-        private string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\dtb_login.mdf;Integrated Security=True;Connect Timeout=30;Pooling=False";
+        private const string EnvVarName = "WINDOW_APP_SQL_CONNECTION";
+
+        private static string BuildConnectionString()
+        {
+            string? raw = Environment.GetEnvironmentVariable(EnvVarName);
+            if (string.IsNullOrWhiteSpace(raw))
+            {
+                throw new InvalidOperationException(
+                    $"Chưa cấu hình connection string. Hãy set biến môi trường {EnvVarName}.\n\n" +
+                    "Ví dụ:\n" +
+                    $"Server=<IP_or_HOST>\\\\SQLEXPRESS;Database=window_app;User Id=window_app_user;Password=...;TrustServerCertificate=True;");
+            }
+
+            // Normalize to avoid common TLS/trust errors on dev servers.
+            var builder = new SqlConnectionStringBuilder(raw)
+            {
+                ConnectTimeout = 30,
+                Pooling = true,
+            };
+
+            if (!builder.ContainsKey("TrustServerCertificate") && !builder.ContainsKey("Encrypt"))
+            {
+                builder.TrustServerCertificate = true;
+            }
+
+            return builder.ConnectionString;
+        }
+
+        private readonly string connectionString = BuildConnectionString();
+        private SqlConnection? _connection;
+
+        public SqlConnection getConnection()
+        {
+            _connection ??= new SqlConnection(connectionString);
+            return _connection;
+        }
+
+        public void openConnection()
+        {
+            var conn = getConnection();
+            if (conn.State == ConnectionState.Closed || conn.State == ConnectionState.Broken)
+                conn.Open();
+        }
+
+        public void closeConnection()
+        {
+            if (_connection is null) return;
+            if (_connection.State == ConnectionState.Open)
+                _connection.Close();
+        }
 
         // Hàm băm mật khẩu SHA256 sẵn có của C#
         public string HashPassword(string rawPassword)
@@ -42,21 +90,6 @@ namespace window_app
             } // Kết nối tự động đóng tại đây
         }
 
-        public bool AddUser(string username, string password, string email)
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                string sql = "INSERT INTO [Table] (username, password, email) VALUES (@user, @pass, @mail)";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@user", username);
-                    cmd.Parameters.AddWithValue("@pass", password);
-                    cmd.Parameters.AddWithValue("@mail", email);
-
-                    conn.Open();
-                    return cmd.ExecuteNonQuery() > 0;
-                }
-            }
-        }
+        
     }
 }

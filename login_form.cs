@@ -12,24 +12,75 @@ namespace window_app
             string user = user_tb.Text.Trim();
             string pass = pass_tb.Text.Trim();
 
-            myDB db = new myDB();
+            // 1. Kiểm tra nhanh đầu vào
+            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
+            {
+                MessageBox.Show("Vui lòng điền đầy đủ Username và Password!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Account acc = new Account();
+
             try
             {
-                string hashedInDB = db.GetHashedPassword(user);
-                string hashedInput = db.HashPassword(pass);
-
-                if (hashedInDB != null && hashedInDB == hashedInput)
+                // 2. Login + phân biệt đúng sai / chưa phê duyệt
+                var loginStatus = acc.LoginWithStatus(user, pass);
+                if (loginStatus == Account.LoginResult.Success)
                 {
-                    MessageBox.Show("Đăng nhập thành công!");
+                    // 3. Nếu đăng nhập thành công, lấy thêm thông tin quyền hạn và MSSV
+                    int position = acc.GetUserPosition(user);
+                    //string mssv = acc.GetStudentID(user);
+
+                    // 4. Lưu vào biến toàn cục để các Form sau (như f_Main) có thể sử dụng
+                    // Giả sử bạn lưu MSSV vào Globals để hiện thông tin cá nhân sau này
+                    //if (!string.IsNullOrEmpty(mssv))
+                    //{
+                    //    // Globals.SetGlobalUserId(int.Parse(mssv)); 
+                    //}
+
+                    MessageBox.Show("Đăng nhập thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // 5. Phân quyền và chuyển Form
+                    this.Hide(); // Ẩn form Login đi
+
+                    if (position == 0) // Admin
+                    {
+                        // MainFormAdmin fAdmin = new MainFormAdmin();
+                        // fAdmin.ShowDialog();
+                    }
+                    else if (position == 1) // Sinh viên
+                    {
+                        // MainFormStudent fStudent = new MainFormStudent();
+                        // fStudent.ShowDialog();
+                    }
+                    else if (position == 2) // HR
+                    {
+                        // MainFormHR fHR = new MainFormHR();
+                        // fHR.ShowDialog();
+                    }
+
+                    this.Close(); // Đóng hẳn form login khi user thoát khỏi form chính
                 }
                 else
                 {
-                    MessageBox.Show("Sai tài khoản hoặc mật khẩu.");
+                    if (loginStatus == Account.LoginResult.NotApproved)
+                    {
+                        MessageBox.Show(
+                                        "Tài khoản đúng nhưng chưa được Admin phê duyệt (valid = 0).\n\n" +
+                                        "Hãy liên hệ Admin để bật valid = 1.",
+                                        "Chưa được phê duyệt", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        // Thông báo chung để bảo mật thông tin
+                        MessageBox.Show("Tên đăng nhập hoặc mật khẩu không đúng!",
+                                        "Đăng nhập thất bại", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi kết nối: " + ex.Message);
+                MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
