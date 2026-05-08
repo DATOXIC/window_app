@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
+using Npgsql;
 
 namespace window_app
 {

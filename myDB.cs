@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Data.SqlClient;
 using System.Security.Cryptography;
+using Npgsql;
 
 namespace window_app
 {
