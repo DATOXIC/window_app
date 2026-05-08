@@ -74,21 +74,21 @@ namespace window_app
         }
 
         // Truy vấn dùng Parameter để chống SQL Injection
-        public string GetHashedPassword(string username)
-        {
-            // Cấu trúc này đảm bảo kết nối luôn được đóng tự động
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string sql = "SELECT password FROM [Table] WHERE username = @user";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@user", username);
-                    object result = cmd.ExecuteScalar();
-                    return result?.ToString();
-                }
-            } // Kết nối tự động đóng tại đây
-        }
+        //public string GetHashedPassword(string username)
+        //{
+        //    // Cấu trúc này đảm bảo kết nối luôn được đóng tự động
+        //    using (SqlConnection conn = new SqlConnection(connectionString))
+        //    {
+        //        conn.Open();
+        //        string sql = "SELECT password FROM [Table] WHERE username = @user";
+        //        using (SqlCommand cmd = new SqlCommand(sql, conn))
+        //        {
+        //            cmd.Parameters.AddWithValue("@user", username);
+        //            object result = cmd.ExecuteScalar();
+        //            return result?.ToString();
+        //        }
+        //    } // Kết nối tự động đóng tại đây
+        //}
 
         
     }
