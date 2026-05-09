@@ -42,9 +42,8 @@ namespace window_app
 
                     if (position == 0) // Admin
                     {
-                        // MainFormAdmin fAdmin = new MainFormAdmin();
-                        // fAdmin.ShowDialog();
-                        
+                        Admin_Main fadmin = new Admin_Main();
+                        fadmin.ShowDialog();
                     }
                     else if (position == 1) // Sinh viên
                     {
@@ -53,12 +52,11 @@ namespace window_app
                     }
                     else if (position == 2) // HR
                     {
-                        
                         HR_Main fHR = new HR_Main();
                         fHR.ShowDialog();
                     }
 
-                    this.Close(); // Đóng hẳn form login khi user thoát khỏi form chính
+                    this.Close();
                 }
                 else
                 {
