@@ -47,9 +47,10 @@
             createAccount_button.BackColor = SystemColors.ActiveCaption;
             createAccount_button.Font = new Font("Segoe UI", 13F);
             createAccount_button.ForeColor = SystemColors.ButtonHighlight;
-            createAccount_button.Location = new Point(279, 302);
+            createAccount_button.Location = new Point(319, 403);
+            createAccount_button.Margin = new Padding(3, 4, 3, 4);
             createAccount_button.Name = "createAccount_button";
-            createAccount_button.Size = new Size(229, 35);
+            createAccount_button.Size = new Size(262, 47);
             createAccount_button.TabIndex = 0;
             createAccount_button.Text = "Create account";
             createAccount_button.UseVisualStyleBackColor = false;
@@ -58,9 +59,9 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10F);
-            label1.Location = new Point(230, 146);
+            label1.Location = new Point(263, 195);
             label1.Name = "label1";
-            label1.Size = new Size(71, 19);
+            label1.Size = new Size(87, 23);
             label1.TabIndex = 1;
             label1.Text = "Username";
             // 
@@ -68,9 +69,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10F);
-            label2.Location = new Point(230, 198);
+            label2.Location = new Point(263, 264);
             label2.Name = "label2";
-            label2.Size = new Size(67, 19);
+            label2.Size = new Size(80, 23);
             label2.TabIndex = 2;
             label2.Text = "Password";
             // 
@@ -78,31 +79,34 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10F);
-            label3.Location = new Point(230, 250);
+            label3.Location = new Point(263, 333);
             label3.Name = "label3";
-            label3.Size = new Size(113, 19);
+            label3.Size = new Size(138, 23);
             label3.TabIndex = 3;
             label3.Text = "Retype password";
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(351, 146);
+            textBox1.Location = new Point(401, 195);
+            textBox1.Margin = new Padding(3, 4, 3, 4);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(231, 23);
+            textBox1.Size = new Size(263, 27);
             textBox1.TabIndex = 4;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(351, 197);
+            textBox2.Location = new Point(401, 263);
+            textBox2.Margin = new Padding(3, 4, 3, 4);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(231, 23);
+            textBox2.Size = new Size(263, 27);
             textBox2.TabIndex = 5;
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(351, 249);
+            textBox3.Location = new Point(401, 332);
+            textBox3.Margin = new Padding(3, 4, 3, 4);
             textBox3.Name = "textBox3";
-            textBox3.Size = new Size(231, 23);
+            textBox3.Size = new Size(263, 27);
             textBox3.TabIndex = 6;
             // 
             // label4
@@ -110,9 +114,9 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.Desktop;
-            label4.Location = new Point(351, 33);
+            label4.Location = new Point(401, 44);
             label4.Name = "label4";
-            label4.Size = new Size(93, 31);
+            label4.Size = new Size(117, 40);
             label4.TabIndex = 7;
             label4.Text = "Sign up";
             label4.TextAlign = ContentAlignment.MiddleCenter;
@@ -120,9 +124,9 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(289, 347);
+            label5.Location = new Point(330, 463);
             label5.Name = "label5";
-            label5.Size = new Size(142, 15);
+            label5.Size = new Size(178, 20);
             label5.TabIndex = 8;
             label5.Text = "Already have an account?";
             // 
@@ -133,9 +137,10 @@
             button2.BackgroundImageLayout = ImageLayout.Stretch;
             button2.FlatStyle = FlatStyle.System;
             button2.ForeColor = Color.Transparent;
-            button2.Location = new Point(424, 343);
+            button2.Location = new Point(518, 458);
+            button2.Margin = new Padding(3, 4, 3, 4);
             button2.Name = "button2";
-            button2.Size = new Size(75, 23);
+            button2.Size = new Size(86, 31);
             button2.TabIndex = 9;
             button2.Text = "Log In";
             button2.UseVisualStyleBackColor = false;
@@ -143,26 +148,27 @@
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(351, 93);
+            textBox4.Location = new Point(401, 124);
+            textBox4.Margin = new Padding(3, 4, 3, 4);
             textBox4.Name = "textBox4";
-            textBox4.Size = new Size(231, 23);
+            textBox4.Size = new Size(263, 27);
             textBox4.TabIndex = 11;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10F);
-            label6.Location = new Point(230, 93);
+            label6.Location = new Point(263, 124);
             label6.Name = "label6";
-            label6.Size = new Size(41, 19);
+            label6.Size = new Size(51, 23);
             label6.TabIndex = 10;
             label6.Text = "Email";
             // 
             // signup_form
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(914, 600);
             Controls.Add(textBox4);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -175,6 +181,7 @@
             Controls.Add(label1);
             Controls.Add(createAccount_button);
             Controls.Add(button2);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "signup_form";
             Text = "signup_form";
             ResumeLayout(false);

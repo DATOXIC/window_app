@@ -23,10 +23,7 @@ namespace window_app
 
             try
             {
-                // 2. Login + phân biệt đúng sai / chưa phê duyệt
-                var loginStatus = acc.LoginWithStatus(user, pass);
-                    //if (loginStatus == Account.LoginResult.Success)
-                if (acc.Login(user,pass))
+                if (acc.LoginWithStatus(user, pass) == Account.LoginResult.Success)
                 {
                     // 3. Nếu đăng nhập thành công, lấy thêm thông tin quyền hạn và MSSV
                     int position = acc.GetUserPosition(user);
@@ -41,7 +38,6 @@ namespace window_app
 
                         MessageBox.Show("Đăng nhập thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // 5. Phân quyền và chuyển Form
                     this.Hide(); // Ẩn form Login đi
 
                     if (position == 0) // Admin
@@ -66,7 +62,7 @@ namespace window_app
                 }
                 else
                 {
-                    if (loginStatus == Account.LoginResult.NotApproved)
+                    if (acc.LoginWithStatus(user,pass) == Account.LoginResult.NotApproved)
                     {
                         MessageBox.Show(
                                         "Tài khoản đúng nhưng chưa được Admin phê duyệt (valid = 0).\n\n" +

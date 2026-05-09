@@ -27,7 +27,7 @@ namespace window_app
             string hashedPass = db.HashPassword(pass);
 
             string query = "INSERT INTO [Table] (username, password, valid, position, email) " +
-                           "VALUES (@user, @pass, 1, 1, @mail)";
+                           "VALUES (@user, @pass, 0, 1, @mail)";
 
             using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
             {

@@ -19,19 +19,19 @@ namespace window_app
         private void createAccount_button_Click(object sender, EventArgs e)
         {
             // Lấy dữ liệu từ TextBox và loại bỏ khoảng trắng
-            string user = textBox1.Text.Trim(); // Username[cite: 3]
-            string pass = textBox2.Text.Trim(); // Password[cite: 3]
-            string rePass = textBox3.Text.Trim(); // Retype password[cite: 3]
-            string email = textBox4.Text.Trim(); // Email [cite: 3]
+            string user = textBox1.Text.Trim(); // Username
+            string pass = textBox2.Text.Trim(); // Password
+            string rePass = textBox3.Text.Trim(); // Retype password
+            string email = textBox4.Text.Trim(); // Email 
 
-            // 1. Kiểm tra không được để trống
+            // Kiểm tra không được để trống
             if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass)|| string.IsNullOrEmpty(email))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ Email, Username và Password!");
                 return;
             }
 
-            // 2. Kiểm tra mật khẩu nhập lại có khớp không
+            // Kiểm tra mật khẩu nhập lại có khớp không
             if (pass != rePass)
             {
                 MessageBox.Show("Mật khẩu xác nhận không khớp!");
@@ -41,7 +41,7 @@ namespace window_app
             Account acc = new Account();
             try
             {
-                // Chúng ta cần hứng kết quả trả về (bool) từ hàm Register
+             
                 if (acc.Register(user, pass, email))
                 {
                     MessageBox.Show("Đăng ký thành công! Vui lòng chờ Admin phê duyệt.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
