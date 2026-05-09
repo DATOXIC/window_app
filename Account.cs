@@ -16,11 +16,16 @@ namespace window_app
         public string StudentID { get; set; } // NCHAR(10) - Lưu MSSV kết nối
         public int Position { get; set; }     // 0: Admin, 1: Student, 2: HR
         public string Email { get; set; }
+        public enum LoginResult
+        {
+            Success = 0,
+            InvalidCredentials = 1,
+            NotApproved = 2,
+        }
         public bool Register(string user, string pass, string email)
         {
             string hashedPass = db.HashPassword(pass);
 
-            // Bổ sung cột 'email' vào câu lệnh SQL
             string query = "INSERT INTO [Table] (username, password, valid, position, email) " +
                            "VALUES (@user, @pass, 1, 1, @mail)";
 
@@ -41,12 +46,6 @@ namespace window_app
             return LoginWithStatus(user, pass) == LoginResult.Success;
         }
 
-        public enum LoginResult
-        {
-            Success = 0,
-            InvalidCredentials = 1,
-            NotApproved = 2,
-        }
 
         public LoginResult LoginWithStatus(string user, string pass)
         {
@@ -108,6 +107,20 @@ namespace window_app
                 // Nếu DB đang có dữ liệu test bị NULL, mặc định Student (1) để app không crash.
                 if (result is null || result == DBNull.Value) return 1;
                 return Convert.ToInt32(result);
+            }
+        }
+        public string GetStudentID(string user)
+        {
+            string query = "SELECT studentID FROM [Table] WHERE username = @user";
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@user", user);
+                db.openConnection();
+                object result = cmd.ExecuteScalar();
+                db.closeConnection();
+                // Trả về studentID hoặc null nếu không tìm thấy.
+                if (result is null || result == DBNull.Value) return null;
+                return result.ToString();
             }
         }
         public bool ApproveAndLinkStudent(string user, string studentID, int pos)
