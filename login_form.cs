@@ -25,21 +25,21 @@ namespace window_app
             {
                 // 2. Login + phân biệt đúng sai / chưa phê duyệt
                 var loginStatus = acc.LoginWithStatus(user, pass);
-                //if (acc.Login(user,pass))
-                if (loginStatus == Account.LoginResult.Success)
+                    //if (loginStatus == Account.LoginResult.Success)
+                if (acc.Login(user,pass))
                 {
                     // 3. Nếu đăng nhập thành công, lấy thêm thông tin quyền hạn và MSSV
                     int position = acc.GetUserPosition(user);
                     string mssv = acc.GetStudentID(user);
 
-                    // 4. Lưu vào biến toàn cục để các Form sau (như f_Main) có thể sử dụng
-                    // Giả sử bạn lưu MSSV vào Globals để hiện thông tin cá nhân sau này
-                    //if (!string.IsNullOrEmpty(mssv))
-                    //{
-                    //    // Globals.SetGlobalUserId(int.Parse(mssv)); 
-                    //}
+                        // 4. Lưu vào biến toàn cục để các Form sau (như f_Main) có thể sử dụng
+                        // Giả sử bạn lưu MSSV vào Globals để hiện thông tin cá nhân sau này
+                        //if (!string.IsNullOrEmpty(mssv))
+                        //{
+                        //    // Globals.SetGlobalUserId(int.Parse(mssv)); 
+                        //}
 
-                    //MessageBox.Show("Đăng nhập thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Đăng nhập thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // 5. Phân quyền và chuyển Form
                     this.Hide(); // Ẩn form Login đi

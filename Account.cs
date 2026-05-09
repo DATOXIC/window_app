@@ -33,7 +33,7 @@ namespace window_app
             {
                 cmd.Parameters.AddWithValue("@user", user);
                 cmd.Parameters.AddWithValue("@pass", hashedPass);
-                cmd.Parameters.AddWithValue("@mail", email); // Truyền giá trị email từ tham số
+                cmd.Parameters.AddWithValue("@mail", email); 
 
                 db.openConnection();
                 bool result = cmd.ExecuteNonQuery() > 0;
@@ -41,14 +41,15 @@ namespace window_app
                 return result;
             }
         }
-        public bool Login(string user, string pass)
-        {
-            return LoginWithStatus(user, pass) == LoginResult.Success;
-        }
+        //public bool Login(string user, string pass)
+        //{
+        //    return LoginWithStatus(user, pass) == LoginResult.Success;
+        //}
 
-
+        // Hàm Trả về trạng thái của Login 
         public LoginResult LoginWithStatus(string user, string pass)
         {
+
             string query = "SELECT password, valid FROM [Table] WHERE username = @user";
             using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
             {
@@ -57,37 +58,22 @@ namespace window_app
                 db.openConnection();
                 using (var reader = cmd.ExecuteReader())
                 {
-                    if (!reader.Read())
+                    if (!reader.Read()) // Nếu SQL kh tìm thấy
                     {
                         db.closeConnection();
                         return LoginResult.InvalidCredentials;
                     }
 
-                    string storedPass = reader["password"]?.ToString() ?? "";
+                    string storedPass = reader["password"] ?. ToString() ?? "";
                     int valid = reader["valid"] != DBNull.Value ? Convert.ToInt32(reader["valid"]) : 0;
                     db.closeConnection();
 
+                    // So sánh MK trong DTB và người dùng nhập
                     string hashedPass = db.HashPassword(pass);
-
                     bool matchesHash = string.Equals(storedPass, hashedPass, StringComparison.OrdinalIgnoreCase);
-                    bool matchesPlain = string.Equals(storedPass, pass, StringComparison.Ordinal);
 
-                    if (!matchesHash && !matchesPlain)
+                    if (!matchesHash) // Sai MK
                         return LoginResult.InvalidCredentials;
-
-                    // If legacy DB stored plain text password, migrate to hash on successful login.
-                    if (matchesPlain && !matchesHash)
-                    {
-                        string update = "UPDATE [Table] SET password = @pass WHERE username = @user";
-                        using (SqlCommand upd = new SqlCommand(update, db.getConnection()))
-                        {
-                            upd.Parameters.AddWithValue("@user", user);
-                            upd.Parameters.AddWithValue("@pass", hashedPass);
-                            db.openConnection();
-                            upd.ExecuteNonQuery();
-                            db.closeConnection();
-                        }
-                    }
 
                     return valid == 1 ? LoginResult.Success : LoginResult.NotApproved;
                 }
@@ -123,6 +109,8 @@ namespace window_app
                 return result.ToString();
             }
         }
+        
+        // Chức năng của HR ==> Chỉnh sửa ID - Valid - POS
         public bool ApproveAndLinkStudent(string user, string studentID, int pos)
         {
             // Cập nhật trạng thái valid, quyền hạn và nối với bảng Student qua studentID
