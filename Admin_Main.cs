@@ -14,5 +14,10 @@ namespace window_app
         {
             InitializeComponent();
         }
+
+        private void approve_button_Click(object sender, EventArgs e)
+        {
+            header_label.Text = "APPROVE STUDENT ACCOUNTS";
+        }
     }
 }

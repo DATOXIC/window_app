@@ -28,12 +28,120 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "Admin_Main";
+            panel1 = new Panel();
+            button3 = new Button();
+            button2 = new Button();
+            approve_button = new Button();
+            pictureBox1 = new PictureBox();
+            header_label = new TextBox();
+            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            SuspendLayout();
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(32, 64, 113);
+            panel1.Controls.Add(button3);
+            panel1.Controls.Add(button2);
+            panel1.Controls.Add(approve_button);
+            panel1.Controls.Add(pictureBox1);
+            panel1.Dock = DockStyle.Left;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(165, 450);
+            panel1.TabIndex = 0;
+            // 
+            // button3
+            // 
+            button3.BackColor = Color.Transparent;
+            button3.Dock = DockStyle.Top;
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.ForeColor = Color.White;
+            button3.Location = new Point(0, 140);
+            button3.Name = "button3";
+            button3.Size = new Size(165, 42);
+            button3.TabIndex = 3;
+            button3.Text = "button3";
+            button3.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            button2.BackColor = Color.Transparent;
+            button2.Dock = DockStyle.Top;
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.ForeColor = SystemColors.ControlLightLight;
+            button2.Location = new Point(0, 98);
+            button2.Name = "button2";
+            button2.Size = new Size(165, 42);
+            button2.TabIndex = 2;
+            button2.Text = "button2";
+            button2.UseVisualStyleBackColor = false;
+            // 
+            // approve_button
+            // 
+            approve_button.BackColor = Color.Transparent;
+            approve_button.Dock = DockStyle.Top;
+            approve_button.FlatAppearance.BorderSize = 0;
+            approve_button.FlatAppearance.MouseDownBackColor = Color.FromArgb(24, 49, 87);
+            approve_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(24, 49, 87);
+            approve_button.FlatStyle = FlatStyle.Flat;
+            approve_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            approve_button.ForeColor = SystemColors.ControlLightLight;
+            approve_button.Location = new Point(0, 56);
+            approve_button.Name = "approve_button";
+            approve_button.Size = new Size(165, 42);
+            approve_button.TabIndex = 1;
+            approve_button.Text = "Approve Account";
+            approve_button.TextAlign = ContentAlignment.MiddleRight;
+            approve_button.UseVisualStyleBackColor = false;
+            approve_button.Click += approve_button_Click;
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Top;
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(165, 56);
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
+            // header_label
+            // 
+            header_label.Anchor = AnchorStyles.Left;
+            header_label.BackColor = Color.FromArgb(41, 107, 191);
+            header_label.BorderStyle = BorderStyle.None;
+            header_label.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            header_label.ForeColor = SystemColors.Window;
+            header_label.Location = new Point(165, 0);
+            header_label.Multiline = true;
+            header_label.Name = "header_label";
+            header_label.Size = new Size(635, 50);
+            header_label.TabIndex = 2;
+            // 
+            // Admin_Main
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            Controls.Add(header_label);
+            Controls.Add(panel1);
+            Name = "Admin_Main";
+            Text = "Admin_Main";
+            panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Panel panel1;
+        private PictureBox pictureBox1;
+        private Button button3;
+        private Button button2;
+        private Button approve_button;
+        private TextBox header_label;
     }
 }
