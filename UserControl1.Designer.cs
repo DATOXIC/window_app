@@ -37,10 +37,10 @@
             button2 = new Button();
             button1 = new Button();
             panel2 = new Panel();
-            panel3 = new Panel();
             label1 = new Label();
+            panel3 = new Panel();
             dataGridView1 = new DataGridView();
-            label4 = new Label();
+            panel4 = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
@@ -58,9 +58,10 @@
             panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Dock = DockStyle.Right;
-            panel1.Location = new Point(586, 0);
+            panel1.Location = new Point(565, 0);
+            panel1.Margin = new Padding(3, 3, 15, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(206, 532);
+            panel1.Size = new Size(227, 532);
             panel1.TabIndex = 9;
             // 
             // comboBox2
@@ -110,7 +111,7 @@
             button3.BackColor = Color.SteelBlue;
             button3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.White;
-            button3.Location = new Point(14, 398);
+            button3.Location = new Point(21, 398);
             button3.Name = "button3";
             button3.Size = new Size(177, 58);
             button3.TabIndex = 11;
@@ -122,7 +123,7 @@
             button2.BackColor = Color.Firebrick;
             button2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.White;
-            button2.Location = new Point(14, 303);
+            button2.Location = new Point(21, 303);
             button2.Name = "button2";
             button2.Size = new Size(177, 58);
             button2.TabIndex = 10;
@@ -134,7 +135,7 @@
             button1.BackColor = Color.LimeGreen;
             button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(14, 208);
+            button1.Location = new Point(21, 208);
             button1.Name = "button1";
             button1.Size = new Size(177, 53);
             button1.TabIndex = 9;
@@ -144,75 +145,73 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(label1);
             panel2.Controls.Add(panel3);
-            panel2.Dock = DockStyle.Left;
+            panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
             panel2.Name = "panel2";
             panel2.Padding = new Padding(15);
-            panel2.Size = new Size(555, 532);
+            panel2.Size = new Size(557, 532);
             panel2.TabIndex = 10;
-            // 
-            // panel3
-            // 
-            panel3.Controls.Add(label1);
-            panel3.Controls.Add(dataGridView1);
-            panel3.Dock = DockStyle.Fill;
-            panel3.Location = new Point(15, 15);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(523, 500);
-            panel3.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Dock = DockStyle.Top;
-            label1.Location = new Point(0, 0);
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Location = new Point(33, -1);
             label1.Name = "label1";
-            label1.Padding = new Padding(20, 0, 0, 0);
-            label1.Size = new Size(131, 20);
-            label1.TabIndex = 5;
+            label1.Size = new Size(159, 28);
+            label1.TabIndex = 1;
             label1.Text = "APPROVAL LIST";
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(dataGridView1);
+            panel3.Dock = DockStyle.Fill;
+            panel3.Location = new Point(15, 15);
+            panel3.Name = "panel3";
+            panel3.Padding = new Padding(0, 12, 0, 0);
+            panel3.Size = new Size(525, 500);
+            panel3.TabIndex = 0;
             // 
             // dataGridView1
             // 
             dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 0);
+            dataGridView1.Location = new Point(0, 12);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(523, 500);
+            dataGridView1.Size = new Size(525, 488);
             dataGridView1.TabIndex = 4;
             // 
-            // label4
+            // panel4
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(596, 26);
-            label4.Name = "label4";
-            label4.Size = new Size(73, 25);
-            label4.TabIndex = 12;
-            label4.Text = "DETAIL";
+            panel4.BackColor = Color.Transparent;
+            panel4.Dock = DockStyle.Right;
+            panel4.Location = new Point(557, 0);
+            panel4.Name = "panel4";
+            panel4.Size = new Size(8, 532);
+            panel4.TabIndex = 11;
             // 
             // UserControl1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLight;
-            Controls.Add(label4);
             Controls.Add(panel2);
+            Controls.Add(panel4);
             Controls.Add(panel1);
             Name = "UserControl1";
             Size = new Size(792, 532);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -225,9 +224,9 @@
         private Button button2;
         private Button button1;
         private Panel panel2;
-        private Label label4;
         private Panel panel3;
-        private Label label1;
         private DataGridView dataGridView1;
+        private Panel panel4;
+        private Label label1;
     }
 }

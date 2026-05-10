@@ -19,7 +19,7 @@ namespace window_app
         {
             header_label.Text = "APPROVE STUDENT ACCOUNTS";
             UserControl1 us = new UserControl1();
-            admin_content_panel.Controls.Clear();
+            //admin_content_panel.Controls.Clear();
             us.Dock = DockStyle.Fill;
             admin_content_panel.Controls.Add(us);
             us.BringToFront();
