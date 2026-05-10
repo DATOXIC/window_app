@@ -34,6 +34,7 @@
             approve_button = new Button();
             pictureBox1 = new PictureBox();
             header_label = new TextBox();
+            admin_content_panel = new Panel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -48,7 +49,7 @@
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(165, 450);
+            panel1.Size = new Size(165, 603);
             panel1.TabIndex = 0;
             // 
             // button3
@@ -109,22 +110,34 @@
             // 
             // header_label
             // 
-            header_label.Anchor = AnchorStyles.Left;
             header_label.BackColor = Color.FromArgb(41, 107, 191);
             header_label.BorderStyle = BorderStyle.None;
+            header_label.Dock = DockStyle.Top;
             header_label.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             header_label.ForeColor = SystemColors.Window;
             header_label.Location = new Point(165, 0);
             header_label.Multiline = true;
             header_label.Name = "header_label";
-            header_label.Size = new Size(635, 50);
+            header_label.Size = new Size(817, 50);
             header_label.TabIndex = 2;
+            // 
+            // admin_content_panel
+            // 
+            admin_content_panel.BackColor = SystemColors.ControlLight;
+            admin_content_panel.BorderStyle = BorderStyle.FixedSingle;
+            admin_content_panel.Dock = DockStyle.Fill;
+            admin_content_panel.Location = new Point(165, 50);
+            admin_content_panel.Name = "admin_content_panel";
+            admin_content_panel.Padding = new Padding(5);
+            admin_content_panel.Size = new Size(817, 553);
+            admin_content_panel.TabIndex = 3;
             // 
             // Admin_Main
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(982, 603);
+            Controls.Add(admin_content_panel);
             Controls.Add(header_label);
             Controls.Add(panel1);
             Name = "Admin_Main";
@@ -143,5 +156,6 @@
         private Button button2;
         private Button approve_button;
         private TextBox header_label;
+        private Panel admin_content_panel;
     }
 }
