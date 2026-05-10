@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -110,6 +110,37 @@ namespace window_app
             }
         }
         
+        // Lấy email theo username (dùng cho Forgot Password)
+        public string GetEmailByUsername(string username)
+        {
+            string query = "SELECT email FROM [Table] WHERE username = @user";
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@user", username);
+                db.openConnection();
+                object result = cmd.ExecuteScalar();
+                db.closeConnection();
+                if (result is null || result == DBNull.Value) return null;
+                return result.ToString();
+            }
+        }
+
+        // Đặt lại mật khẩu (hash SHA-256 trước khi lưu)
+        public bool ResetPassword(string username, string newPassword)
+        {
+            string hashedPass = db.HashPassword(newPassword);
+            string query = "UPDATE [Table] SET password = @pass WHERE username = @user";
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@user", username);
+                cmd.Parameters.AddWithValue("@pass", hashedPass);
+                db.openConnection();
+                bool result = cmd.ExecuteNonQuery() > 0;
+                db.closeConnection();
+                return result;
+            }
+        }
+
         // Chức năng của HR ==> Chỉnh sửa ID - Valid - POS
         public bool ApproveAndLinkStudent(string user, string studentID, int pos)
         {

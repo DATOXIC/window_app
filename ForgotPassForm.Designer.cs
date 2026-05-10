@@ -1,7 +1,8 @@
-﻿namespace window_app
+namespace window_app
 {
     partial class ForgotPassForm
     {
+        /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
@@ -27,108 +28,58 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            label6 = new Label();
-            txtUsername = new TextBox();
-            txtConfirmPass = new TextBox();
-            label7 = new Label();
-            grbChangePass = new GroupBox();
-            btnChange = new Button();
-            txtNewPass = new TextBox();
+            lblTitle = new Label();
+            lblSubtitle = new Label();
             returnPB = new PictureBox();
-            label4 = new Label();
-            label3 = new Label();
-            label5 = new Label();
-            label2 = new Label();
-            cbbAnswer1 = new ComboBox();
-            cbbAnswer2 = new ComboBox();
-            groupBox2 = new GroupBox();
-            lblQuestion2 = new Label();
-            lblQuestion1 = new Label();
-            btnConfirm = new Button();
-            btnSearch = new Button();
-            grbChangePass.SuspendLayout();
+            // Step 1 controls
+            pnlStep1 = new Panel();
+            lblUsername = new Label();
+            txtUsername = new TextBox();
+            btnSendOtp = new Button();
+            lblEmailHint = new Label();
+            // Step 2 controls
+            pnlStep2 = new Panel();
+            lblOtpLabel = new Label();
+            txtOtp = new TextBox();
+            lblTimer = new Label();
+            btnVerifyOtp = new Button();
+            lnkResend = new LinkLabel();
+            // Step 3 controls
+            pnlStep3 = new Panel();
+            lblNewPassLabel = new Label();
+            txtNewPass = new TextBox();
+            lblConfirmLabel = new Label();
+            txtConfirmPass = new TextBox();
+            btnChangePass = new Button();
+
             ((System.ComponentModel.ISupportInitialize)returnPB).BeginInit();
-            groupBox2.SuspendLayout();
+            pnlStep1.SuspendLayout();
+            pnlStep2.SuspendLayout();
+            pnlStep3.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // lblTitle
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(13, 44);
-            label1.Name = "label1";
-            label1.Size = new Size(110, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Enter Username";
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblTitle.ForeColor = SystemColors.Desktop;
+            lblTitle.Location = new Point(268, 30);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(245, 40);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Forgot Password";
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // label6
+            // lblSubtitle
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label6.Location = new Point(10, 42);
-            label6.Name = "label6";
-            label6.Size = new Size(99, 20);
-            label6.TabIndex = 5;
-            label6.Text = "New Password";
-            // 
-            // txtUsername
-            // 
-            txtUsername.Location = new Point(140, 37);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(290, 27);
-            txtUsername.TabIndex = 6;
-            // 
-            // txtConfirmPass
-            // 
-            txtConfirmPass.Location = new Point(140, 81);
-            txtConfirmPass.Name = "txtConfirmPass";
-            txtConfirmPass.Size = new Size(290, 27);
-            txtConfirmPass.TabIndex = 12;
-            txtConfirmPass.UseSystemPasswordChar = true;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Font = new Font("Segoe UI Light", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label7.Location = new Point(10, 88);
-            label7.Name = "label7";
-            label7.Size = new Size(58, 20);
-            label7.TabIndex = 13;
-            label7.Text = "Confirm";
-            // 
-            // grbChangePass
-            // 
-            grbChangePass.Controls.Add(btnChange);
-            grbChangePass.Controls.Add(label7);
-            grbChangePass.Controls.Add(txtConfirmPass);
-            grbChangePass.Controls.Add(label6);
-            grbChangePass.Controls.Add(txtNewPass);
-            grbChangePass.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            grbChangePass.Location = new Point(115, 322);
-            grbChangePass.Name = "grbChangePass";
-            grbChangePass.Size = new Size(580, 125);
-            grbChangePass.TabIndex = 16;
-            grbChangePass.TabStop = false;
-            grbChangePass.Text = "Change Password";
-            // 
-            // btnChange
-            // 
-            btnChange.Location = new Point(471, 77);
-            btnChange.Name = "btnChange";
-            btnChange.Size = new Size(94, 31);
-            btnChange.TabIndex = 14;
-            btnChange.Text = "Change";
-            btnChange.UseVisualStyleBackColor = true;
-            btnChange.Click += btnChange_Click;
-            // 
-            // txtNewPass
-            // 
-            txtNewPass.Location = new Point(140, 39);
-            txtNewPass.Name = "txtNewPass";
-            txtNewPass.Size = new Size(290, 27);
-            txtNewPass.TabIndex = 10;
-            txtNewPass.UseSystemPasswordChar = true;
+            lblSubtitle.Font = new Font("Segoe UI", 10F);
+            lblSubtitle.ForeColor = Color.Gray;
+            lblSubtitle.Location = new Point(0, 80);
+            lblSubtitle.Name = "lblSubtitle";
+            lblSubtitle.Size = new Size(800, 25);
+            lblSubtitle.TabIndex = 1;
+            lblSubtitle.Text = "Enter your username to receive OTP";
+            lblSubtitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // returnPB
             // 
@@ -137,168 +88,243 @@
             returnPB.Name = "returnPB";
             returnPB.Size = new Size(42, 31);
             returnPB.SizeMode = PictureBoxSizeMode.Zoom;
-            returnPB.TabIndex = 12;
+            returnPB.TabIndex = 2;
             returnPB.TabStop = false;
-            returnPB.Click += pictureBox1_Click;
+            returnPB.Cursor = Cursors.Hand;
+            returnPB.Click += returnPB_Click;
             // 
-            // label4
+            // ===== PANEL STEP 1 =====
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI Light", 9F);
-            label4.Location = new Point(13, 206);
-            label4.Name = "label4";
-            label4.Size = new Size(77, 20);
-            label4.TabIndex = 3;
-            label4.Text = "Question 2";
+            pnlStep1.Controls.Add(lblEmailHint);
+            pnlStep1.Controls.Add(btnSendOtp);
+            pnlStep1.Controls.Add(txtUsername);
+            pnlStep1.Controls.Add(lblUsername);
+            pnlStep1.Location = new Point(100, 130);
+            pnlStep1.Name = "pnlStep1";
+            pnlStep1.Size = new Size(600, 220);
+            pnlStep1.TabIndex = 3;
             // 
-            // label3
+            // lblUsername
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Light", 9F);
-            label3.Location = new Point(13, 159);
-            label3.Name = "label3";
-            label3.Size = new Size(55, 20);
-            label3.TabIndex = 2;
-            label3.Text = "Answer";
+            lblUsername.AutoSize = true;
+            lblUsername.Font = new Font("Segoe UI", 10F);
+            lblUsername.Location = new Point(50, 30);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(87, 23);
+            lblUsername.TabIndex = 0;
+            lblUsername.Text = "Username";
             // 
-            // label5
+            // txtUsername
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Light", 9F);
-            label5.Location = new Point(13, 252);
-            label5.Name = "label5";
-            label5.Size = new Size(55, 20);
-            label5.TabIndex = 4;
-            label5.Text = "Answer";
+            txtUsername.Font = new Font("Segoe UI", 10F);
+            txtUsername.Location = new Point(200, 27);
+            txtUsername.Name = "txtUsername";
+            txtUsername.Size = new Size(263, 30);
+            txtUsername.TabIndex = 1;
             // 
-            // label2
+            // btnSendOtp
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Light", 9F);
-            label2.Location = new Point(13, 107);
-            label2.Name = "label2";
-            label2.Size = new Size(74, 20);
-            label2.TabIndex = 1;
-            label2.Text = "Question 1";
+            btnSendOtp.BackColor = SystemColors.ActiveCaption;
+            btnSendOtp.Font = new Font("Segoe UI", 13F);
+            btnSendOtp.ForeColor = SystemColors.ButtonHighlight;
+            btnSendOtp.Location = new Point(170, 80);
+            btnSendOtp.Name = "btnSendOtp";
+            btnSendOtp.Size = new Size(262, 47);
+            btnSendOtp.TabIndex = 2;
+            btnSendOtp.Text = "Gửi mã OTP";
+            btnSendOtp.UseVisualStyleBackColor = false;
+            btnSendOtp.Click += btnSendOtp_Click;
             // 
-            // cbbAnswer1
+            // lblEmailHint
             // 
-            cbbAnswer1.FormattingEnabled = true;
-            cbbAnswer1.Items.AddRange(new object[] { "Black", "Blue", "Brown", "Green", "Grey", "Orange", "Pink", "Red", "White", "Yellow" });
-            cbbAnswer1.Location = new Point(140, 151);
-            cbbAnswer1.Name = "cbbAnswer1";
-            cbbAnswer1.Size = new Size(290, 28);
-            cbbAnswer1.TabIndex = 12;
+            lblEmailHint.AutoSize = true;
+            lblEmailHint.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
+            lblEmailHint.ForeColor = Color.Gray;
+            lblEmailHint.Location = new Point(170, 145);
+            lblEmailHint.Name = "lblEmailHint";
+            lblEmailHint.Size = new Size(0, 20);
+            lblEmailHint.TabIndex = 3;
             // 
-            // cbbAnswer2
+            // ===== PANEL STEP 2 =====
             // 
-            cbbAnswer2.FormattingEnabled = true;
-            cbbAnswer2.Items.AddRange(new object[] { "Ant", "Bear", "Cat", "Dog", "Elephant", "Fish", "Giraffe", "Horse", "Iguana", "Jellyfish" });
-            cbbAnswer2.Location = new Point(140, 244);
-            cbbAnswer2.Name = "cbbAnswer2";
-            cbbAnswer2.Size = new Size(290, 28);
-            cbbAnswer2.TabIndex = 13;
+            pnlStep2.Controls.Add(lnkResend);
+            pnlStep2.Controls.Add(btnVerifyOtp);
+            pnlStep2.Controls.Add(lblTimer);
+            pnlStep2.Controls.Add(txtOtp);
+            pnlStep2.Controls.Add(lblOtpLabel);
+            pnlStep2.Location = new Point(100, 130);
+            pnlStep2.Name = "pnlStep2";
+            pnlStep2.Size = new Size(600, 220);
+            pnlStep2.TabIndex = 4;
             // 
-            // groupBox2
+            // lblOtpLabel
             // 
-            groupBox2.Controls.Add(lblQuestion2);
-            groupBox2.Controls.Add(lblQuestion1);
-            groupBox2.Controls.Add(btnConfirm);
-            groupBox2.Controls.Add(btnSearch);
-            groupBox2.Controls.Add(label1);
-            groupBox2.Controls.Add(cbbAnswer2);
-            groupBox2.Controls.Add(txtUsername);
-            groupBox2.Controls.Add(cbbAnswer1);
-            groupBox2.Controls.Add(label2);
-            groupBox2.Controls.Add(label5);
-            groupBox2.Controls.Add(label3);
-            groupBox2.Controls.Add(label4);
-            groupBox2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            groupBox2.Location = new Point(115, 12);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(580, 295);
-            groupBox2.TabIndex = 15;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Security Questions and Answers";
+            lblOtpLabel.AutoSize = true;
+            lblOtpLabel.Font = new Font("Segoe UI", 10F);
+            lblOtpLabel.Location = new Point(50, 30);
+            lblOtpLabel.Name = "lblOtpLabel";
+            lblOtpLabel.Size = new Size(83, 23);
+            lblOtpLabel.TabIndex = 0;
+            lblOtpLabel.Text = "OTP Code";
             // 
-            // lblQuestion2
+            // txtOtp
             // 
-            lblQuestion2.AutoSize = true;
-            lblQuestion2.Location = new Point(140, 206);
-            lblQuestion2.Name = "lblQuestion2";
-            lblQuestion2.Size = new Size(161, 20);
-            lblQuestion2.TabIndex = 17;
-            lblQuestion2.Text = "Waiting for question..";
+            txtOtp.Font = new Font("Segoe UI", 14F);
+            txtOtp.Location = new Point(200, 23);
+            txtOtp.MaxLength = 6;
+            txtOtp.Name = "txtOtp";
+            txtOtp.Size = new Size(263, 38);
+            txtOtp.TabIndex = 1;
+            txtOtp.TextAlign = HorizontalAlignment.Center;
             // 
-            // lblQuestion1
+            // lblTimer
             // 
-            lblQuestion1.AutoSize = true;
-            lblQuestion1.Location = new Point(140, 107);
-            lblQuestion1.Name = "lblQuestion1";
-            lblQuestion1.Size = new Size(165, 20);
-            lblQuestion1.TabIndex = 16;
-            lblQuestion1.Text = "Waiting for question...";
+            lblTimer.AutoSize = true;
+            lblTimer.Font = new Font("Segoe UI", 9F);
+            lblTimer.ForeColor = Color.Gray;
+            lblTimer.Location = new Point(200, 70);
+            lblTimer.Name = "lblTimer";
+            lblTimer.Size = new Size(0, 20);
+            lblTimer.TabIndex = 2;
             // 
-            // btnConfirm
+            // btnVerifyOtp
             // 
-            btnConfirm.Location = new Point(471, 243);
-            btnConfirm.Name = "btnConfirm";
-            btnConfirm.Size = new Size(94, 29);
-            btnConfirm.TabIndex = 15;
-            btnConfirm.Text = "Confirm";
-            btnConfirm.UseVisualStyleBackColor = true;
-            btnConfirm.Click += btnConfirm_Click;
+            btnVerifyOtp.BackColor = SystemColors.ActiveCaption;
+            btnVerifyOtp.Font = new Font("Segoe UI", 13F);
+            btnVerifyOtp.ForeColor = SystemColors.ButtonHighlight;
+            btnVerifyOtp.Location = new Point(170, 100);
+            btnVerifyOtp.Name = "btnVerifyOtp";
+            btnVerifyOtp.Size = new Size(262, 47);
+            btnVerifyOtp.TabIndex = 3;
+            btnVerifyOtp.Text = "Xác nhận";
+            btnVerifyOtp.UseVisualStyleBackColor = false;
+            btnVerifyOtp.Click += btnVerifyOtp_Click;
             // 
-            // btnSearch
+            // lnkResend
             // 
-            btnSearch.Location = new Point(471, 35);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(94, 29);
-            btnSearch.TabIndex = 14;
-            btnSearch.Text = "Search";
-            btnSearch.UseVisualStyleBackColor = true;
-            btnSearch.Click += searchButton_Click;
+            lnkResend.AutoSize = true;
+            lnkResend.Font = new Font("Segoe UI", 9F);
+            lnkResend.Location = new Point(250, 160);
+            lnkResend.Name = "lnkResend";
+            lnkResend.Size = new Size(106, 20);
+            lnkResend.TabIndex = 4;
+            lnkResend.TabStop = true;
+            lnkResend.Text = "Gửi lại mã OTP";
+            lnkResend.Visible = false;
+            lnkResend.LinkClicked += lnkResend_LinkClicked;
+            // 
+            // ===== PANEL STEP 3 =====
+            // 
+            pnlStep3.Controls.Add(btnChangePass);
+            pnlStep3.Controls.Add(txtConfirmPass);
+            pnlStep3.Controls.Add(lblConfirmLabel);
+            pnlStep3.Controls.Add(txtNewPass);
+            pnlStep3.Controls.Add(lblNewPassLabel);
+            pnlStep3.Location = new Point(100, 130);
+            pnlStep3.Name = "pnlStep3";
+            pnlStep3.Size = new Size(600, 250);
+            pnlStep3.TabIndex = 5;
+            // 
+            // lblNewPassLabel
+            // 
+            lblNewPassLabel.AutoSize = true;
+            lblNewPassLabel.Font = new Font("Segoe UI", 10F);
+            lblNewPassLabel.Location = new Point(30, 30);
+            lblNewPassLabel.Name = "lblNewPassLabel";
+            lblNewPassLabel.Size = new Size(117, 23);
+            lblNewPassLabel.TabIndex = 0;
+            lblNewPassLabel.Text = "New Password";
+            // 
+            // txtNewPass
+            // 
+            txtNewPass.Font = new Font("Segoe UI", 10F);
+            txtNewPass.Location = new Point(200, 27);
+            txtNewPass.Name = "txtNewPass";
+            txtNewPass.Size = new Size(263, 30);
+            txtNewPass.TabIndex = 1;
+            txtNewPass.UseSystemPasswordChar = true;
+            // 
+            // lblConfirmLabel
+            // 
+            lblConfirmLabel.AutoSize = true;
+            lblConfirmLabel.Font = new Font("Segoe UI", 10F);
+            lblConfirmLabel.Location = new Point(30, 80);
+            lblConfirmLabel.Name = "lblConfirmLabel";
+            lblConfirmLabel.Size = new Size(145, 23);
+            lblConfirmLabel.TabIndex = 2;
+            lblConfirmLabel.Text = "Confirm Password";
+            // 
+            // txtConfirmPass
+            // 
+            txtConfirmPass.Font = new Font("Segoe UI", 10F);
+            txtConfirmPass.Location = new Point(200, 77);
+            txtConfirmPass.Name = "txtConfirmPass";
+            txtConfirmPass.Size = new Size(263, 30);
+            txtConfirmPass.TabIndex = 3;
+            txtConfirmPass.UseSystemPasswordChar = true;
+            // 
+            // btnChangePass
+            // 
+            btnChangePass.BackColor = SystemColors.ActiveCaption;
+            btnChangePass.Font = new Font("Segoe UI", 13F);
+            btnChangePass.ForeColor = SystemColors.ButtonHighlight;
+            btnChangePass.Location = new Point(170, 135);
+            btnChangePass.Name = "btnChangePass";
+            btnChangePass.Size = new Size(262, 47);
+            btnChangePass.TabIndex = 4;
+            btnChangePass.Text = "Đổi mật khẩu";
+            btnChangePass.UseVisualStyleBackColor = false;
+            btnChangePass.Click += btnChangePass_Click;
             // 
             // ForgotPassForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(grbChangePass);
+            ClientSize = new Size(800, 500);
+            Controls.Add(pnlStep3);
+            Controls.Add(pnlStep2);
+            Controls.Add(pnlStep1);
             Controls.Add(returnPB);
-            Controls.Add(groupBox2);
+            Controls.Add(lblSubtitle);
+            Controls.Add(lblTitle);
             Name = "ForgotPassForm";
-            Text = "ForgotPassForm";
+            Text = "Forgot Password";
             Load += ForgotPassForm_Load;
-            grbChangePass.ResumeLayout(false);
-            grbChangePass.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)returnPB).EndInit();
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
+            pnlStep1.ResumeLayout(false);
+            pnlStep1.PerformLayout();
+            pnlStep2.ResumeLayout(false);
+            pnlStep2.PerformLayout();
+            pnlStep3.ResumeLayout(false);
+            pnlStep3.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
-        private Label label6;
-        private TextBox txtUsername;
-        private TextBox txtConfirmPass;
-        private Label label7;
-        private GroupBox grbChangePass;
+        private Label lblTitle;
+        private Label lblSubtitle;
         private PictureBox returnPB;
-        private Label label4;
-        private Label label3;
-        private Label label5;
-        private Label label2;
-        private ComboBox cbbAnswer1;
-        private ComboBox cbbAnswer2;
-        private GroupBox groupBox2;
-        private Button btnConfirm;
-        private Button btnSearch;
-        private Label lblQuestion2;
-        private Label lblQuestion1;
+        // Step 1
+        private Panel pnlStep1;
+        private Label lblUsername;
+        private TextBox txtUsername;
+        private Button btnSendOtp;
+        private Label lblEmailHint;
+        // Step 2
+        private Panel pnlStep2;
+        private Label lblOtpLabel;
+        private TextBox txtOtp;
+        private Label lblTimer;
+        private Button btnVerifyOtp;
+        private LinkLabel lnkResend;
+        // Step 3
+        private Panel pnlStep3;
+        private Label lblNewPassLabel;
         private TextBox txtNewPass;
-        private Button btnChange;
+        private Label lblConfirmLabel;
+        private TextBox txtConfirmPass;
+        private Button btnChangePass;
     }
 }
