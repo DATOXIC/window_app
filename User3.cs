@@ -1,0 +1,118 @@
+﻿using Microsoft.Data.SqlClient;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Xml.Linq;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace window_app
+{
+    public partial class User3 : UserControl
+    {
+        myDB db = new myDB();
+        public User3()
+        {
+            InitializeComponent();
+        }
+
+        private void UC_AddStudent_Load(object sender, EventArgs e)
+        {
+            // 1. Thiết lập năm hiện tại cho NumericUpDown
+            numYear.Minimum = 2000;
+            numYear.Maximum = 2100;
+            numYear.Value = DateTime.Now.Year;
+
+            // 2. Thêm dữ liệu cho ComboBox Ngành học
+            // Để logic MSSV chạy đúng, Value nên là mã ngành (110, 120...)
+            var majors = new[] {
+        new { Name = "Công nghệ thông tin", Code = "110" },
+        new { Name = "Cơ khí", Code = "120" },
+        new { Name = "Kinh tế", Code = "130" }
+    };
+            DataTable dtbMajors = getAllMajors();
+            cboMajor.DataSource = dtbMajors;
+            cboMajor.DisplayMember = "MajorName";
+            cboMajor.ValueMember = "MajorCode";
+        }
+
+        private void btnAddStudent_Click(object sender, EventArgs e)
+        {
+            // BƯỚC 1: Kiểm tra tính hợp lệ (Validation)
+            if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(txtEmail.Text) || string.IsNullOrWhiteSpace(txtPhone.Text))
+            {
+                MessageBox.Show("Họ tên, Email và Số điện thoại là bắt buộc!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // BƯỚC 2: Thu thập dữ liệu từ các Control
+            string name = txtName.Text.Trim();
+            string email = txtEmail.Text.Trim();
+            string phone = txtPhone.Text.Trim();
+            string address = txtAddress.Text.Trim();
+            string majorCode = cboMajor.SelectedValue.ToString(); // Lấy mã: 110, 120...
+            int year = (int)numYear.Value;
+            DateTime dob = dtpDob.Value;
+
+            // Logic lấy giới tính từ RadioButton
+            string sex = rbMale.Checked ? "Nam" : "Nữ";
+
+            // BƯỚC 3: Gọi logic lưu từ lớp Student.cs
+            Student stuLogic = new Student();
+            try
+            {
+                bool success = stuLogic.AddCandidateToAdmission(name, majorCode, year, email, phone, dob, sex, address);
+
+                if (success)
+                {
+                    MessageBox.Show($"Đã thêm thí sinh {name} vào danh sách chờ phê duyệt!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ResetFields(); // Xóa sạch form để nhập người tiếp theo
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void ResetFields()
+        {
+            txtName.Clear();
+            txtEmail.Clear();
+            txtPhone.Clear();
+            txtAddress.Clear();
+
+            // Đưa về giá trị mặc định
+            if (cboMajor.Items.Count > 0) cboMajor.SelectedIndex = 0;
+            numYear.Value = DateTime.Now.Year;
+            dtpDob.Value = DateTime.Now.AddYears(-18); // Gợi ý tuổi sinh viên (18 tuổi)
+            rbMale.Checked = true; // Mặc định chọn Nam
+
+            txtName.Focus(); // Đưa con trỏ chuột về ô tên để nhập tiếp
+        }
+        public DataTable getAllMajors()
+        {
+            string sql = "SELECT MajorCode, MajorName FROM Majors";
+            SqlCommand command = new SqlCommand(sql, db.getConnection());
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            DataTable table = new DataTable();
+
+            try
+            {
+                db.openConnection();
+                adapter.Fill(table);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi tải danh sách ngành: " + ex.Message);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
+            return table;
+        }
+    }
+}

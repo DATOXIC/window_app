@@ -25,9 +25,18 @@ namespace window_app
 
         private void add_student_button_Click(object sender, EventArgs e)
         {
-            header_label.Text = "APPROVE STUDENT ACCOUNTS";
+            header_label.Text = "VERIFY STUDENT ACCOUNTS";
             admin_content_panel.Controls.Clear();
             User2 us = new User2();
+            admin_content_panel.Controls.Add(us);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            header_label.Text = "ADD STUDENT TO ADMISSION";
+            admin_content_panel.Controls.Clear();
+            User3 us = new User3();
+            us.Dock = DockStyle.Fill;
             admin_content_panel.Controls.Add(us);
         }
     }

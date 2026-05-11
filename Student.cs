@@ -179,5 +179,42 @@ namespace window_app
             adapter.Fill(table);
             return table;
         }
+
+        public bool AddCandidateToAdmission(string name, string major, int year, string email, string phone, DateTime dob, string gender, string address)
+        {
+            // Tự sinh CandidateID duy nhất: TS + 10 số cuối của Ticks (thời gian hệ thống)
+            string candidateId = "TS" + DateTime.Now.Ticks.ToString().Substring(10);
+
+            string sql = @"INSERT INTO AdmissionList 
+                   (CandidateID, FullName, MajorCode, EnrollmentYear, Email, Phone, Dob, Gender, Address, IsAccountCreated)
+                   VALUES (@cid, @name, @major, @year, @email, @phone, @dob, @gender, @address, 0)";
+
+            try
+            {
+                db.openConnection();
+                SqlCommand cmd = new SqlCommand(sql, db.getConnection());
+
+                cmd.Parameters.AddWithValue("@cid", candidateId);
+                cmd.Parameters.AddWithValue("@name", name.Trim());
+                cmd.Parameters.AddWithValue("@major", major);
+                cmd.Parameters.AddWithValue("@year", year);
+                cmd.Parameters.AddWithValue("@email", email.Trim());
+                cmd.Parameters.AddWithValue("@phone", phone.Trim());
+                cmd.Parameters.AddWithValue("@dob", dob);
+                cmd.Parameters.AddWithValue("@gender", gender);
+                cmd.Parameters.AddWithValue("@address", address.Trim());
+
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi thêm thí sinh: " + ex.Message);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
+        }
     }
 }
