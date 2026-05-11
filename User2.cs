@@ -82,6 +82,12 @@ namespace window_app
                 return;
             }
 
+            MemoryStream ms = new MemoryStream();
+
+            pictureboxStudent.Image.Save(ms, pictureboxStudent.Image.RawFormat);
+
+            byte[] img = ms.ToArray();
+
             // Gom danh sách các hàng được chọn
             List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
             foreach (DataGridViewRow row in admission_data_display.SelectedRows)
@@ -96,7 +102,7 @@ namespace window_app
                 {
                     Student stu = new Student();
                     // Gọi hàm xử lý hàng loạt mà chúng ta đã viết
-                    if (stu.ApproveBatchStudents(selectedRows))
+                    if (stu.ApproveBatchStudents(selectedRows, ms))
                     {
                         MessageBox.Show("Phê duyệt và kích hoạt tài khoản thành công!", "Thành công");
                         RefreshAdmissionGrid(); // Nạp lại bảng để xóa những người đã duyệt

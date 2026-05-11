@@ -35,7 +35,7 @@ namespace window_app
             command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = gder;
             command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = phone;
             command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = address;
-            command.Parameters.Add("@pic", SqlDbType.Image).Value = picture.ToArray();
+            command.Parameters.Add("@pic", SqlDbType.VarBinary).Value = picture.ToArray();
 
             db.openConnection();
             bool result = (command.ExecuteNonQuery() == 1);
@@ -240,7 +240,7 @@ namespace window_app
 
             return (int)cmd.ExecuteScalar();
         }
-        public bool ApproveBatchStudents(List<DataGridViewRow> selectedRows)
+        public bool ApproveBatchStudents(List<DataGridViewRow> selectedRows, MemoryStream picture)
         {
             // 1. SẮP XẾP LẠI theo tên để đảm bảo tính nhất quán của STT
             var sortedRows = selectedRows.OrderBy(r => r.Cells["FullName"].Value.ToString()).ToList();
@@ -282,8 +282,8 @@ namespace window_app
                     int newAccountId = Convert.ToInt32(cmdAccount.ExecuteScalar());
 
                     // Bước 3.2: Chèn vào bảng Student (Dùng Id vừa lấy)
-                    string sqlStudent = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Dob, Gder, Address) " +
-                        "VALUES (@id, @mssv, @name, @phone, @email, @dob, @gdr, @adrs)";
+                    string sqlStudent = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Dob, Gder, Address, Pture) " +
+                        "VALUES (@id, @mssv, @name, @phone, @email, @dob, @gdr, @adrs, @pic)";
 
                     SqlCommand cmdStudent = new SqlCommand(sqlStudent, db.getConnection(), trans);
                     cmdStudent.Parameters.AddWithValue("@id", newAccountId);
@@ -294,6 +294,7 @@ namespace window_app
                     cmdStudent.Parameters.AddWithValue("@dob", dob);     // ĐÃ THÊM DOB
                     cmdStudent.Parameters.AddWithValue("@gdr", gender);  // ĐÃ THÊM GENDER
                     cmdStudent.Parameters.AddWithValue("@adrs", address); // ĐÃ THÊM ADDRESS
+                    cmdStudent.Parameters.AddWithValue("@pic", picture.ToArray()); //Đã thêm Picture
                     cmdStudent.ExecuteNonQuery();
 
                     // Bước 3.3: Quay lại cập nhật studentID cho bảng [Table] (Nếu cần)
