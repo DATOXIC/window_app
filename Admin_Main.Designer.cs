@@ -30,7 +30,7 @@
         {
             panel1 = new Panel();
             button3 = new Button();
-            button2 = new Button();
+            add_student_button = new Button();
             approve_button = new Button();
             pictureBox1 = new PictureBox();
             header_label = new TextBox();
@@ -43,7 +43,7 @@
             // 
             panel1.BackColor = Color.FromArgb(32, 64, 113);
             panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
+            panel1.Controls.Add(add_student_button);
             panel1.Controls.Add(approve_button);
             panel1.Controls.Add(pictureBox1);
             panel1.Dock = DockStyle.Left;
@@ -66,19 +66,21 @@
             button3.Text = "button3";
             button3.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // add_student_button
             // 
-            button2.BackColor = Color.Transparent;
-            button2.Dock = DockStyle.Top;
-            button2.FlatAppearance.BorderSize = 0;
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.ForeColor = SystemColors.ControlLightLight;
-            button2.Location = new Point(0, 98);
-            button2.Name = "button2";
-            button2.Size = new Size(165, 42);
-            button2.TabIndex = 2;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = false;
+            add_student_button.BackColor = Color.Transparent;
+            add_student_button.Dock = DockStyle.Top;
+            add_student_button.FlatAppearance.BorderSize = 0;
+            add_student_button.FlatStyle = FlatStyle.Flat;
+            add_student_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            add_student_button.ForeColor = SystemColors.ControlLightLight;
+            add_student_button.Location = new Point(0, 98);
+            add_student_button.Name = "add_student_button";
+            add_student_button.Size = new Size(165, 42);
+            add_student_button.TabIndex = 2;
+            add_student_button.Text = "Add Student";
+            add_student_button.UseVisualStyleBackColor = false;
+            add_student_button.Click += add_student_button_Click;
             // 
             // approve_button
             // 
@@ -153,7 +155,7 @@
         private Panel panel1;
         private PictureBox pictureBox1;
         private Button button3;
-        private Button button2;
+        private Button add_student_button;
         private Button approve_button;
         private TextBox header_label;
         private Panel admin_content_panel;
