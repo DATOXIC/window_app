@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace window_app
 {
@@ -27,7 +28,9 @@ namespace window_app
                 admission_data_display.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 admission_data_display.MultiSelect = true;
                 admission_data_display.ReadOnly = true;
-
+                admission_data_display.Columns["ProvisionalMSSV"].HeaderText = "MSSV Dự Kiến";
+                admission_data_display.Columns["ProvisionalMSSV"].DefaultCellStyle.ForeColor = Color.Blue;
+                admission_data_display.Columns["ProvisionalMSSV"].DefaultCellStyle.Font = new Font(admission_data_display.Font, FontStyle.Bold);
                 // Chỉnh sửa tiêu đề cột cho chuyên nghiệp
                 if (admission_data_display.Columns["CandidateID"] != null)
                     admission_data_display.Columns["CandidateID"].HeaderText = "Mã hồ sơ";
@@ -73,49 +76,54 @@ namespace window_app
 
         private void btnApprove_Click(object sender, EventArgs e)
         {
-            if (admission_data_display.CurrentRow == null)
+            if (admission_data_display.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Vui lòng chọn một thí sinh để phê duyệt!", "Thông báo");
+                MessageBox.Show("Vui lòng chọn ít nhất một thí sinh để phê duyệt!", "Thông báo");
                 return;
             }
 
-            try
+            MemoryStream ms = new MemoryStream();
+
+            pictureboxStudent.Image.Save(ms, pictureboxStudent.Image.RawFormat);
+
+            byte[] img = ms.ToArray();
+
+            // Gom danh sách các hàng được chọn
+            List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
+            foreach (DataGridViewRow row in admission_data_display.SelectedRows)
             {
-                DataGridViewRow row = admission_data_display.CurrentRow;
+                selectedRows.Add(row);
+            }
 
-                // Trích xuất thông tin (Bỏ phần xử lý ảnh)
-                string cid = row.Cells["CandidateID"].Value.ToString();
-                string fullName = row.Cells["FullName"].Value.ToString();
-                string email = row.Cells["Email"].Value.ToString();
-                string majorCode = row.Cells["MajorCode"].Value.ToString();
-                int year = Convert.ToInt32(row.Cells["EnrollmentYear"].Value);
-                DateTime dob = Convert.ToDateTime(row.Cells["Dob"].Value);
-                string gender = row.Cells["Gender"].Value.ToString();
-                string phone = row.Cells["Phone"].Value.ToString();
-                string address = row.Cells["Address"].Value.ToString();
-
-                Student student = new Student();
-
-                DialogResult result = MessageBox.Show($"Xác nhận phê duyệt cho: {fullName}?",
-                                                    "Xác nhận", MessageBoxButtons.YesNo);
-
-                if (result == DialogResult.Yes)
+            // Xác nhận
+            if (MessageBox.Show($"Phê duyệt {selectedRows.Count} thí sinh?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
                 {
-                    // Gọi hàm không có tham số picture
-                    if (student.AutoEnrollStudent(cid, fullName, email, majorCode, year, dob, gender, phone, address))
+                    Student stu = new Student();
+                    // Gọi hàm xử lý hàng loạt mà chúng ta đã viết
+                    if (stu.ApproveBatchStudents(selectedRows, ms))
                     {
-                        MessageBox.Show("Phê duyệt thành công!");
-                        RefreshAdmissionGrid(); // Tải lại bảng để cập nhật danh sách
-                    }
-                    else
-                    {
-                        MessageBox.Show("Lỗi khi thực hiện phê duyệt.");
+                        MessageBox.Show("Phê duyệt và kích hoạt tài khoản thành công!", "Thành công");
+                        RefreshAdmissionGrid(); // Nạp lại bảng để xóa những người đã duyệt
                     }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi: " + ex.Message);
+                }
             }
-            catch (Exception ex)
+        }
+
+        private void btnLoadImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog opf = new OpenFileDialog();
+
+            opf.Filter = "Select Image(*.jpg;*.png)|*.jpg;*.png";
+
+            if (opf.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("Chi tiết lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                pictureboxStudent.Image = Image.FromFile(opf.FileName);
             }
         }
     }

@@ -32,6 +32,8 @@
             panel2 = new Panel();
             admission_data_display = new DataGridView();
             panel3 = new Panel();
+            btnLoadImage = new Button();
+            pictureboxStudent = new PictureBox();
             sellect_all_button = new Button();
             button2 = new Button();
             accept_button = new Button();
@@ -40,6 +42,7 @@
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)admission_data_display).BeginInit();
             panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureboxStudent).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -70,11 +73,14 @@
             admission_data_display.Location = new Point(0, 12);
             admission_data_display.Name = "admission_data_display";
             admission_data_display.RowHeadersWidth = 51;
+            admission_data_display.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             admission_data_display.Size = new Size(527, 490);
             admission_data_display.TabIndex = 0;
             // 
             // panel3
             // 
+            panel3.Controls.Add(btnLoadImage);
+            panel3.Controls.Add(pictureboxStudent);
             panel3.Controls.Add(sellect_all_button);
             panel3.Controls.Add(button2);
             panel3.Controls.Add(accept_button);
@@ -84,16 +90,39 @@
             panel3.Size = new Size(227, 532);
             panel3.TabIndex = 1;
             // 
+            // btnLoadImage
+            // 
+            btnLoadImage.BackColor = Color.FromArgb(64, 64, 0);
+            btnLoadImage.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold);
+            btnLoadImage.ForeColor = Color.White;
+            btnLoadImage.Location = new Point(25, 436);
+            btnLoadImage.Name = "btnLoadImage";
+            btnLoadImage.Size = new Size(177, 58);
+            btnLoadImage.TabIndex = 16;
+            btnLoadImage.Text = "Load Avatar";
+            btnLoadImage.UseVisualStyleBackColor = false;
+            btnLoadImage.Click += btnLoadImage_Click;
+            // 
+            // pictureboxStudent
+            // 
+            pictureboxStudent.BorderStyle = BorderStyle.FixedSingle;
+            pictureboxStudent.Location = new Point(25, 27);
+            pictureboxStudent.Name = "pictureboxStudent";
+            pictureboxStudent.Size = new Size(177, 141);
+            pictureboxStudent.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureboxStudent.TabIndex = 15;
+            pictureboxStudent.TabStop = false;
+            // 
             // sellect_all_button
             // 
             sellect_all_button.BackColor = Color.SteelBlue;
             sellect_all_button.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             sellect_all_button.ForeColor = Color.White;
-            sellect_all_button.Location = new Point(25, 332);
+            sellect_all_button.Location = new Point(25, 372);
             sellect_all_button.Name = "sellect_all_button";
             sellect_all_button.Size = new Size(177, 58);
             sellect_all_button.TabIndex = 14;
-            sellect_all_button.Text = "SELLECT ALL";
+            sellect_all_button.Text = "SELECT ALL";
             sellect_all_button.UseVisualStyleBackColor = false;
             sellect_all_button.Click += sellect_all_button_Click;
             // 
@@ -102,7 +131,7 @@
             button2.BackColor = Color.Firebrick;
             button2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.White;
-            button2.Location = new Point(25, 237);
+            button2.Location = new Point(25, 308);
             button2.Name = "button2";
             button2.Size = new Size(177, 58);
             button2.TabIndex = 13;
@@ -114,7 +143,7 @@
             accept_button.BackColor = Color.LimeGreen;
             accept_button.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
             accept_button.ForeColor = Color.White;
-            accept_button.Location = new Point(25, 142);
+            accept_button.Location = new Point(25, 249);
             accept_button.Name = "accept_button";
             accept_button.Size = new Size(177, 53);
             accept_button.TabIndex = 12;
@@ -144,6 +173,7 @@
             panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)admission_data_display).EndInit();
             panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureboxStudent).EndInit();
             ResumeLayout(false);
         }
 
@@ -157,5 +187,7 @@
         private Button sellect_all_button;
         private Button button2;
         private Button accept_button;
+        private Button btnLoadImage;
+        private PictureBox pictureboxStudent;
     }
 }

@@ -35,7 +35,7 @@ namespace window_app
             command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = gder;
             command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = phone;
             command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = address;
-            command.Parameters.Add("@pic", SqlDbType.Image).Value = picture.ToArray();
+            command.Parameters.Add("@pic", SqlDbType.VarBinary).Value = picture.ToArray();
 
             db.openConnection();
             bool result = (command.ExecuteNonQuery() == 1);
@@ -172,14 +172,56 @@ namespace window_app
         // Thêm vào lớp Student.cs
         public DataTable GetPendingAdmissions()
         {
-            SqlCommand command = new SqlCommand("SELECT CandidateID, FullName, Email, MajorCode, EnrollmentYear, Dob, Gender, Phone, Address FROM AdmissionList WHERE IsAccountCreated = 0", db.getConnection());
+            // Logic: 
+            // 1. Lấy 2 số cuối của năm nhập học (ví dụ 2024 -> 24).
+            // 2. Dùng ROW_NUMBER() để đánh số thứ tự (Rank) theo bảng chữ cái (FullName).
+            // 3. Nếu trùng tên, CandidateID sẽ là tiêu chí phụ để đảm bảo thứ tự luôn cố định.
+            // 4. Kết hợp lại thành MSSV dự kiến (ProvisionalMSSV).
+
+            string sql = @"
+        SELECT 
+            CandidateID, 
+            FullName, 
+            Email, 
+            Phone, 
+            MajorCode, 
+            EnrollmentYear,
+            Dob,
+            Gender,
+            Address,
+            (CAST(RIGHT(CAST(EnrollmentYear AS VARCHAR), 2) AS VARCHAR) + 
+             MajorCode + 
+             RIGHT('000' + CAST(ROW_NUMBER() OVER(
+                PARTITION BY MajorCode, EnrollmentYear 
+                ORDER BY 
+                    REVERSE(LEFT(REVERSE(FullName), CHARINDEX(' ', REVERSE(FullName) + ' ') - 1)) ASC,
+                    FullName ASC,
+                    CandidateID ASC
+             ) AS VARCHAR), 3)) AS ProvisionalMSSV
+        FROM AdmissionList 
+        WHERE IsAccountCreated = 0";
+
+            SqlCommand command = new SqlCommand(sql, db.getConnection());
             SqlDataAdapter adapter = new SqlDataAdapter(command);
             DataTable table = new DataTable();
 
-            adapter.Fill(table);
+            try
+            {
+                db.openConnection();
+                adapter.Fill(table);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi lấy danh sách trúng tuyển: " + ex.Message);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
+
             return table;
         }
-
+// --- PHẦN 1: THÊM THÍ SINH VÀO DANH SÁCH CHỜ (Từ nhánh admin_form) ---
         public bool AddCandidateToAdmission(string name, string major, int year, string email, string phone, DateTime dob, string gender, string address)
         {
             // Tự sinh CandidateID duy nhất: TS + 10 số cuối của Ticks (thời gian hệ thống)
@@ -215,6 +257,115 @@ namespace window_app
             {
                 db.closeConnection();
             }
+        }
+
+        // --- PHẦN 2: LOGIC PHÊ DUYỆT VÀ CẤP MSSV (Từ nhánh master) ---
+        private int GetAlphabeticalRank(string majorCode, int year, string fullName, string candidateId, SqlTransaction trans)
+        {
+            string sql = @"
+                SELECT COUNT(*) + 1 
+                FROM AdmissionList 
+                WHERE MajorCode = @major 
+                AND EnrollmentYear = @year 
+                AND (FullName < @name OR (FullName = @name AND CandidateID <= @cid))";
+
+            SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans);
+            cmd.Parameters.AddWithValue("@major", majorCode);
+            cmd.Parameters.AddWithValue("@year", year);
+            cmd.Parameters.AddWithValue("@name", fullName);
+            cmd.Parameters.AddWithValue("@cid", candidateId);
+
+            return (int)cmd.ExecuteScalar();
+        }
+
+        public bool ApproveBatchStudents(List<DataGridViewRow> selectedRows, MemoryStream picture)
+        {
+            var sortedRows = selectedRows.OrderBy(r => r.Cells["FullName"].Value.ToString()).ToList();
+
+            db.openConnection();
+            SqlTransaction trans = db.getConnection().BeginTransaction();
+
+            try
+            {
+                foreach (var row in sortedRows)
+                {
+                    string cid = row.Cells["CandidateID"].Value.ToString().Trim();
+                    string fullName = row.Cells["FullName"].Value.ToString().Trim();
+                    string majorCode = row.Cells["MajorCode"].Value.ToString().Trim();
+                    string email = row.Cells["Email"].Value.ToString().Trim();
+                    int year = Convert.ToInt32(row.Cells["EnrollmentYear"].Value);
+                    string phone = row.Cells["Phone"].Value?.ToString() ?? "";
+                    string address = row.Cells["Address"].Value?.ToString() ?? "";
+                    string gender = row.Cells["Gender"].Value?.ToString() ?? "";
+                    DateTime dob = Convert.ToDateTime(row.Cells["Dob"].Value);
+
+                    int rank = GetAlphabeticalRank(majorCode, year, fullName, cid, trans);
+                    string yearPrefix = year.ToString().Substring(year.ToString().Length - 2);
+                    string mssvString = yearPrefix + majorCode + rank.ToString("D3");
+
+                    // 3.1: Chèn vào bảng [Table]
+                    string sqlAccount = "INSERT INTO [Table] (username, password, valid, position, email) " +
+                                        "VALUES (@user, @pass, 1, 1, @email); SELECT SCOPE_IDENTITY();";
+
+                    SqlCommand cmdAccount = new SqlCommand(sqlAccount, db.getConnection(), trans);
+                    cmdAccount.Parameters.AddWithValue("@user", mssvString);
+                    cmdAccount.Parameters.AddWithValue("@pass", db.HashPassword(mssvString));
+                    cmdAccount.Parameters.AddWithValue("@email", email);
+
+                    int newAccountId = Convert.ToInt32(cmdAccount.ExecuteScalar());
+
+                    // 3.2: Chèn vào bảng Student
+                    string sqlStudent = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Dob, Gder, Address, Pture) " +
+                        "VALUES (@id, @mssv, @name, @phone, @email, @dob, @gdr, @adrs, @pic)";
+
+                    SqlCommand cmdStudent = new SqlCommand(sqlStudent, db.getConnection(), trans);
+                    cmdStudent.Parameters.AddWithValue("@id", newAccountId);
+                    cmdStudent.Parameters.AddWithValue("@mssv", mssvString);
+                    cmdStudent.Parameters.AddWithValue("@name", fullName);
+                    cmdStudent.Parameters.AddWithValue("@phone", phone);
+                    cmdStudent.Parameters.AddWithValue("@email", email);
+                    cmdStudent.Parameters.AddWithValue("@dob", dob);
+                    cmdStudent.Parameters.AddWithValue("@gdr", gender);
+                    cmdStudent.Parameters.AddWithValue("@adrs", address);
+                    cmdStudent.Parameters.AddWithValue("@pic", picture.ToArray());
+                    cmdStudent.ExecuteNonQuery();
+
+                    // 3.3: Cập nhật studentID cho Account
+                    string sqlUpdateAcc = "UPDATE [Table] SET studentID = @sid WHERE id = @aid";
+                    SqlCommand cmdUpdateAcc = new SqlCommand(sqlUpdateAcc, db.getConnection(), trans);
+                    cmdUpdateAcc.Parameters.AddWithValue("@sid", mssvString);
+                    cmdUpdateAcc.Parameters.AddWithValue("@aid", newAccountId);
+                    cmdUpdateAcc.ExecuteNonQuery();
+
+                    // 3.4: Đánh dấu đã phê duyệt trong AdmissionList
+                    string sqlUpdateAdm = "UPDATE AdmissionList SET IsAccountCreated = 1 WHERE CandidateID = @cid";
+                    SqlCommand cmdUpdateAdm = new SqlCommand(sqlUpdateAdm, db.getConnection(), trans);
+                    cmdUpdateAdm.Parameters.AddWithValue("@cid", cid);
+                    cmdUpdateAdm.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                throw new Exception("Lỗi phê duyệt hệ thống: " + ex.Message);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
+        }
+
+        private int GetCurrentStudentCount(string major, string year, SqlTransaction trans)
+        {
+            string yearPrefix = year.Substring(2);
+            string sql = "SELECT COUNT(*) FROM Student WHERE MSSV LIKE @prefix";
+            SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans);
+            cmd.Parameters.AddWithValue("@prefix", yearPrefix + major + "%");
+            int currentCount = GetCurrentStudentCount(majorCode, year.ToString(), trans);
+            return currentCount + (int)cmd.ExecuteScalar();
         }
     }
 }
