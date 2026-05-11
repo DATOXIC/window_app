@@ -8,10 +8,10 @@ using System.Windows.Forms;
 
 namespace window_app
 {
-    public partial class UserControl1 : UserControl
+    public partial class User1 : UserControl
     {
         Account acc = new Account();
-        public UserControl1()
+        public User1()
         {
             InitializeComponent();
         }

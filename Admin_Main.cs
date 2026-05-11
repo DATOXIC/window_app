@@ -19,7 +19,7 @@ namespace window_app
         {
             header_label.Text = "APPROVE STUDENT ACCOUNTS";
             admin_content_panel.Controls.Clear();
-            UserControl1 us = new UserControl1();
+            User1 us = new User1();
             admin_content_panel.Controls.Add(us);
         }
     }
