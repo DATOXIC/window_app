@@ -221,16 +221,53 @@ namespace window_app
 
             return table;
         }
+// --- PHẦN 1: THÊM THÍ SINH VÀO DANH SÁCH CHỜ (Từ nhánh admin_form) ---
+        public bool AddCandidateToAdmission(string name, string major, int year, string email, string phone, DateTime dob, string gender, string address)
+        {
+            // Tự sinh CandidateID duy nhất: TS + 10 số cuối của Ticks (thời gian hệ thống)
+            string candidateId = "TS" + DateTime.Now.Ticks.ToString().Substring(10);
+
+            string sql = @"INSERT INTO AdmissionList 
+                   (CandidateID, FullName, MajorCode, EnrollmentYear, Email, Phone, Dob, Gender, Address, IsAccountCreated)
+                   VALUES (@cid, @name, @major, @year, @email, @phone, @dob, @gender, @address, 0)";
+
+            try
+            {
+                db.openConnection();
+                SqlCommand cmd = new SqlCommand(sql, db.getConnection());
+
+                cmd.Parameters.AddWithValue("@cid", candidateId);
+                cmd.Parameters.AddWithValue("@name", name.Trim());
+                cmd.Parameters.AddWithValue("@major", major);
+                cmd.Parameters.AddWithValue("@year", year);
+                cmd.Parameters.AddWithValue("@email", email.Trim());
+                cmd.Parameters.AddWithValue("@phone", phone.Trim());
+                cmd.Parameters.AddWithValue("@dob", dob);
+                cmd.Parameters.AddWithValue("@gender", gender);
+                cmd.Parameters.AddWithValue("@address", address.Trim());
+
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Lỗi khi thêm thí sinh: " + ex.Message);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
+        }
+
+        // --- PHẦN 2: LOGIC PHÊ DUYỆT VÀ CẤP MSSV (Từ nhánh master) ---
         private int GetAlphabeticalRank(string majorCode, int year, string fullName, string candidateId, SqlTransaction trans)
         {
-            // Chúng ta đếm số người có tên "nhỏ hơn" tên hiện tại
-            // Nếu trùng tên, ta dùng CandidateID làm tiêu chí phụ để đảm bảo thứ tự không đổi
             string sql = @"
-        SELECT COUNT(*) + 1 
-        FROM AdmissionList 
-        WHERE MajorCode = @major 
-        AND EnrollmentYear = @year 
-        AND (FullName < @name OR (FullName = @name AND CandidateID <= @cid))";
+                SELECT COUNT(*) + 1 
+                FROM AdmissionList 
+                WHERE MajorCode = @major 
+                AND EnrollmentYear = @year 
+                AND (FullName < @name OR (FullName = @name AND CandidateID <= @cid))";
 
             SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans);
             cmd.Parameters.AddWithValue("@major", majorCode);
@@ -240,9 +277,9 @@ namespace window_app
 
             return (int)cmd.ExecuteScalar();
         }
+
         public bool ApproveBatchStudents(List<DataGridViewRow> selectedRows, MemoryStream picture)
         {
-            // 1. SẮP XẾP LẠI theo tên để đảm bảo tính nhất quán của STT
             var sortedRows = selectedRows.OrderBy(r => r.Cells["FullName"].Value.ToString()).ToList();
 
             db.openConnection();
@@ -261,15 +298,12 @@ namespace window_app
                     string address = row.Cells["Address"].Value?.ToString() ?? "";
                     string gender = row.Cells["Gender"].Value?.ToString() ?? "";
                     DateTime dob = Convert.ToDateTime(row.Cells["Dob"].Value);
-                    // 2. Tính toán MSSV (Rank Alphabet)
+
                     int rank = GetAlphabeticalRank(majorCode, year, fullName, cid, trans);
                     string yearPrefix = year.ToString().Substring(year.ToString().Length - 2);
                     string mssvString = yearPrefix + majorCode + rank.ToString("D3");
 
-                    // 3. Tiến hành chèn (Sửa lỗi thứ tự và ép kiểu)
-
-                    // Bước 3.1: Chèn Account trước (để lấy Id tự tăng)
-                    // Lưu ý: Tạm thời chưa điền studentID nếu nó là Khóa ngoại
+                    // 3.1: Chèn vào bảng [Table]
                     string sqlAccount = "INSERT INTO [Table] (username, password, valid, position, email) " +
                                         "VALUES (@user, @pass, 1, 1, @email); SELECT SCOPE_IDENTITY();";
 
@@ -278,10 +312,9 @@ namespace window_app
                     cmdAccount.Parameters.AddWithValue("@pass", db.HashPassword(mssvString));
                     cmdAccount.Parameters.AddWithValue("@email", email);
 
-                    // Ép kiểu decimal để tránh lỗi InvalidCastException
                     int newAccountId = Convert.ToInt32(cmdAccount.ExecuteScalar());
 
-                    // Bước 3.2: Chèn vào bảng Student (Dùng Id vừa lấy)
+                    // 3.2: Chèn vào bảng Student
                     string sqlStudent = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Dob, Gder, Address, Pture) " +
                         "VALUES (@id, @mssv, @name, @phone, @email, @dob, @gdr, @adrs, @pic)";
 
@@ -289,35 +322,33 @@ namespace window_app
                     cmdStudent.Parameters.AddWithValue("@id", newAccountId);
                     cmdStudent.Parameters.AddWithValue("@mssv", mssvString);
                     cmdStudent.Parameters.AddWithValue("@name", fullName);
-                    cmdStudent.Parameters.AddWithValue("@phone", phone); // ĐÃ THÊM PHONE
+                    cmdStudent.Parameters.AddWithValue("@phone", phone);
                     cmdStudent.Parameters.AddWithValue("@email", email);
-                    cmdStudent.Parameters.AddWithValue("@dob", dob);     // ĐÃ THÊM DOB
-                    cmdStudent.Parameters.AddWithValue("@gdr", gender);  // ĐÃ THÊM GENDER
-                    cmdStudent.Parameters.AddWithValue("@adrs", address); // ĐÃ THÊM ADDRESS
-                    cmdStudent.Parameters.AddWithValue("@pic", picture.ToArray()); //Đã thêm Picture
+                    cmdStudent.Parameters.AddWithValue("@dob", dob);
+                    cmdStudent.Parameters.AddWithValue("@gdr", gender);
+                    cmdStudent.Parameters.AddWithValue("@adrs", address);
+                    cmdStudent.Parameters.AddWithValue("@pic", picture.ToArray());
                     cmdStudent.ExecuteNonQuery();
 
-                    // Bước 3.3: Quay lại cập nhật studentID cho bảng [Table] (Nếu cần)
+                    // 3.3: Cập nhật studentID cho Account
                     string sqlUpdateAcc = "UPDATE [Table] SET studentID = @sid WHERE id = @aid";
                     SqlCommand cmdUpdateAcc = new SqlCommand(sqlUpdateAcc, db.getConnection(), trans);
                     cmdUpdateAcc.Parameters.AddWithValue("@sid", mssvString);
                     cmdUpdateAcc.Parameters.AddWithValue("@aid", newAccountId);
                     cmdUpdateAcc.ExecuteNonQuery();
 
-                    // Bước 3.4: Chốt hạ - Xóa khỏi danh sách chờ
+                    // 3.4: Đánh dấu đã phê duyệt trong AdmissionList
                     string sqlUpdateAdm = "UPDATE AdmissionList SET IsAccountCreated = 1 WHERE CandidateID = @cid";
                     SqlCommand cmdUpdateAdm = new SqlCommand(sqlUpdateAdm, db.getConnection(), trans);
                     cmdUpdateAdm.Parameters.AddWithValue("@cid", cid);
                     cmdUpdateAdm.ExecuteNonQuery();
                 }
 
-                // Nếu mọi thứ suôn sẻ, chốt giao dịch
                 trans.Commit();
                 return true;
             }
             catch (Exception ex)
             {
-                // Nếu có bất kỳ lỗi nào, hủy bỏ toàn bộ để tránh dữ liệu rác
                 trans.Rollback();
                 throw new Exception("Lỗi phê duyệt hệ thống: " + ex.Message);
             }
@@ -326,75 +357,15 @@ namespace window_app
                 db.closeConnection();
             }
         }
-        public bool ApproveStandardSystem(List<DataGridViewRow> selectedRows)
-        {
-            // 1. SẮP XẾP TUYỆT ĐỐI: Dù Admin chọn thế nào, code vẫn nắn lại theo quy tắc chuẩn
-            // Sắp xếp theo Ngành -> Tên -> Họ đệm (Đảm bảo thứ tự định danh luôn cố định)
-            var sortedList = selectedRows.Select(r => new {
-                Row = r,
-                CandidateID = r.Cells["CandidateID"].Value.ToString(),
-                Major = r.Cells["MajorCode"].Value.ToString(),
-                Year = r.Cells["EnrollmentYear"].Value.ToString()
-            }).OrderBy(x => x.Major).ThenBy(x => x.CandidateID).ToList();
 
-            db.openConnection();
-            SqlTransaction trans = db.getConnection().BeginTransaction();
-
-            try
-            {
-                foreach (var item in sortedList)
-                {
-                    // 2. TÍNH TOÁN MSSV TỰ ĐỘNG
-                    // Lấy số lượng sinh viên ĐÃ TỒN TẠI của ngành đó trong bảng Student
-                    int currentCount = GetCurrentStudentCount(item.Major, item.Year, trans);
-
-                    // MSSV = Năm(2) + Ngành(3) + (Số lượng + 1)
-                    string mssvString = item.Year.Substring(2) + item.Major + (currentCount + 1).ToString("D3");
-                    int newMSSV = int.Parse(mssvString);
-
-                    // 3. ỦY QUYỀN (AUTHORIZATION)
-                    // Tạo tài khoản với trạng thái valid = 1 để cho phép đăng nhập
-                    string sqlAcc = "INSERT INTO [Table] (username, password, valid, studentID, position, email) " +
-                                    "VALUES (@user, @user, 1, @sid, 1, @email); SELECT SCOPE_IDENTITY();";
-                    SqlCommand cmdAcc = new SqlCommand(sqlAcc, db.getConnection(), trans);
-                    cmdAcc.Parameters.AddWithValue("@user", mssvString);
-                    cmdAcc.Parameters.AddWithValue("@sid", mssvString);
-                    cmdAcc.Parameters.AddWithValue("@email", item.Row.Cells["Email"].Value.ToString());
-                    int accountId = Convert.ToInt32(cmdAcc.ExecuteScalar());
-
-                    // 4. LƯU HỒ SƠ SINH VIÊN
-                    string sqlStu = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Dob, Gder, Address) " +
-                                    "VALUES (@id, @mssv, @name, @phn, @email, @dob, @gdr, @adrs)";
-                    SqlCommand cmdStu = new SqlCommand(sqlStu, db.getConnection(), trans);
-                    cmdStu.Parameters.AddWithValue("@id", accountId);
-                    cmdStu.Parameters.AddWithValue("@mssv", newMSSV);
-                    cmdStu.Parameters.AddWithValue("@name", item.Row.Cells["FullName"].Value.ToString());
-                    // ... (các tham số khác từ item.Row) ...
-                    cmdStu.ExecuteNonQuery();
-
-                    // 5. CẬP NHẬT TRẠNG THÁI ADMISSION
-                    string sqlAdm = "UPDATE AdmissionList SET IsAccountCreated = 1 WHERE CandidateID = @cid";
-                    SqlCommand cmdAdm = new SqlCommand(sqlAdm, db.getConnection(), trans);
-                    cmdAdm.Parameters.AddWithValue("@cid", item.CandidateID);
-                    cmdAdm.ExecuteNonQuery();
-                }
-                trans.Commit();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                trans.Rollback();
-                throw ex;
-            }
-            finally { db.closeConnection(); }
-        }
         private int GetCurrentStudentCount(string major, string year, SqlTransaction trans)
         {
             string yearPrefix = year.Substring(2);
             string sql = "SELECT COUNT(*) FROM Student WHERE MSSV LIKE @prefix";
             SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans);
             cmd.Parameters.AddWithValue("@prefix", yearPrefix + major + "%");
-            return (int)cmd.ExecuteScalar();
+            int currentCount = GetCurrentStudentCount(majorCode, year.ToString(), trans);
+            return currentCount + (int)cmd.ExecuteScalar();
         }
     }
 }
