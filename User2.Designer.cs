@@ -70,6 +70,7 @@
             admission_data_display.Location = new Point(0, 12);
             admission_data_display.Name = "admission_data_display";
             admission_data_display.RowHeadersWidth = 51;
+            admission_data_display.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             admission_data_display.Size = new Size(527, 490);
             admission_data_display.TabIndex = 0;
             // 
