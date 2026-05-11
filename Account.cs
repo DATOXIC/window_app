@@ -1,6 +1,7 @@
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace window_app
@@ -157,6 +158,46 @@ namespace window_app
                 bool result = cmd.ExecuteNonQuery() > 0;
                 db.closeConnection();
                 return result;
+            }
+        }
+        public bool UpdateStatus(string username, int role, int status)
+        {
+            string query = "UPDATE [Table] SET position = @role, valid = @status WHERE username = @user";
+
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@role", role);
+                cmd.Parameters.AddWithValue("@status", status);
+                cmd.Parameters.AddWithValue("@user", username);
+
+                try
+                {
+                    db.openConnection();
+                    int result = cmd.ExecuteNonQuery();
+                    db.closeConnection();
+
+                    return result > 0;
+                }
+                catch (Exception ex)
+                {
+                    db.closeConnection();
+                    return false;
+                }
+            }
+        }
+
+        public DataTable GetPendingAccounts()
+        {
+            string query = "SELECT username, email, position, valid FROM [Table] WHERE valid = 0";
+
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                db.openConnection();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                db.closeConnection();
+                return table;
             }
         }
     }

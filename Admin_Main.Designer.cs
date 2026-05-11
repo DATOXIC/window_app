@@ -35,11 +35,8 @@
             pictureBox1 = new PictureBox();
             header_label = new TextBox();
             admin_content_panel = new Panel();
-            label1 = new Label();
-            label2 = new Label();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            admin_content_panel.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -128,32 +125,12 @@
             // 
             admin_content_panel.BackColor = SystemColors.ControlLight;
             admin_content_panel.BorderStyle = BorderStyle.FixedSingle;
-            admin_content_panel.Controls.Add(label1);
-            admin_content_panel.Controls.Add(label2);
             admin_content_panel.Dock = DockStyle.Fill;
             admin_content_panel.Location = new Point(165, 50);
             admin_content_panel.Name = "admin_content_panel";
             admin_content_panel.Padding = new Padding(5);
             admin_content_panel.Size = new Size(817, 553);
             admin_content_panel.TabIndex = 3;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(50, 5);
-            label1.Name = "label1";
-            label1.Size = new Size(50, 20);
-            label1.TabIndex = 0;
-            label1.Text = "label1";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(613, 1);
-            label2.Name = "label2";
-            label2.Size = new Size(50, 20);
-            label2.TabIndex = 1;
-            label2.Text = "label2";
             // 
             // Admin_Main
             // 
@@ -167,8 +144,6 @@
             Text = "Admin_Main";
             panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            admin_content_panel.ResumeLayout(false);
-            admin_content_panel.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -182,7 +157,5 @@
         private Button approve_button;
         private TextBox header_label;
         private Panel admin_content_panel;
-        private Label label2;
-        private Label label1;
     }
 }

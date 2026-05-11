@@ -18,11 +18,9 @@ namespace window_app
         private void approve_button_Click(object sender, EventArgs e)
         {
             header_label.Text = "APPROVE STUDENT ACCOUNTS";
+            admin_content_panel.Controls.Clear();
             UserControl1 us = new UserControl1();
-            //admin_content_panel.Controls.Clear();
-            us.Dock = DockStyle.Fill;
             admin_content_panel.Controls.Add(us);
-            us.BringToFront();
         }
     }
 }
