@@ -42,10 +42,6 @@ namespace window_app
                 return result;
             }
         }
-        //public bool Login(string user, string pass)
-        //{
-        //    return LoginWithStatus(user, pass) == LoginResult.Success;
-        //}
 
         // Hàm Trả về trạng thái của Login 
         public LoginResult LoginWithStatus(string user, string pass)
