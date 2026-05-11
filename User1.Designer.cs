@@ -1,6 +1,6 @@
 ﻿namespace window_app
 {
-    partial class UserControl1
+    partial class User1
     {
         /// <summary> 
         /// Required designer variable.
