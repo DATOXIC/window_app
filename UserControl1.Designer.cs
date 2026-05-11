@@ -32,19 +32,19 @@
             comboBox2 = new ComboBox();
             label3 = new Label();
             label2 = new Label();
-            comboBox1 = new ComboBox();
-            button3 = new Button();
+            confirm_role_combobox = new ComboBox();
+            sellect_all_button = new Button();
             button2 = new Button();
-            button1 = new Button();
+            accept_button = new Button();
             panel2 = new Panel();
             label1 = new Label();
             panel3 = new Panel();
-            dataGridView1 = new DataGridView();
+            Display_Account_View = new DataGridView();
             panel4 = new Panel();
             panel1.SuspendLayout();
             panel2.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)Display_Account_View).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -53,10 +53,10 @@
             panel1.Controls.Add(comboBox2);
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
-            panel1.Controls.Add(comboBox1);
-            panel1.Controls.Add(button3);
+            panel1.Controls.Add(confirm_role_combobox);
+            panel1.Controls.Add(sellect_all_button);
             panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(accept_button);
             panel1.Dock = DockStyle.Right;
             panel1.Location = new Point(565, 0);
             panel1.Margin = new Padding(3, 3, 15, 3);
@@ -96,27 +96,28 @@
             label2.TabIndex = 13;
             label2.Text = "CONFIRM ROLE";
             // 
-            // comboBox1
+            // confirm_role_combobox
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Admin", "Teacher", "Student" });
-            comboBox1.Location = new Point(14, 138);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(177, 28);
-            comboBox1.TabIndex = 12;
+            confirm_role_combobox.DropDownStyle = ComboBoxStyle.DropDownList;
+            confirm_role_combobox.FormattingEnabled = true;
+            confirm_role_combobox.Items.AddRange(new object[] { "Admin", "Teacher", "Student" });
+            confirm_role_combobox.Location = new Point(14, 138);
+            confirm_role_combobox.Name = "confirm_role_combobox";
+            confirm_role_combobox.Size = new Size(177, 28);
+            confirm_role_combobox.TabIndex = 12;
             // 
-            // button3
+            // sellect_all_button
             // 
-            button3.BackColor = Color.SteelBlue;
-            button3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button3.ForeColor = Color.White;
-            button3.Location = new Point(21, 398);
-            button3.Name = "button3";
-            button3.Size = new Size(177, 58);
-            button3.TabIndex = 11;
-            button3.Text = "SELLECT ALL";
-            button3.UseVisualStyleBackColor = false;
+            sellect_all_button.BackColor = Color.SteelBlue;
+            sellect_all_button.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            sellect_all_button.ForeColor = Color.White;
+            sellect_all_button.Location = new Point(21, 398);
+            sellect_all_button.Name = "sellect_all_button";
+            sellect_all_button.Size = new Size(177, 58);
+            sellect_all_button.TabIndex = 11;
+            sellect_all_button.Text = "SELLECT ALL";
+            sellect_all_button.UseVisualStyleBackColor = false;
+            sellect_all_button.Click += sellect_all_button_Click;
             // 
             // button2
             // 
@@ -130,17 +131,18 @@
             button2.Text = "REJECT";
             button2.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // accept_button
             // 
-            button1.BackColor = Color.LimeGreen;
-            button1.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(21, 208);
-            button1.Name = "button1";
-            button1.Size = new Size(177, 53);
-            button1.TabIndex = 9;
-            button1.Text = "APPROVE";
-            button1.UseVisualStyleBackColor = false;
+            accept_button.BackColor = Color.LimeGreen;
+            accept_button.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            accept_button.ForeColor = Color.White;
+            accept_button.Location = new Point(21, 208);
+            accept_button.Name = "accept_button";
+            accept_button.Size = new Size(177, 53);
+            accept_button.TabIndex = 9;
+            accept_button.Text = "APPROVE";
+            accept_button.UseVisualStyleBackColor = false;
+            accept_button.Click += accept_button_Click;
             // 
             // panel2
             // 
@@ -167,7 +169,7 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(dataGridView1);
+            panel3.Controls.Add(Display_Account_View);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(15, 15);
             panel3.Name = "panel3";
@@ -175,16 +177,16 @@
             panel3.Size = new Size(525, 500);
             panel3.TabIndex = 0;
             // 
-            // dataGridView1
+            // Display_Account_View
             // 
-            dataGridView1.BackgroundColor = SystemColors.ButtonHighlight;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Dock = DockStyle.Fill;
-            dataGridView1.Location = new Point(0, 12);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(525, 488);
-            dataGridView1.TabIndex = 4;
+            Display_Account_View.BackgroundColor = SystemColors.ButtonHighlight;
+            Display_Account_View.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            Display_Account_View.Dock = DockStyle.Fill;
+            Display_Account_View.Location = new Point(0, 12);
+            Display_Account_View.Name = "Display_Account_View";
+            Display_Account_View.RowHeadersWidth = 51;
+            Display_Account_View.Size = new Size(525, 488);
+            Display_Account_View.TabIndex = 4;
             // 
             // panel4
             // 
@@ -205,12 +207,13 @@
             Controls.Add(panel1);
             Name = "UserControl1";
             Size = new Size(792, 532);
+            Load += UserControl1_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)Display_Account_View).EndInit();
             ResumeLayout(false);
         }
 
@@ -219,13 +222,13 @@
         private ComboBox comboBox2;
         private Label label3;
         private Label label2;
-        private ComboBox comboBox1;
-        private Button button3;
+        private ComboBox confirm_role_combobox;
+        private Button sellect_all_button;
         private Button button2;
-        private Button button1;
+        private Button accept_button;
         private Panel panel2;
         private Panel panel3;
-        private DataGridView dataGridView1;
+        private DataGridView Display_Account_View;
         private Panel panel4;
         private Label label1;
     }
