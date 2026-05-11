@@ -275,7 +275,8 @@ namespace window_app
             cmd.Parameters.AddWithValue("@name", fullName);
             cmd.Parameters.AddWithValue("@cid", candidateId);
 
-            return (int)cmd.ExecuteScalar();
+            int currentCount = GetCurrentStudentCount(majorCode, year.ToString(), trans);
+            return currentCount + (int)cmd.ExecuteScalar();
         }
 
         public bool ApproveBatchStudents(List<DataGridViewRow> selectedRows, MemoryStream picture)
@@ -364,8 +365,7 @@ namespace window_app
             string sql = "SELECT COUNT(*) FROM Student WHERE MSSV LIKE @prefix";
             SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans);
             cmd.Parameters.AddWithValue("@prefix", yearPrefix + major + "%");
-            int currentCount = GetCurrentStudentCount(majorCode, year.ToString(), trans);
-            return currentCount + (int)cmd.ExecuteScalar();
+            return (int)cmd.ExecuteScalar();
         }
     }
 }
