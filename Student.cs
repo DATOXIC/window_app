@@ -275,7 +275,7 @@ namespace window_app
 
                     SqlCommand cmdAccount = new SqlCommand(sqlAccount, db.getConnection(), trans);
                     cmdAccount.Parameters.AddWithValue("@user", mssvString);
-                    cmdAccount.Parameters.AddWithValue("@pass", mssvString);
+                    cmdAccount.Parameters.AddWithValue("@pass", db.HashPassword(mssvString));
                     cmdAccount.Parameters.AddWithValue("@email", email);
 
                     // Ép kiểu decimal để tránh lỗi InvalidCastException
