@@ -72,12 +72,13 @@
             button2.Dock = DockStyle.Top;
             button2.FlatAppearance.BorderSize = 0;
             button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = SystemColors.ControlLightLight;
             button2.Location = new Point(0, 98);
             button2.Name = "button2";
             button2.Size = new Size(165, 42);
             button2.TabIndex = 2;
-            button2.Text = "button2";
+            button2.Text = "Management";
             button2.UseVisualStyleBackColor = false;
             // 
             // approve_button
