@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace window_app
 {
@@ -105,6 +106,18 @@ namespace window_app
                 {
                     MessageBox.Show("Lỗi: " + ex.Message);
                 }
+            }
+        }
+
+        private void btnLoadImage_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog opf = new OpenFileDialog();
+
+            opf.Filter = "Select Image(*.jpg;*.png)|*.jpg;*.png";
+
+            if (opf.ShowDialog() == DialogResult.OK)
+            {
+                pictureboxStudent.Image = Image.FromFile(opf.FileName);
             }
         }
     }
