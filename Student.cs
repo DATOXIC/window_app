@@ -8,16 +8,16 @@ namespace window_app
 {
     public class studentModel
     {
-        public int Id { get; set; }
-        public int MSSV { get; set; }
-        public string Fname { get; set; }
-        public string Lname { get; set; }
-        public DateTime Dob { get; set; }
-        public string Gder { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public string Email { get; set; }
-        public byte[] Picture { get; set; }
+        public int Id { get; private set; }
+        public int MSSV { get; private set; }
+        public string Fname { get; private set; }
+        public string Lname { get; private set; }
+        public DateTime Dob { get; private set; }
+        public string Gder { get; private set; }
+        public string Phone { get; private set; }
+        public string Address { get; private set; }
+        public string Email { get; private set; }
+        public byte[] Picture { get; private set; }
     }
     public class PendingStudentDTO
     {
@@ -33,7 +33,7 @@ namespace window_app
     }
     internal class Student
     {
-        myDB db = new myDB();
+        private readonly myDB db = new myDB();
 
         // 1. Hàm Thêm sinh viên (Dành cho Admin nhập tay)
 
@@ -181,7 +181,7 @@ namespace window_app
             }
         }
         // 6. Hàm Sinh MSSV tự động
-        public string GenerateNewMSSV(string year, string majorCode)
+        private string GenerateNewMSSV(string year, string majorCode)
         {
             string yearPrefix = year.Substring(year.Length - 2);
             string prefix = yearPrefix + majorCode;
