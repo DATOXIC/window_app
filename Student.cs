@@ -6,11 +6,8 @@ using System.IO; // Thêm dòng này để dùng MemoryStream
 
 namespace window_app
 {
-    internal class Student
+    public class studentModel
     {
-        myDB db = new myDB();
-
-        // Cập nhật Properties để khớp với Week 02
         public int Id { get; set; }
         public int MSSV { get; set; }
         public string Fname { get; set; }
@@ -21,21 +18,25 @@ namespace window_app
         public string Address { get; set; }
         public string Email { get; set; }
         public byte[] Picture { get; set; }
+    }
+    internal class Student
+    {
+        myDB db = new myDB();
 
         // 1. Hàm Thêm sinh viên (Dành cho Admin nhập tay)
-        public bool insertStudent(int mssv, string fname, string lname, DateTime dob, string gder, string phone, string address, MemoryStream picture)
+        public bool insertStudent(studentModel student)
         {
             SqlCommand command = new SqlCommand("INSERT INTO Student (MSSV, Fname, Lname, Dob, Gder, Phone, Address, Pture) " +
                 "VALUES (@mssv, @fn, @ln, @dob, @gdr, @phn, @adrs, @pic)", db.getConnection());
 
-            command.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
-            command.Parameters.Add("@fn", SqlDbType.NVarChar).Value = fname;
-            command.Parameters.Add("@ln", SqlDbType.NVarChar).Value = lname;
-            command.Parameters.Add("@dob", SqlDbType.DateTime).Value = dob;
-            command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = gder;
-            command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = phone;
-            command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = address;
-            command.Parameters.Add("@pic", SqlDbType.VarBinary).Value = picture.ToArray();
+            command.Parameters.Add("@mssv", SqlDbType.Int).Value = student.MSSV;
+            command.Parameters.Add("@fn", SqlDbType.NVarChar).Value = student.Fname;
+            command.Parameters.Add("@ln", SqlDbType.NVarChar).Value = student.Lname;
+            command.Parameters.Add("@dob", SqlDbType.DateTime).Value = student.Dob;
+            command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = student.Gder;
+            command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = student.Phone;
+            command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = student.Address;
+            command.Parameters.Add("@pic", SqlDbType.VarBinary).Value = student.Picture;
 
             db.openConnection();
             bool result = (command.ExecuteNonQuery() == 1);
@@ -44,18 +45,18 @@ namespace window_app
         }
 
         // 2. Hàm Cập nhật sinh viên (Đã sửa lại khớp với cấu trúc mới)
-        public bool updateStudent(int mssv, string fname, string lname, DateTime dob, string gder, string phone, string address, MemoryStream picture)
+        public bool updateStudent(studentModel student)
         {
             SqlCommand command = new SqlCommand("UPDATE Student SET Fname=@fn, Lname=@ln, Dob=@dob, Gder=@gdr, Phone=@phn, Address=@adrs, Pture=@pic WHERE MSSV=@mssv", db.getConnection());
 
-            command.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
-            command.Parameters.Add("@fn", SqlDbType.NVarChar).Value = fname;
-            command.Parameters.Add("@ln", SqlDbType.NVarChar).Value = lname;
-            command.Parameters.Add("@dob", SqlDbType.DateTime).Value = dob;
-            command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = gder;
-            command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = phone;
-            command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = address;
-            command.Parameters.Add("@pic", SqlDbType.Image).Value = picture.ToArray();
+            command.Parameters.Add("@mssv", SqlDbType.Int).Value = student.MSSV;
+            command.Parameters.Add("@fn", SqlDbType.NVarChar).Value = student.Fname;
+            command.Parameters.Add("@ln", SqlDbType.NVarChar).Value = student.Lname;
+            command.Parameters.Add("@dob", SqlDbType.DateTime).Value = student.Dob;
+            command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = student.Gder;
+            command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = student.Phone;
+            command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = student.Address;
+            command.Parameters.Add("@pic", SqlDbType.VarBinary).Value = student.Picture;
 
             db.openConnection();
             bool result = (command.ExecuteNonQuery() == 1);
