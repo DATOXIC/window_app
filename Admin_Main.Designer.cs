@@ -58,13 +58,15 @@
             button3.Dock = DockStyle.Top;
             button3.FlatAppearance.BorderSize = 0;
             button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button3.ForeColor = Color.White;
             button3.Location = new Point(0, 140);
             button3.Name = "button3";
             button3.Size = new Size(165, 42);
             button3.TabIndex = 3;
-            button3.Text = "button3";
+            button3.Text = "Add Student";
             button3.UseVisualStyleBackColor = false;
+            button3.Click += button3_Click;
             // 
             // add_student_button
             // 
