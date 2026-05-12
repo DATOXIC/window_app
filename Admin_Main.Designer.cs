@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            user_mangament_button = new Button();
             button3 = new Button();
             add_student_button = new Button();
             approve_button = new Button();
@@ -42,6 +43,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(32, 64, 113);
+            panel1.Controls.Add(user_mangament_button);
             panel1.Controls.Add(button3);
             panel1.Controls.Add(add_student_button);
             panel1.Controls.Add(approve_button);
@@ -51,6 +53,22 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(165, 603);
             panel1.TabIndex = 0;
+            // 
+            // user_mangament_button
+            // 
+            user_mangament_button.BackColor = Color.Transparent;
+            user_mangament_button.Dock = DockStyle.Top;
+            user_mangament_button.FlatAppearance.BorderSize = 0;
+            user_mangament_button.FlatStyle = FlatStyle.Flat;
+            user_mangament_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            user_mangament_button.ForeColor = Color.White;
+            user_mangament_button.Location = new Point(0, 182);
+            user_mangament_button.Name = "user_mangament_button";
+            user_mangament_button.Size = new Size(165, 42);
+            user_mangament_button.TabIndex = 4;
+            user_mangament_button.Text = "User Management";
+            user_mangament_button.UseVisualStyleBackColor = false;
+            user_mangament_button.Click += user_mangament_button_Click;
             // 
             // button3
             // 
@@ -80,7 +98,7 @@
             add_student_button.Name = "add_student_button";
             add_student_button.Size = new Size(165, 42);
             add_student_button.TabIndex = 2;
-            add_student_button.Text = "Add Student";
+            add_student_button.Text = "Admission Review";
             add_student_button.UseVisualStyleBackColor = false;
             add_student_button.Click += add_student_button_Click;
             // 
@@ -98,7 +116,7 @@
             approve_button.Name = "approve_button";
             approve_button.Size = new Size(165, 42);
             approve_button.TabIndex = 1;
-            approve_button.Text = "Approve Account";
+            approve_button.Text = "Access Control";
             approve_button.TextAlign = ContentAlignment.MiddleRight;
             approve_button.UseVisualStyleBackColor = false;
             approve_button.Click += approve_button_Click;
@@ -161,5 +179,6 @@
         private Button approve_button;
         private TextBox header_label;
         private Panel admin_content_panel;
+        private Button user_mangament_button;
     }
 }

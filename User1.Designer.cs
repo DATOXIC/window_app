@@ -197,7 +197,7 @@
             panel4.Size = new Size(8, 532);
             panel4.TabIndex = 11;
             // 
-            // UserControl1
+            // User1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -205,7 +205,7 @@
             Controls.Add(panel2);
             Controls.Add(panel4);
             Controls.Add(panel1);
-            Name = "UserControl1";
+            Name = "User1";
             Size = new Size(792, 532);
             Load += UserControl1_Load;
             panel1.ResumeLayout(false);

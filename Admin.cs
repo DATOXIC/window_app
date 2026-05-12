@@ -4,6 +4,7 @@ using System.Text;
 
 namespace window_app
 {
+
     // Admin.cs
     internal class Admin : Person
     {

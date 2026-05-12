@@ -54,43 +54,44 @@ TemporaryDependencyNodeTargetIdentifier=net10.0-windows
 /warnaserror+:NU1605,SYSLIB0011
 
 [sourceFiles]
+Account.cs
+Admin.cs
+Admin_Main.cs
 Admin_Main.Designer.cs
-BACK_END/
- Account.cs
- Admin.cs
- Admin_Main.cs
- Contact.cs
- Course.cs
- EmailService.cs
- ForgotPassForm.cs
- Globals.cs
- HR_Main.cs
- login_form.cs
- MutualFunc.cs
- myDB.cs
- Person.cs
- Program.cs
- Score.cs
- signup_form.cs
- Student.cs
- Student_Main.cs
- Teacher.cs
- User1.cs
- User2.cs
- User3.cs
+Contact.cs
+Course.cs
+EmailService.cs
+ForgotPassForm.cs
 ForgotPassForm.Designer.cs
+Globals.cs
+HR_Main.cs
 HR_Main.Designer.cs
+login_form.cs
 login_form.Designer.cs
+MutualFunc.cs
+myDB.cs
 obj/Debug/net10.0-windows/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
  window_app.AssemblyInfo.cs
  window_app.GlobalUsings.g.cs
+Person.cs
+Program.cs
 Properties/Resources.Designer.cs
+Score.cs
+signup_form.cs
 signup_form.Designer.cs
+Student.cs
+Student_Main.cs
 Student_Main.Designer.cs
+Teacher.cs
+User1.cs
 User1.Designer.cs
+User2.cs
 User2.Designer.cs
+User3.cs
 User3.Designer.cs
+User4.cs
+User4.Designer.cs
 
 [metadataReferences]
 <DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/
