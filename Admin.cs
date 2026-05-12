@@ -8,9 +8,9 @@ namespace window_app
     // Admin.cs
     internal class Admin : Person
     {
-        myDB db = new myDB();
+        private readonly myDB db = new myDB();
 
-        public int AdminLevel { get; set; } // Ví dụ: 1 là SuperAdmin, 2 là Mod
+        public int AdminLevel { get; private set; } // Ví dụ: 1 là SuperAdmin, 2 là Mod
 
         public bool UpdateAdminProfile(string email, string phone, string address)
         {

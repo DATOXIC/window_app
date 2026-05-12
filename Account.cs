@@ -8,16 +8,16 @@ namespace window_app
 {
     internal class Account
     {
-        myDB db = new myDB();
+        private readonly myDB db = new myDB();
 
         // --- Các thuộc tính khớp với bảng [Table] ---
-        public int Id { get; set; }           // Tự động tăng (Identity)
-        public string Username { get; set; }  // NVARCHAR(MAX)
-        public string Password { get; set; }  // NVARCHAR(MAX)
-        public int Valid { get; set; }        // 0 hoặc 1
-        public string StudentID { get; set; } // NCHAR(10) - Lưu MSSV kết nối
-        public int Position { get; set; }     // 0: Admin, 1: Student, 2: HR
-        public string Email { get; set; }
+        public int Id { get; private set; }           // Tự động tăng (Identity)
+        public string Username { get; private set; }  // NVARCHAR(MAX)
+        public string Password { get; private set; }  // NVARCHAR(MAX)
+        public int Valid { get; private set; }        // 0 hoặc 1
+        public string StudentID { get; private set; } // NCHAR(10) - Lưu MSSV kết nối
+        public int Position { get; private set; }     // 0: Admin, 1: Student, 2: HR
+        public string Email { get; private set; }
 
         public enum LoginResult
         {
