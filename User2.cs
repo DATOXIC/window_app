@@ -76,42 +76,52 @@ namespace window_app
 
         private void btnApprove_Click(object sender, EventArgs e)
         {
-            if (admission_data_display.SelectedRows.Count == 0)
+            try
             {
-                MessageBox.Show("Vui lòng chọn ít nhất một thí sinh để phê duyệt!", "Thông báo");
-                return;
-            }
-
-            MemoryStream ms = new MemoryStream();
-
-            pictureboxStudent.Image.Save(ms, pictureboxStudent.Image.RawFormat);
-
-            byte[] img = ms.ToArray();
-
-            // Gom danh sách các hàng được chọn
-            List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
-            foreach (DataGridViewRow row in admission_data_display.SelectedRows)
-            {
-                selectedRows.Add(row);
-            }
-
-            // Xác nhận
-            if (MessageBox.Show($"Phê duyệt {selectedRows.Count} thí sinh?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                try
+                // 1. Kiểm tra ảnh có trống không
+                if (pictureboxStudent.Image == null)
                 {
-                    Student stu = new Student();
-                    // Gọi hàm xử lý hàng loạt mà chúng ta đã viết
-                    if (stu.ApproveBatchStudents(selectedRows, ms))
+                    MessageBox.Show("Vui lòng chọn ảnh đại diện cho sinh viên trước khi phê duyệt!", "Thông báo");
+                    return;
+                }
+
+                // 2. Kiểm tra xem có sinh viên nào được chọn trong bảng không
+                if (admission_data_display.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Vui lòng chọn ít nhất một sinh viên trong danh sách!", "Thông báo");
+                    return;
+                }
+
+                // 3. Xử lý ảnh an toàn
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    // Sử dụng định dạng chuẩn (ví dụ Png) thay vì RawFormat để tránh lỗi định dạng
+                    pictureboxStudent.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+
+                    List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
+                    foreach (DataGridViewRow row in admission_data_display.SelectedRows)
                     {
-                        MessageBox.Show("Phê duyệt và kích hoạt tài khoản thành công!", "Thành công");
-                        RefreshAdmissionGrid(); // Nạp lại bảng để xóa những người đã duyệt
+                        // Kiểm tra xem hàng có hợp lệ không (tránh hàng trống cuối bảng)
+                        if (row.Cells["CandidateID"].Value != null)
+                        {
+                            selectedRows.Add(row);
+                        }
+                    }
+
+                    if (selectedRows.Count > 0)
+                    {
+                        Student stu = new Student();
+                        if (stu.ApproveBatchStudents(selectedRows, ms))
+                        {
+                            MessageBox.Show("Phê duyệt thành công!");
+                            RefreshAdmissionGrid();
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi: " + ex.Message);
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi chi tiết: " + ex.Message);
             }
         }
 

@@ -268,12 +268,16 @@ namespace window_app
         // --- PHẦN 2: LOGIC PHÊ DUYỆT VÀ CẤP MSSV (Từ nhánh master) ---
         private int GetAlphabeticalRank(string majorCode, int year, string fullName, string candidateId, SqlTransaction trans)
         {
+            int currentMaxRank = GetCurrentStudentCount(majorCode, year.ToString(), trans);
+
+            // Đếm số người đứng trước thí sinh này trong danh sách trúng tuyển (dựa trên tên)
             string sql = @"
-                SELECT COUNT(*) + 1 
-                FROM AdmissionList 
-                WHERE MajorCode = @major 
-                AND EnrollmentYear = @year 
-                AND (FullName < @name OR (FullName = @name AND CandidateID <= @cid))";
+        SELECT COUNT(*) + 1 
+        FROM AdmissionList 
+        WHERE MajorCode = @major 
+        AND EnrollmentYear = @year 
+        AND IsAccountCreated = 0
+        AND (FullName < @name OR (FullName = @name AND CandidateID <= @cid))";
 
             SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans);
             cmd.Parameters.AddWithValue("@major", majorCode);
@@ -281,8 +285,8 @@ namespace window_app
             cmd.Parameters.AddWithValue("@name", fullName);
             cmd.Parameters.AddWithValue("@cid", candidateId);
 
-            int currentCount = GetCurrentStudentCount(majorCode, year.ToString(), trans);
-            return currentCount + (int)cmd.ExecuteScalar();
+            // Rank cuối cùng = (Số người lớn nhất trong DB) + (Thứ tự trong đợt duyệt này)
+            return currentMaxRank + (int)cmd.ExecuteScalar();
         }
 
         public bool ApproveBatchStudents(List<DataGridViewRow> selectedRows, MemoryStream picture)
@@ -367,11 +371,27 @@ namespace window_app
 
         private int GetCurrentStudentCount(string major, string year, SqlTransaction trans)
         {
-            string yearPrefix = year.Substring(2);
-            string sql = "SELECT COUNT(*) FROM Student WHERE MSSV LIKE @prefix";
+            // Lấy 2 số cuối của năm
+            string yearPrefix = year.Length > 2 ? year.Substring(year.Length - 2) : year;
+            string prefix = yearPrefix + major; // Ví dụ: 24110
+
+            // Tìm MSSV lớn nhất có tiền tố này
+            string sql = "SELECT MAX(MSSV) FROM Student WHERE CAST(MSSV AS VARCHAR) LIKE @prefix";
+
             SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans);
-            cmd.Parameters.AddWithValue("@prefix", yearPrefix + major + "%");
-            return (int)cmd.ExecuteScalar();
+            cmd.Parameters.AddWithValue("@prefix", prefix + "%");
+
+            object result = cmd.ExecuteScalar();
+
+            if (result == DBNull.Value || result == null)
+            {
+                return 0; // Nếu chưa có ai, bắt đầu từ 0
+            }
+
+            // Giả sử MSSV là 24110003, chúng ta lấy 3 số cuối là 3
+            string maxMssvStr = result.ToString();
+            string suffix = maxMssvStr.Substring(maxMssvStr.Length - 3);
+            return int.Parse(suffix);
         }
     }
 }
