@@ -13,7 +13,8 @@ namespace window_app
 {
     public partial class User3 : UserControl
     {
-        myDB db = new myDB();
+        private readonly myDB db = new myDB();
+        private readonly Student stuLogic = new Student();
         public User3()
         {
             InitializeComponent();
@@ -60,8 +61,6 @@ namespace window_app
             // Logic lấy giới tính từ RadioButton
             string sex = rbMale.Checked ? "Nam" : "Nữ";
 
-            // BƯỚC 3: Gọi logic lưu từ lớp Student.cs
-            Student stuLogic = new Student();
             try
             {
                 bool success = stuLogic.AddCandidateToAdmission(name, majorCode, year, email, phone, dob, sex, address);
@@ -92,7 +91,7 @@ namespace window_app
 
             txtName.Focus(); // Đưa con trỏ chuột về ô tên để nhập tiếp
         }
-        public DataTable getAllMajors()
+        private DataTable getAllMajors()
         {
             string sql = "SELECT MajorCode, MajorName FROM Majors";
             SqlCommand command = new SqlCommand(sql, db.getConnection());

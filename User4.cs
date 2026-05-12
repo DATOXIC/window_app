@@ -11,8 +11,8 @@ namespace window_app
 {
     public partial class User4 : UserControl
     {
-        private Account acc = new Account();
-        private myDB db = new myDB();
+        private readonly Account acc = new Account();
+        private readonly myDB db = new myDB();
 
         public User4()
         {

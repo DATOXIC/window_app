@@ -11,7 +11,7 @@ namespace window_app
     public partial class User1 : UserControl
     {
         
-        Account acc = new Account();
+        private readonly Account acc = new Account();
         public User1()
         {
             InitializeComponent();

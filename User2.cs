@@ -11,6 +11,7 @@ namespace window_app
 {
     public partial class User2 : UserControl
     {
+        private readonly Student stu = new Student();
         public User2()
         {
             InitializeComponent();
