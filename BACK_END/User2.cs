@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -98,20 +98,31 @@ namespace window_app
                     // Sử dụng định dạng chuẩn (ví dụ Png) thay vì RawFormat để tránh lỗi định dạng
                     pictureboxStudent.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
 
-                    List<DataGridViewRow> selectedRows = new List<DataGridViewRow>();
+                List<PendingStudentDTO> pendingStudents = new List<PendingStudentDTO>();
                     foreach (DataGridViewRow row in admission_data_display.SelectedRows)
                     {
                         // Kiểm tra xem hàng có hợp lệ không (tránh hàng trống cuối bảng)
                         if (row.Cells["CandidateID"].Value != null)
                         {
-                            selectedRows.Add(row);
+                        pendingStudents.Add(new PendingStudentDTO
+                        {
+                            CandidateID = row.Cells["CandidateID"].Value.ToString().Trim(),
+                            FullName = row.Cells["FullName"].Value.ToString().Trim(),
+                            MajorCode = row.Cells["MajorCode"].Value.ToString().Trim(),
+                            Email = row.Cells["Email"].Value.ToString().Trim(),
+                            EnrollmentYear = Convert.ToInt32(row.Cells["EnrollmentYear"].Value),
+                            Phone = row.Cells["Phone"].Value?.ToString() ?? "",
+                            Address = row.Cells["Address"].Value?.ToString() ?? "",
+                            Gender = row.Cells["Gender"].Value?.ToString() ?? "",
+                            Dob = Convert.ToDateTime(row.Cells["Dob"].Value)
+                        });
                         }
                     }
 
-                    if (selectedRows.Count > 0)
+                if (pendingStudents.Count > 0)
                     {
                         Student stu = new Student();
-                        if (stu.ApproveBatchStudents(selectedRows, ms))
+                    if (stu.ApproveBatchStudents(pendingStudents, ms))
                         {
                             MessageBox.Show("Phê duyệt thành công!");
                             RefreshAdmissionGrid();

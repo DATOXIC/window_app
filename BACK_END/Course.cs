@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
 
@@ -46,23 +46,27 @@ namespace window_app
         // Xóa khóa học
         public bool Delete(int courseId)
         {
-            SqlCommand command = new SqlCommand("DELETE FROM Course WHERE id = @id", db.getConnection());
-            command.Parameters.AddWithValue("@id", courseId);
+            using (SqlCommand command = new SqlCommand("DELETE FROM Course WHERE id = @id", db.getConnection()))
+            {
+                command.Parameters.AddWithValue("@id", courseId);
 
-            db.openConnection();
-            bool result = (command.ExecuteNonQuery() == 1);
-            db.closeConnection();
-            return result;
+                db.openConnection();
+                bool result = (command.ExecuteNonQuery() == 1);
+                db.closeConnection();
+                return result;
+            }
         }
 
         // Lấy dữ liệu (Tính đa hình)
         public DataTable GetData(SqlCommand command)
         {
             command.Connection = db.getConnection();
-            SqlDataAdapter adapter = new SqlDataAdapter(command);
-            DataTable table = new DataTable();
-            adapter.Fill(table);
-            return table;
+            using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+            {
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                return table;
+            }
         }
 
         // 3. CÁC HÀM HỖ TRỢ VÀ NGHIỆP VỤ RIÊNG
@@ -70,17 +74,18 @@ namespace window_app
         // Hàm phụ dùng chung để thực thi lệnh SQL (Tính đóng gói logic)
         private bool ExecuteNonQuery(string sql, bool isInsert)
         {
-            SqlCommand command = new SqlCommand(sql, db.getConnection());
+            using (SqlCommand command = new SqlCommand(sql, db.getConnection()))
+            {
+                command.Parameters.AddWithValue("@id", this.Id);
+                command.Parameters.AddWithValue("@lbl", this.Label);
+                command.Parameters.AddWithValue("@per", this.Period);
+                command.Parameters.AddWithValue("@desc", this.Description);
 
-            command.Parameters.AddWithValue("@id", this.Id);
-            command.Parameters.AddWithValue("@lbl", this.Label);
-            command.Parameters.AddWithValue("@per", this.Period);
-            command.Parameters.AddWithValue("@desc", this.Description);
-
-            db.openConnection();
-            bool result = (command.ExecuteNonQuery() == 1);
-            db.closeConnection();
-            return result;
+                db.openConnection();
+                bool result = (command.ExecuteNonQuery() == 1);
+                db.closeConnection();
+                return result;
+            }
         }
 
         // Hàm kiểm tra tên khóa học đã tồn tại chưa (Nghiệp vụ riêng)
@@ -91,12 +96,14 @@ namespace window_app
                 ? "SELECT * FROM Course WHERE label = @name"
                 : "SELECT * FROM Course WHERE label = @name AND id <> @id";
 
-            SqlCommand command = new SqlCommand(sql, db.getConnection());
-            command.Parameters.AddWithValue("@name", courseName);
-            command.Parameters.AddWithValue("@id", courseId);
+            using (SqlCommand command = new SqlCommand(sql, db.getConnection()))
+            {
+                command.Parameters.AddWithValue("@name", courseName);
+                command.Parameters.AddWithValue("@id", courseId);
 
-            DataTable table = GetData(command);
-            return table.Rows.Count > 0;
+                DataTable table = GetData(command);
+                return table.Rows.Count > 0;
+            }
         }
 
         // Nạp chồng (Overloading) hàm lấy danh sách khóa học
