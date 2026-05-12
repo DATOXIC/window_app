@@ -6,36 +6,42 @@ using System.IO; // Thêm dòng này để dùng MemoryStream
 
 namespace window_app
 {
-    internal class Student
+    internal class Student : Person, MutualFunc
     {
         myDB db = new myDB();
 
         // Cập nhật Properties để khớp với Week 02
         public int Id { get; set; }
         public int MSSV { get; set; }
-        public string Fname { get; set; }
-        public string Lname { get; set; }
-        public DateTime Dob { get; set; }
-        public string Gder { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
-        public string Email { get; set; }
-        public byte[] Picture { get; set; }
+
+        // Constructor của Student gọi Constructor của Person
+        public Student(int mssv, string fname, string lname, DateTime dob, string gder, string phone, string address, string email, byte[] picture)
+            : base(fname, lname, dob, gder, phone, address, email, picture) // Đẩy dữ liệu lên lớp cha
+        {
+            this.MSSV = mssv; // Chỉ cần gán những gì riêng biệt của Student
+        }
+        public Student() : base() { }
+        public override string GetFullName()
+        {
+            return base.GetFullName().ToUpper(); // Trả về tên in hoa
+        }
 
         // 1. Hàm Thêm sinh viên (Dành cho Admin nhập tay)
-        public bool insertStudent(int mssv, string fname, string lname, DateTime dob, string gder, string phone, string address, MemoryStream picture)
+        public bool Insert()
         {
-            SqlCommand command = new SqlCommand("INSERT INTO Student (MSSV, Fname, Lname, Dob, Gder, Phone, Address, Pture) " +
-                "VALUES (@mssv, @fn, @ln, @dob, @gdr, @phn, @adrs, @pic)", db.getConnection());
+            string sql = "INSERT INTO Student (MSSV, Fname, Lname, Dob, Gder, Phone, Address, Email, Pture) " +
+                         "VALUES (@mssv, @fn, @ln, @dob, @gdr, @phn, @adrs, @email, @pic)";
 
-            command.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
-            command.Parameters.Add("@fn", SqlDbType.NVarChar).Value = fname;
-            command.Parameters.Add("@ln", SqlDbType.NVarChar).Value = lname;
-            command.Parameters.Add("@dob", SqlDbType.DateTime).Value = dob;
-            command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = gder;
-            command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = phone;
-            command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = address;
-            command.Parameters.Add("@pic", SqlDbType.VarBinary).Value = picture.ToArray();
+            SqlCommand command = new SqlCommand(sql, db.getConnection());
+            command.Parameters.AddWithValue("@mssv", this.MSSV);
+            command.Parameters.AddWithValue("@fn", this.Fname);
+            command.Parameters.AddWithValue("@ln", this.Lname);
+            command.Parameters.AddWithValue("@dob", this.Dob);
+            command.Parameters.AddWithValue("@gdr", this.Gder);
+            command.Parameters.AddWithValue("@phn", this.Phone);
+            command.Parameters.AddWithValue("@adrs", this.Address);
+            command.Parameters.AddWithValue("@email", this.Email);
+            command.Parameters.AddWithValue("@pic", (this.Picture != null) ? this.Picture : (object)DBNull.Value);
 
             db.openConnection();
             bool result = (command.ExecuteNonQuery() == 1);
@@ -44,18 +50,20 @@ namespace window_app
         }
 
         // 2. Hàm Cập nhật sinh viên (Đã sửa lại khớp với cấu trúc mới)
-        public bool updateStudent(int mssv, string fname, string lname, DateTime dob, string gder, string phone, string address, MemoryStream picture)
+        public bool Update()
         {
-            SqlCommand command = new SqlCommand("UPDATE Student SET Fname=@fn, Lname=@ln, Dob=@dob, Gder=@gdr, Phone=@phn, Address=@adrs, Pture=@pic WHERE MSSV=@mssv", db.getConnection());
+            string sql = "UPDATE Student SET Fname=@fn, Lname=@ln, Dob=@dob, Gder=@gdr, Phone=@phn, Address=@adrs, Email=@email, Pture=@pic WHERE MSSV=@mssv";
 
-            command.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
-            command.Parameters.Add("@fn", SqlDbType.NVarChar).Value = fname;
-            command.Parameters.Add("@ln", SqlDbType.NVarChar).Value = lname;
-            command.Parameters.Add("@dob", SqlDbType.DateTime).Value = dob;
-            command.Parameters.Add("@gdr", SqlDbType.NVarChar).Value = gder;
-            command.Parameters.Add("@phn", SqlDbType.NVarChar).Value = phone;
-            command.Parameters.Add("@adrs", SqlDbType.NVarChar).Value = address;
-            command.Parameters.Add("@pic", SqlDbType.Image).Value = picture.ToArray();
+            SqlCommand command = new SqlCommand(sql, db.getConnection());
+            command.Parameters.AddWithValue("@mssv", this.MSSV);
+            command.Parameters.AddWithValue("@fn", this.Fname);
+            command.Parameters.AddWithValue("@ln", this.Lname);
+            command.Parameters.AddWithValue("@dob", this.Dob);
+            command.Parameters.AddWithValue("@gdr", this.Gder);
+            command.Parameters.AddWithValue("@phn", this.Phone);
+            command.Parameters.AddWithValue("@adrs", this.Address);
+            command.Parameters.AddWithValue("@email", this.Email);
+            command.Parameters.AddWithValue("@pic", (this.Picture != null) ? this.Picture : (object)DBNull.Value);
 
             db.openConnection();
             bool result = (command.ExecuteNonQuery() == 1);
@@ -64,7 +72,7 @@ namespace window_app
         }
 
         // 3. Hàm Xóa sinh viên
-        public bool deleteStudent(int mssv)
+        public bool Delete(int mssv)
         {
             SqlCommand command = new SqlCommand("DELETE FROM Student WHERE MSSV=@mssv", db.getConnection());
             command.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
@@ -76,7 +84,7 @@ namespace window_app
         }
 
         // 4. Hàm lấy danh sách sinh viên
-        public DataTable getStudents(SqlCommand command)
+        public DataTable GetData(SqlCommand command)
         {
             command.Connection = db.getConnection();
             SqlDataAdapter adapter = new SqlDataAdapter(command);

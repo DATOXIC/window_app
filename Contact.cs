@@ -4,16 +4,13 @@ using System.Text;
 
 namespace window_app
 {
-    internal class Contact
+    // Contact cũng là một Person
+    internal class Contact : Person
     {
-        public int ID { get; set; } // Mã liên hệ [cite: 77]
-        public string Fname { get; set; }
+        // Thuộc tính riêng của Contact (Ví dụ: Nhóm người liên hệ)
+        public int ContactId { get; set; }
+        public string GroupName { get; set; }
 
-        public string Lname { get; set; }
-        public string GroupID { get; set; } // Mã nhóm liên hệ [cite: 77]
-        public string Phone { get; set; }
-     
-        public string Email { get; set; }
-        public int UserID { get; set; } // Liên kết với người dùng sở hữu danh bạ [cite: 77]
+        // Lớp này cũng nghiễm nhiên có Fname, Lname, Email... từ Person gửi sang
     }
 }
