@@ -25,18 +25,14 @@ namespace window_app
             {
                 if (acc.LoginWithStatus(user, pass) == Account.LoginResult.Success)
                 {
-                    // 3. Nếu đăng nhập thành công, lấy thêm thông tin quyền hạn và MSSV
+                    // 3. Lấy thêm thông tin quyền hạn và MSSV
                     int position = acc.GetUserPosition(user);
                     string mssv = acc.GetStudentID(user);
 
-                        // 4. Lưu vào biến toàn cục để các Form sau (như f_Main) có thể sử dụng
-                        // Giả sử bạn lưu MSSV vào Globals để hiện thông tin cá nhân sau này
-                        //if (!string.IsNullOrEmpty(mssv))
-                        //{
-                        //    // Globals.SetGlobalUserId(int.Parse(mssv)); 
-                        //}
+                    // 4. Lưu vào Globals để các Form sau sử dụng
+                    Globals.SetLoginSession(0, user, position, mssv ?? "");
 
-                        MessageBox.Show("Đăng nhập thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Đăng nhập thành công!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     this.Hide(); // Ẩn form Login đi
 
