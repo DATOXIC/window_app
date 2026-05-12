@@ -9,6 +9,7 @@ namespace window_app
     internal class Account
     {
         myDB db = new myDB();
+
         // --- Các thuộc tính khớp với bảng [Table] ---
         public int Id { get; set; }           // Tự động tăng (Identity)
         public string Username { get; set; }  // NVARCHAR(MAX)
@@ -17,6 +18,7 @@ namespace window_app
         public string StudentID { get; set; } // NCHAR(10) - Lưu MSSV kết nối
         public int Position { get; set; }     // 0: Admin, 1: Student, 2: HR
         public string Email { get; set; }
+
         public enum LoginResult
         {
             Success = 0,
