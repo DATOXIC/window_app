@@ -196,5 +196,80 @@ namespace window_app
                 return table;
             }
         }
+
+    public DataTable GetFilteredStudentAccounts(string year, string department)
+    {
+        // Trích xuất Năm học (EnrollmentYear) và Mã ngành (MajorCode) từ MSSV
+        string query = @"
+            SELECT 
+                acc.username AS Username, 
+                acc.email AS Email, 
+                LTRIM(RTRIM(ISNULL(stu.Fname, '') + ' ' + ISNULL(stu.Lname, ''))) AS FullName,
+                SUBSTRING(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 3, 3) AS MajorCode,
+                CASE WHEN LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) LIKE '[0-9][0-9]' 
+                     THEN CAST('20' + LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) AS INT) 
+                     ELSE 0 END AS EnrollmentYear
+            FROM [Table] acc
+            LEFT JOIN Student stu ON (LTRIM(RTRIM(acc.studentID)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))) 
+                                  OR LTRIM(RTRIM(acc.username)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))))
+            WHERE acc.position = 1"; // position = 1 dành riêng cho sinh viên
+
+        if (!string.IsNullOrEmpty(year))
+        {
+            query += " AND LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) = RIGHT(@year, 2)";
+        }
+        
+        if (!string.IsNullOrEmpty(department))
+        {
+            query += " AND SUBSTRING(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 3, 3) = @department";
+        }
+
+        using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+        {
+            if (!string.IsNullOrEmpty(year))
+                cmd.Parameters.AddWithValue("@year", year);
+                
+            if (!string.IsNullOrEmpty(department))
+                cmd.Parameters.AddWithValue("@department", department);
+
+            DataTable table = new DataTable();
+            try
+            {
+                db.openConnection();
+                using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                {
+                    adapter.Fill(table);
+                    
+                    // --- BƯỚC 2: Debug dữ liệu ra Console (Output) của Visual Studio ---
+                    if (table.Columns.Contains("FullName"))
+                    {
+                        System.Diagnostics.Debug.WriteLine("DEBUG: Đã tìm thấy cột FullName trong DataTable.");
+                        if (table.Rows.Count > 0)
+                        {
+                            System.Diagnostics.Debug.WriteLine("DEBUG: Giá trị FullName dòng đầu tiên là: '" + table.Rows[0]["FullName"].ToString() + "'");
+                        }
+                        else
+                        {
+                            System.Diagnostics.Debug.WriteLine("DEBUG: Bảng không có dữ liệu (0 rows).");
+                        }
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("DEBUG - CẢNH BÁO: Không có cột FullName trong DataTable!");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Hiện thông báo lỗi SQL (VD: Thiếu cột Fname, Lname) để xử lý thay vì bị ẩn đi
+                System.Windows.Forms.MessageBox.Show("Lỗi truy vấn SQL: " + ex.Message, "Debug SQL", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            }
+            finally
+            {
+                db.closeConnection();
+            }
+            return table;
+        }
+    }
     }
 }

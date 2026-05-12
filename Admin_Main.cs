@@ -39,5 +39,14 @@ namespace window_app
             us.Dock = DockStyle.Fill;
             admin_content_panel.Controls.Add(us);
         }
+
+        private void user_mangament_button_Click(object sender, EventArgs e)
+        {
+            header_label.Text = "USER ACCOUNT MANAGEMENT";
+            admin_content_panel.Controls.Clear();
+            User4 us = new User4();
+            us.Dock = DockStyle.Fill;
+            admin_content_panel.Controls.Add(us);
+        }
     }
 }
