@@ -9,6 +9,8 @@ namespace window_app
 {
     public partial class Student_Main : Form
     {
+        private readonly myDB db = new myDB();
+
         public Student_Main()
         {
             InitializeComponent();
@@ -100,38 +102,41 @@ namespace window_app
 
             try
             {
-                myDB db = new myDB();
                 string sql = "SELECT Name, Fname, Lname, Pture FROM Student WHERE CAST(MSSV AS NVARCHAR) = @m OR RTRIM(CAST(MSSV AS NVARCHAR)) = @m";
-                SqlCommand cmd = new SqlCommand(sql, db.getConnection());
-                cmd.Parameters.AddWithValue("@m", mssv.Trim());
-
-                db.openConnection();
-                using (var rdr = cmd.ExecuteReader())
+                
+                using (SqlCommand cmd = new SqlCommand(sql, db.getConnection()))
                 {
-                    if (rdr.Read())
-                    {
-                        string name = rdr["Name"] != DBNull.Value
-                            ? rdr["Name"].ToString()
-                            : ((rdr["Fname"] != DBNull.Value ? rdr["Fname"].ToString() : "")
-                             + " " + (rdr["Lname"] != DBNull.Value ? rdr["Lname"].ToString() : "")).Trim();
-                        lblStudentName.Text = string.IsNullOrWhiteSpace(name) ? (Globals.GlobalUsername ?? "Sinh viên") : name;
+                    cmd.Parameters.AddWithValue("@m", mssv.Trim());
 
-                        if (rdr["Pture"] != DBNull.Value)
-                        {
-                            byte[] bytes = (byte[])rdr["Pture"];
-                            using var ms = new MemoryStream(bytes);
-                            picStudentPhoto.Image = MakeCircle(Image.FromStream(ms), picStudentPhoto.Width);
-                        }
-                        else LoadDefaultAvatar();
-                    }
-                    else
+                    db.openConnection();
+                    using (var rdr = cmd.ExecuteReader())
                     {
-                        lblStudentName.Text = Globals.GlobalUsername ?? "Sinh viên";
-                        LoadDefaultAvatar();
+                        if (rdr.Read())
+                        {
+                            string name = rdr["Name"] != DBNull.Value
+                                ? rdr["Name"].ToString()
+                                : ((rdr["Fname"] != DBNull.Value ? rdr["Fname"].ToString() : "")
+                                + " " + (rdr["Lname"] != DBNull.Value ? rdr["Lname"].ToString() : "")).Trim();
+                            lblStudentName.Text = string.IsNullOrWhiteSpace(name) ? (Globals.GlobalUsername ?? "Sinh viên") : name;
+
+                            if (rdr["Pture"] != DBNull.Value)
+                            {
+                                byte[] bytes = (byte[])rdr["Pture"];
+                                using var ms = new MemoryStream(bytes);
+                                picStudentPhoto.Image = MakeCircle(Image.FromStream(ms), picStudentPhoto.Width);
+                            }
+                            else LoadDefaultAvatar();
+                        }
+                        else
+                        {
+                            lblStudentName.Text = Globals.GlobalUsername ?? "Sinh viên";
+                            LoadDefaultAvatar();
+                        }
                     }
-                }
-                db.closeConnection();
+                    db.closeConnection();
+                }   
             }
+                
             catch
             {
                 lblStudentName.Text = Globals.GlobalUsername ?? "Sinh viên";
