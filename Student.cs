@@ -418,31 +418,49 @@ namespace window_app
             }
         }
 
-        private int GetCurrentStudentCount(string major, string year, SqlTransaction trans)
+        /// <summary>
+/// Truy vấn số thứ tự (3 số cuối) lớn nhất của sinh viên dựa trên mã ngành và năm nhập học.
+/// Hàm này sử dụng SQL Transaction để đảm bảo tính nhất quán dữ liệu khi chạy hàng loạt.
+/// </summary>
+/// <param name="major">Mã ngành học (ví dụ: 110, 120).</param>
+/// <param name="year">Năm nhập học (ví dụ: 2024 hoặc 24).</param>
+/// <param name="trans">Đối tượng <see cref="SqlTransaction"/> để thực thi lệnh trong một phiên làm việc an toàn.</param>
+/// <returns>Trả về số thứ tự lớn nhất hiện có (kiểu int). Nếu chưa có sinh viên nào thì trả về 0.</returns>
+private int GetCurrentStudentCount(string major, string year, SqlTransaction trans)
+{
+    // Bước 1: Xử lý chuỗi để lấy 2 số cuối của năm (ví dụ: 2024 -> 24)
+    string yearPrefix = year.Length > 2 ? year.Substring(year.Length - 2) : year;
+    
+    // Bước 2: Tạo tiền tố (prefix) tìm kiếm. Ví dụ: 24 (năm) + 110 (ngành) = 24110
+    string prefix = yearPrefix + major; 
+
+    // Bước 3: Dùng hàm MAX() trong SQL để tìm MSSV lớn nhất có tiền tố này.
+    // Việc dùng MAX giúp tránh lỗi trùng lặp mã nếu trước đó có sinh viên bị xóa.
+    string sql = "SELECT MAX(MSSV) FROM Student WHERE CAST(MSSV AS VARCHAR) LIKE @prefix";
+
+    // Khởi tạo command kèm theo Transaction để đảm bảo tính an toàn dữ liệu (Atomicity)
+    using (SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans))
+    {
+        // Dùng toán tử LIKE với ký tự đại diện % để tìm các MSSV "bắt đầu với" tiền tố trên
+        cmd.Parameters.AddWithValue("@prefix", prefix + "%");
+
+        // ExecuteScalar lấy về giá trị duy nhất ở ô đầu tiên (MAX MSSV)
+        object result = cmd.ExecuteScalar();
+
+        // Nếu DB chưa có sinh viên nào thuộc ngành/năm này, kết quả sẽ là NULL
+        if (result == DBNull.Value || result == null)
         {
-            // Lấy 2 số cuối của năm
-            string yearPrefix = year.Length > 2 ? year.Substring(year.Length - 2) : year;
-            string prefix = yearPrefix + major; // Ví dụ: 24110
-
-            // Tìm MSSV lớn nhất có tiền tố này
-            string sql = "SELECT MAX(MSSV) FROM Student WHERE CAST(MSSV AS VARCHAR) LIKE @prefix";
-
-            using (SqlCommand cmd = new SqlCommand(sql, db.getConnection(), trans))
-            {
-                cmd.Parameters.AddWithValue("@prefix", prefix + "%");
-
-                object result = cmd.ExecuteScalar();
-
-                if (result == DBNull.Value || result == null)
-                {
-                    return 0; // Nếu chưa có ai, bắt đầu từ 0
-                }
-
-                // Giả sử MSSV là 24110003, chúng ta lấy 3 số cuối là 3
-                string maxMssvStr = result.ToString();
-                string suffix = maxMssvStr.Substring(maxMssvStr.Length - 3);
-                return int.Parse(suffix);
-            }
+            return 0; // Trả về 0 để sinh viên đầu tiên sẽ có STT là 1 (0 + 1)
         }
+
+        // Bước 4: "Bóc tách" lấy 3 ký tự cuối cùng của MSSV lớn nhất tìm được
+        // Ví dụ: MSSV '24110003' -> lấy được chuỗi '003'
+        string maxMssvStr = result.ToString();
+        string suffix = maxMssvStr.Substring(maxMssvStr.Length - 3);
+        
+        // Ép kiểu về int để trả về số 3 cho hàm xử lý tiếp theo
+        return int.Parse(suffix);
+    }
+}
     }
 }
