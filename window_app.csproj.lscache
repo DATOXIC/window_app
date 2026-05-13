@@ -70,6 +70,9 @@ login_form.cs
 login_form.Designer.cs
 MutualFunc.cs
 myDB.cs
+Notification.cs
+NotificationPage.cs
+NotificationPage.Designer.cs
 obj/Debug/net10.0-windows/
  .NETCoreApp,Version=v10.0.AssemblyAttributes.cs
  window_app.AssemblyInfo.cs

@@ -206,7 +206,7 @@ namespace window_app
             SELECT 
                 acc.username AS Username, 
                 acc.email AS Email, 
-                LTRIM(RTRIM(ISNULL(stu.Fname, '') + ' ' + ISNULL(stu.Lname, ''))) AS FullName,
+                COALESCE(NULLIF(stu.Name, ''), LTRIM(RTRIM(ISNULL(stu.Fname, '') + ' ' + ISNULL(stu.Lname, '')))) AS FullName,
                 SUBSTRING(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 3, 3) AS MajorCode,
                 CASE WHEN LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) LIKE '[0-9][0-9]' 
                      THEN CAST('20' + LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) AS INT) 

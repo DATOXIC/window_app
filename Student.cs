@@ -1,4 +1,4 @@
-﻿﻿using Microsoft.Data.SqlClient;
+﻿﻿﻿﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -347,6 +347,11 @@ namespace window_app
                         string yearPrefix = year.ToString().Substring(year.ToString().Length - 2);
                         string mssvString = yearPrefix + majorCode + rank.ToString("D3");
 
+                        // 3.1.5: Tách tên (Fname, Lname) từ FullName
+                        string[] names = fullName.Trim().Split(' ');
+                        string lastName = names[names.Length - 1];
+                        string firstName = string.Join(" ", names, 0, names.Length - 1);
+
                         // 3.1: Chèn vào bảng [Table]
                         string sqlAccount = "INSERT INTO [Table] (username, password, valid, position, email) " +
                                             "VALUES (@user, @pass, 1, 1, @email); SELECT SCOPE_IDENTITY();";
@@ -361,8 +366,8 @@ namespace window_app
                         }
 
                         // 3.2: Chèn vào bảng Student
-                        string sqlStudent = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Dob, Gder, Address, Pture) " +
-                            "VALUES (@id, @mssv, @name, @phone, @email, @dob, @gdr, @adrs, @pic)";
+                        string sqlStudent = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Dob, Gder, Address, Pture, Fname, Lname) " +
+                            "VALUES (@id, @mssv, @name, @phone, @email, @dob, @gdr, @adrs, @pic, @fn, @ln)";
 
                         using (SqlCommand cmdStudent = new SqlCommand(sqlStudent, db.getConnection(), trans))
                         {
@@ -375,6 +380,8 @@ namespace window_app
                             cmdStudent.Parameters.AddWithValue("@gdr", gender);
                             cmdStudent.Parameters.AddWithValue("@adrs", address);
                             cmdStudent.Parameters.AddWithValue("@pic", picture.ToArray());
+                            cmdStudent.Parameters.AddWithValue("@fn", firstName);
+                            cmdStudent.Parameters.AddWithValue("@ln", lastName);
                             cmdStudent.ExecuteNonQuery();
                         }
 
