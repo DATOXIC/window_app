@@ -111,7 +111,16 @@ namespace window_app
             }
         }
 
-        // 5. Hàm Tự động cấp tài khoản từ AdmissionList
+        /// <summary>
+        /// Tự động ghi danh sinh viên từ danh sách trúng tuyển (AdmissionList).
+        /// Hàm sẽ cấp tài khoản đăng nhập (mật khẩu mặc định bằng MSSV), 
+        /// lưu hồ sơ chi tiết và đánh dấu thí sinh đã được duyệt thành công.
+        /// </summary>
+        /// <param name="candidateId">Mã hồ sơ thí sinh</param>
+        /// <param name="fullName">Họ và tên đầy đủ</param>
+        /// <param name="majorCode">Mã ngành (ví dụ: 110, 120)</param>
+        /// <param name="year">Năm nhập học (để sinh tiền tố MSSV)</param>
+        /// <returns>Trả về <c>true</c> nếu toàn bộ luồng tạo tài khoản và hồ sơ thành công 100%.</returns>
         public bool AutoEnrollStudent(string candidateId, string fullName, string email, string majorCode, int year,
                              DateTime dob, string gender, string phone, string address)
         {
@@ -125,11 +134,12 @@ namespace window_app
             int newMSSV = int.Parse(mssvString);
 
             db.openConnection();
+            // Bắt đầu Transaction để tránh sinh ra dữ liệu mồ côi (ví dụ: có account nhưng mất student profile nếu lỗi giữa chừng)
             using (SqlTransaction trans = db.getConnection().BeginTransaction())
             {
                 try
                 {
-                    // BƯỚC A: Tạo tài khoản trong bảng [Table] (image_8a072b.png)
+                    // BƯỚC A: Tạo tài khoản đăng nhập.
                     string sqlAcc = "INSERT INTO [Table] (username, password, valid, studentID, position, email) " +
                                     "VALUES (@user, @user, 1, @sid, 1, @email); SELECT SCOPE_IDENTITY();";
 
@@ -139,10 +149,11 @@ namespace window_app
                         cmdAcc.Parameters.AddWithValue("@user", mssvString);
                         cmdAcc.Parameters.AddWithValue("@sid", mssvString); // Cột studentID trong [Table]
                         cmdAcc.Parameters.AddWithValue("@email", email);
+                        // SCOPE_IDENTITY() giúp lấy ngay ID vừa được Identity tự sinh trong [Table]
                         accountId = Convert.ToInt32(cmdAcc.ExecuteScalar());
                     }
 
-                    // BƯỚC B: Tạo hồ sơ Student (image_8a070d.png)
+                    // BƯỚC B: Tạo hồ sơ Student liên kết với ID tài khoản phía trên
                     string sqlStu = "INSERT INTO Student (Id, MSSV, Name, Phone, Email, Fname, Lname, Dob, Gder, Address) " +
                                     "VALUES (@id, @mssv, @name, @phn, @email, @fn, @ln, @dob, @gdr, @adrs)";
 
@@ -161,7 +172,7 @@ namespace window_app
                         cmdStu.ExecuteNonQuery();
                     }
 
-                    // BƯỚC C: Cập nhật AdmissionList (image_8a06e8.png)
+                    // BƯỚC C: Đánh dấu đã cấp tài khoản để ngăn ngừa việc xử lý trùng lặp
                     string sqlAdm = "UPDATE AdmissionList SET IsAccountCreated = 1 WHERE CandidateID = @cid";
                     using (SqlCommand cmdAdm = new SqlCommand(sqlAdm, db.getConnection(), trans))
                     {
@@ -169,6 +180,7 @@ namespace window_app
                         cmdAdm.ExecuteNonQuery();
                     }
 
+                    // Hoàn tất và lưu vĩnh viễn các thay đổi vào CSDL
                     trans.Commit();
                     return true;
                 }
@@ -297,11 +309,24 @@ namespace window_app
         }
 
         // --- PHẦN 2: LOGIC PHÊ DUYỆT VÀ CẤP MSSV (Từ nhánh master) ---
+        /// <summary>
+        /// Tính toán số thứ tự (rank) để cấp MSSV cho một sinh viên trong đợt phê duyệt hiện tại.
+        /// Việc cấp số được nối tiếp từ số thứ tự lớn nhất đã có trong DB, cộng thêm 
+        /// vị trí xếp hạng theo bảng chữ cái của sinh viên đó trong danh sách đang chờ duyệt.
+        /// </summary>
+        /// <param name="majorCode">Mã ngành học (Ví dụ: 110, 120)</param>
+        /// <param name="year">Năm nhập học (Ví dụ: 2024)</param>
+        /// <param name="fullName">Họ và tên đầy đủ của thí sinh</param>
+        /// <param name="candidateId">Mã hồ sơ thí sinh (dùng để xử lý trùng tên)</param>
+        /// <param name="trans">SqlTransaction đảm bảo đồng bộ dữ liệu</param>
+        /// <returns>Số thứ tự cuối cùng (int) dùng để ráp thành MSSV hoàn chỉnh</returns>
         private int GetAlphabeticalRank(string majorCode, int year, string fullName, string candidateId, SqlTransaction trans)
         {
+            // Lấy số thứ tự lớn nhất của sinh viên thuộc khóa/ngành này đã nằm sẵn trong DB
             int currentMaxRank = GetCurrentStudentCount(majorCode, year.ToString(), trans);
 
-            // Đếm số người đứng trước thí sinh này trong danh sách trúng tuyển (dựa trên tên)
+            // Đếm số lượng sinh viên trong đợt chờ duyệt (IsAccountCreated = 0) có thứ tự alphabet đứng trước sinh viên này.
+            // Cụm (FullName = @name AND CandidateID <= @cid) hoạt động như 'tie-breaker' để phân định những người trùng y hệt họ tên, đảm bảo rank luôn tăng tuần tự.
             string sql = @"
         SELECT COUNT(*) + 1 
         FROM AdmissionList 
@@ -317,16 +342,28 @@ namespace window_app
                 cmd.Parameters.AddWithValue("@name", fullName);
                 cmd.Parameters.AddWithValue("@cid", candidateId);
 
-                // Rank cuối cùng = (Số người lớn nhất trong DB) + (Thứ tự trong đợt duyệt này)
+                // Rank cuối cùng = (STT lớn nhất đã có trong DB) + (Vị trí của sinh viên trong đợt duyệt hiện tại)
+                // Ví dụ: DB đã có 10 người, bạn đứng thứ 3 trong đợt duyệt hiện tại => Rank = 10 + 3 = 13
                 return currentMaxRank + (int)cmd.ExecuteScalar();
             }
         }
 
+        /// <summary>
+        /// Phê duyệt hàng loạt sinh viên trúng tuyển. 
+        /// Hàm này tự động tạo tài khoản, cấp mã số sinh viên (MSSV) dựa trên thứ tự bảng chữ cái, 
+        /// và lưu thông tin hồ sơ sinh viên vào cơ sở dữ liệu.
+        /// </summary>
+        /// <param name="selectedStudents">Danh sách các sinh viên đang chờ duyệt.</param>
+        /// <param name="picture">Luồng dữ liệu ảnh đại diện mặc định sẽ được gán cho các sinh viên này.</param>
+        /// <returns>Trả về <c>true</c> nếu toàn bộ quá trình phê duyệt thành công.</returns>
         public bool ApproveBatchStudents(List<PendingStudentDTO> selectedStudents, MemoryStream picture)
         {
+            // Sắp xếp danh sách sinh viên theo tên để đảm bảo việc cấp MSSV (STT) đi theo đúng thứ tự bảng chữ cái
             var sortedStudents = selectedStudents.OrderBy(s => s.FullName).ToList();
 
             db.openConnection();
+            // Sử dụng Transaction: Nếu xảy ra lỗi ở bất kỳ thao tác Insert/Update nào của bất kỳ sinh viên nào, 
+            // toàn bộ quá trình sẽ được hoàn tác (Rollback), tránh tình trạng sinh ra dữ liệu rác (VD: Có Account nhưng mất Student)
             using (SqlTransaction trans = db.getConnection().BeginTransaction())
             {
                 try
@@ -343,6 +380,7 @@ namespace window_app
                         string gender = student.Gender;
                         DateTime dob = student.Dob;
 
+                        // Tính toán MSSV theo Format: [2 số cuối của năm nhập học] + [Mã ngành] + [STT 3 chữ số]
                         int rank = GetAlphabeticalRank(majorCode, year, fullName, cid, trans);
                         string yearPrefix = year.ToString().Substring(year.ToString().Length - 2);
                         string mssvString = yearPrefix + majorCode + rank.ToString("D3");
@@ -354,7 +392,7 @@ namespace window_app
 
                         // 3.1: Chèn vào bảng [Table]
                         string sqlAccount = "INSERT INTO [Table] (username, password, valid, position, email) " +
-                                            "VALUES (@user, @pass, 1, 1, @email); SELECT SCOPE_IDENTITY();";
+                                            "VALUES (@user, @pass, 1, 1, @email); SELECT SCOPE_IDENTITY();"; // Dùng SCOPE_IDENTITY() để lấy ngay ID của tài khoản vừa tạo
 
                         int newAccountId;
                         using (SqlCommand cmdAccount = new SqlCommand(sqlAccount, db.getConnection(), trans))
