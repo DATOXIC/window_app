@@ -11,7 +11,7 @@ namespace window_app
 {
     public partial class User4 : UserControl
     {
-        private readonly Account acc = new Account();
+        private readonly Student stu = new Student();
         private readonly myDB db = new myDB();
 
         public User4()
@@ -154,7 +154,7 @@ namespace window_app
             string username =
                 student_account_display.CurrentRow.Cells["Username"].Value.ToString();
 
-            bool result = acc.MoveBackToAdmission(username);
+            bool result = stu.MoveBackToAdmission(username);
 
             if (result)
             {

@@ -85,17 +85,96 @@ namespace window_app
             }
         }
 
-        // 3. Hàm Xóa sinh viên
+        // 3. Hàm Xóa sinh viên --> THÊM LẠI VÀO ADMISSION REVIEW
         public bool Delete(int mssv)
         {
-            using (SqlCommand command = new SqlCommand("DELETE FROM Student WHERE MSSV=@mssv", db.getConnection()))
+            try
             {
-                command.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
-
                 db.openConnection();
-                bool result = (command.ExecuteNonQuery() == 1);
+
+                // 1. Lấy thông tin sinh viên từ bảng Student
+                string selectQuery = "SELECT * FROM Student WHERE MSSV = @mssv";
+
+                SqlCommand selectCmd = new SqlCommand(selectQuery, db.getConnection());
+                selectCmd.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
+
+                SqlDataReader reader = selectCmd.ExecuteReader();
+
+                if (!reader.Read())
+                {
+                    reader.Close();
+                    db.closeConnection();
+                    return false;
+                }
+
+                // Lưu dữ liệu student
+                string fullname = reader["Name"].ToString();
+                string email = reader["Email"].ToString();
+                string phone = reader["Phone"].ToString();
+                string address = reader["Address"].ToString();
+                string gender = reader["Gder"].ToString();
+
+                DateTime dob = Convert.ToDateTime(reader["Dob"]);
+
+                // MSSV: 23110003
+                // MajorCode: 110
+                string majorCode = mssv.ToString().Substring(2, 3);
+
+                // EnrollmentYear: 2023
+                int enrollmentYear = Convert.ToInt32("20" + mssv.ToString().Substring(0, 2));
+
+                reader.Close();
+
+                // 2. Insert lại vào AdmissionList
+                string insertQuery =
+                    "INSERT INTO AdmissionList " +
+                    "(CandidateID, FullName, Email, MajorCode, EnrollmentYear, IsAccountCreated, Dob, Gender, Phone, Address) " +
+                    "VALUES " +
+                    "(@cid, @fullname, @email, @major, @year, 0, @dob, @gender, @phone, @address)";
+
+                SqlCommand insertCmd = new SqlCommand(insertQuery, db.getConnection());
+
+                insertCmd.Parameters.AddWithValue("@cid", "TS" + mssv.ToString());
+                insertCmd.Parameters.AddWithValue("@fullname", fullname);
+                insertCmd.Parameters.AddWithValue("@email", email);
+                insertCmd.Parameters.AddWithValue("@major", majorCode);
+                insertCmd.Parameters.AddWithValue("@year", enrollmentYear);
+                insertCmd.Parameters.AddWithValue("@dob", dob);
+                insertCmd.Parameters.AddWithValue("@gender", gender);
+                insertCmd.Parameters.AddWithValue("@phone", phone);
+                insertCmd.Parameters.AddWithValue("@address", address);
+
+                insertCmd.ExecuteNonQuery();
+
+                // 3. Xóa khỏi Student
+                string deleteQuery = "DELETE FROM Student WHERE MSSV = @mssv";
+
+                SqlCommand deleteCmd = new SqlCommand(deleteQuery, db.getConnection());
+
+                deleteCmd.Parameters.Add("@mssv", SqlDbType.Int).Value = mssv;
+
+                bool result = deleteCmd.ExecuteNonQuery() == 1;
+
+                // 4. Xóa khỏi table ssms
+                // XÓA ACCOUNT TRONG TABLE
+                string deleteAccount =
+                    "DELETE FROM [Table] WHERE username = @user";
+
+                SqlCommand deleteAccCmd =
+                new SqlCommand(deleteAccount, db.getConnection());
+
+                deleteAccCmd.Parameters.AddWithValue("@user", mssv.ToString());
+
+                deleteAccCmd.ExecuteNonQuery();
+
                 db.closeConnection();
+
                 return result;
+            }
+            catch
+            {
+                db.closeConnection();
+                return false;
             }
         }
 

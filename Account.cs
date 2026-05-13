@@ -139,31 +139,6 @@ namespace window_app
                 return result;
             }
         }
-
-        //Nhấn nút delete sinh viên thì đưa sinh viên đó từ list sinh viên -> admission list
-        public bool MoveBackToAdmission(string username)
-        {
-            string query =
-                "UPDATE [Table] " +
-                "SET valid = 0 " +
-                "WHERE username = @user";
-
-            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
-            {
-                cmd.Parameters.AddWithValue("@user", username);
-
-                db.openConnection();
-
-                bool result = cmd.ExecuteNonQuery() > 0;
-
-                db.closeConnection();
-
-                return result;
-            }
-        }
-
-
-
         /// <summary>
         /// Hàm này đóng vai trò 'active' tài khoản và link nó với mã số sinh viên (MSSV).
         /// Thực hiện cập nhật trạng thái Valid = 1, gán ID sinh viên và set quyền hạn (Position).
