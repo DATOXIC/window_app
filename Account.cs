@@ -259,7 +259,7 @@ public bool ApproveAndLinkStudent(string user, string studentID, int pos)
             FROM [Table] acc
             LEFT JOIN Student stu ON (LTRIM(RTRIM(acc.studentID)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))) 
                                   OR LTRIM(RTRIM(acc.username)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))))
-            WHERE acc.position = 1"; // position = 1 dành riêng cho sinh viên
+            WHERE acc.position = 1 and acc.valid = 1"; // position = 1 dành riêng cho sinh viên
 
         // Nếu Admin chọn lọc bằng Year/ Major --> sẽ thêm các lệnh SQL vào query ban đầu
         if (!string.IsNullOrEmpty(year))
