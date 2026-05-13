@@ -1,17 +1,19 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
-using Microsoft.Data.SqlClient;
 //
 namespace window_app
 {
     public partial class User4 : UserControl
     {
         private readonly Student stu = new Student();
+        private readonly Account acc = new Account();
         private readonly myDB db = new myDB();
 
         public User4()
@@ -151,14 +153,15 @@ namespace window_app
                 return;
             }
 
-            string username =
-                student_account_display.CurrentRow.Cells["Username"].Value.ToString();
+            int mssv = Convert.ToInt32(
+                student_account_display.CurrentRow.Cells["Username"].Value
+            );
 
-            bool result = stu.MoveBackToAdmission(username);
+            bool result = stu.Delete(mssv);
 
             if (result)
             {
-                MessageBox.Show("Đã xóa");
+                MessageBox.Show("Đã chuyển sinh viên về Admission Review");
 
                 LoadFilteredData();
             }

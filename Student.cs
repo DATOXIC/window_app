@@ -108,7 +108,7 @@ namespace window_app
                 }
 
                 // Lưu dữ liệu student
-                string fullname = reader["Name"].ToString();
+                string fullname = reader["Fname"].ToString() + " " + reader["Lname"].ToString();
                 string email = reader["Email"].ToString();
                 string phone = reader["Phone"].ToString();
                 string address = reader["Address"].ToString();
@@ -124,6 +124,12 @@ namespace window_app
                 int enrollmentYear = Convert.ToInt32("20" + mssv.ToString().Substring(0, 2));
 
                 reader.Close();
+
+                string clearOldQuery = "DELETE FROM AdmissionList WHERE Email = @email OR CandidateID = @cid";
+                SqlCommand clearCmd = new SqlCommand(clearOldQuery, db.getConnection());
+                clearCmd.Parameters.AddWithValue("@email", email);
+                clearCmd.Parameters.AddWithValue("@cid", "TS" + mssv.ToString());
+                clearCmd.ExecuteNonQuery();
 
                 // 2. Insert lại vào AdmissionList
                 string insertQuery =
@@ -171,9 +177,10 @@ namespace window_app
 
                 return result;
             }
-            catch
+            catch (Exception ex)
             {
                 db.closeConnection();
+                MessageBox.Show("Lỗi");
                 return false;
             }
         }
