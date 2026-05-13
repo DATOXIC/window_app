@@ -214,7 +214,7 @@ namespace window_app
             FROM [Table] acc
             LEFT JOIN Student stu ON (LTRIM(RTRIM(acc.studentID)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))) 
                                   OR LTRIM(RTRIM(acc.username)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))))
-            WHERE acc.position = 1"; // position = 1 dành riêng cho sinh viên
+            WHERE acc.position = 1 and acc.valid = 1"; // position = 1 dành riêng cho sinh viên
 
         if (!string.IsNullOrEmpty(year))
         {
