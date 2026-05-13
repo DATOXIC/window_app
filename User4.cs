@@ -142,5 +142,30 @@ namespace window_app
                 MessageBox.Show("Không thể tải dữ liệu: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (student_account_display.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn sinh viên.");
+                return;
+            }
+
+            string username =
+                student_account_display.CurrentRow.Cells["Username"].Value.ToString();
+
+            bool result = acc.MoveBackToAdmission(username);
+
+            if (result)
+            {
+                MessageBox.Show("Đã xóa");
+
+                LoadFilteredData();
+            }
+            else
+            {
+                MessageBox.Show("Thao tác thất bại.");
+            }
+        }
     }
 }

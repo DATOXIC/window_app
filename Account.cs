@@ -140,17 +140,39 @@ namespace window_app
             }
         }
 
-        
-        
-/// <summary>
-/// Hàm này đóng vai trò 'active' tài khoản và link nó với mã số sinh viên (MSSV).
-/// Thực hiện cập nhật trạng thái Valid = 1, gán ID sinh viên và set quyền hạn (Position).
-/// </summary>
-/// <param name="user">Tên đăng nhập của tài khoản cần duyệt.</param>
-/// <param name="studentID">Mã số sinh viên dùng để map với bảng Student.</param>
-/// <param name="pos">Quyền hạn trong hệ thống (thường 1 là Student).</param>
-/// <returns>Trả về <c>true</c> nếu 'phá đảo' thành công, ngược lại là <c>false</c>.</returns>
-public bool ApproveAndLinkStudent(string user, string studentID, int pos)
+        //Nhấn nút delete sinh viên thì đưa sinh viên đó từ list sinh viên -> admission list
+        public bool MoveBackToAdmission(string username)
+        {
+            string query =
+                "UPDATE [Table] " +
+                "SET valid = 0 " +
+                "WHERE username = @user";
+
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@user", username);
+
+                db.openConnection();
+
+                bool result = cmd.ExecuteNonQuery() > 0;
+
+                db.closeConnection();
+
+                return result;
+            }
+        }
+
+
+
+        /// <summary>
+        /// Hàm này đóng vai trò 'active' tài khoản và link nó với mã số sinh viên (MSSV).
+        /// Thực hiện cập nhật trạng thái Valid = 1, gán ID sinh viên và set quyền hạn (Position).
+        /// </summary>
+        /// <param name="user">Tên đăng nhập của tài khoản cần duyệt.</param>
+        /// <param name="studentID">Mã số sinh viên dùng để map với bảng Student.</param>
+        /// <param name="pos">Quyền hạn trong hệ thống (thường 1 là Student).</param>
+        /// <returns>Trả về <c>true</c> nếu 'phá đảo' thành công, ngược lại là <c>false</c>.</returns>
+        public bool ApproveAndLinkStudent(string user, string studentID, int pos)
 {
     // Bước 1: Build câu Query. 
     // Dùng @ tham số để tránh bị 'ăn đòn' bởi SQL Injection - cực kỳ quan trọng để bảo mật nhé!
@@ -302,5 +324,6 @@ public bool ApproveAndLinkStudent(string user, string studentID, int pos)
             return table;
         }
     }
+
     }
 }

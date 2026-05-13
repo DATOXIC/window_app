@@ -35,6 +35,7 @@
             panel1 = new Panel();
             panel3 = new Panel();
             student_account_display = new DataGridView();
+            btnDelete = new Button();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -44,6 +45,7 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(btnDelete);
             panel2.Controls.Add(cboMajor);
             panel2.Controls.Add(cboYear);
             panel2.Dock = DockStyle.Right;
@@ -107,6 +109,16 @@
             student_account_display.Size = new Size(495, 470);
             student_account_display.TabIndex = 2;
             // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(46, 388);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(151, 49);
+            btnDelete.TabIndex = 5;
+            btnDelete.Text = "Delete Student";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
+            // 
             // User4
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -132,5 +144,6 @@
         private Panel panel1;
         private Panel panel3;
         private DataGridView student_account_display;
+        private Button btnDelete;
     }
 }
