@@ -113,12 +113,14 @@ namespace window_app
                     student_account_display.Columns.Clear();
                     student_account_display.AutoGenerateColumns = true;
 
+                    // Cài đặt thuộc tính cần thiết cho DataGridView
                     student_account_display.DataSource = dt;
                     student_account_display.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                     student_account_display.MultiSelect = false;
                     student_account_display.ReadOnly = true;
                     student_account_display.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
 
+                    // Đổi tên các cột
                     if (student_account_display.Columns["Username"] != null)
                         student_account_display.Columns["Username"].HeaderText = "MSSV";
 

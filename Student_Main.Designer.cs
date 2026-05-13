@@ -22,6 +22,7 @@ namespace window_app
             pnlStudentInfo  = new Panel();
             lblStudentName  = new Label();
             lblStudentMSSV  = new Label();
+            lblDropArrow    = new Label();
             pnlBody         = new Panel();
             pnlSidebar      = new Panel();
             lblPersonalInfo = new Label();
@@ -73,51 +74,70 @@ namespace window_app
             lblSchoolName.Text      = "TRƯỜNG ĐẠI HỌC\r\nCÔNG NGHỆ KỸ THUẬT TP.HCM";
             lblSchoolName.TextAlign = ContentAlignment.MiddleLeft;
 
-            // Header-right (bell + divider + photo + name/mssv)
+            // Header-right (bell + divider + photo + name/mssv + arrow)
             pnlHeaderRight.Anchor    = AnchorStyles.Top | AnchorStyles.Right;
             pnlHeaderRight.BackColor = Color.FromArgb(215, 232, 245);
-            pnlHeaderRight.Size      = new Size(310, 54);
-            pnlHeaderRight.Location  = new Point(1060 - 310 - 10, 10);
-            pnlHeaderRight.Controls.Add(picBell);
-            pnlHeaderRight.Controls.Add(pnlDivider);
-            pnlHeaderRight.Controls.Add(picStudentPhoto);
+            pnlHeaderRight.Size      = new Size(330, 54);
+            pnlHeaderRight.Location  = new Point(1060 - 330 - 10, 10);
+            pnlHeaderRight.Controls.Add(lblDropArrow);
             pnlHeaderRight.Controls.Add(pnlStudentInfo);
+            pnlHeaderRight.Controls.Add(picStudentPhoto);
+            pnlHeaderRight.Controls.Add(pnlDivider);
+            pnlHeaderRight.Controls.Add(picBell);
 
+            // Bell icon - larger for clarity
             picBell.Cursor   = Cursors.Hand;
-            picBell.Location = new Point(10, 11);
-            picBell.Size     = new Size(28, 28);
+            picBell.Location = new Point(14, 11);
+            picBell.Size     = new Size(32, 32);
             picBell.SizeMode = PictureBoxSizeMode.Zoom;
             picBell.TabStop  = false;
             picBell.Click   += PicNotification_Click;
 
-            pnlDivider.Location  = new Point(52, 7);
-            pnlDivider.Size      = new Size(2, 40);
+            // Divider
+            pnlDivider.Location  = new Point(58, 7);
+            pnlDivider.Size      = new Size(1, 40);
             pnlDivider.BackColor = Color.FromArgb(170, 192, 210);
 
+            // Student photo
             picStudentPhoto.Cursor   = Cursors.Hand;
-            picStudentPhoto.Location = new Point(60, 4);
+            picStudentPhoto.Location = new Point(68, 4);
             picStudentPhoto.Size     = new Size(46, 46);
             picStudentPhoto.SizeMode = PictureBoxSizeMode.Zoom;
             picStudentPhoto.TabStop  = false;
             picStudentPhoto.Click   += PicStudentPhoto_Click;
 
-            pnlStudentInfo.Location  = new Point(112, 5);
-            pnlStudentInfo.Size      = new Size(190, 44);
+            // Student info text
+            pnlStudentInfo.Location  = new Point(120, 5);
+            pnlStudentInfo.Size      = new Size(178, 44);
             pnlStudentInfo.BackColor = Color.Transparent;
+            pnlStudentInfo.Cursor    = Cursors.Hand;
             pnlStudentInfo.Controls.Add(lblStudentMSSV);
             pnlStudentInfo.Controls.Add(lblStudentName);
+            pnlStudentInfo.Click    += PicStudentPhoto_Click;
 
             lblStudentName.Dock      = DockStyle.Top;
             lblStudentName.Height    = 22;
             lblStudentName.Font      = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblStudentName.ForeColor = Color.FromArgb(25, 48, 82);
             lblStudentName.Text      = "Sinh viên";
+            lblStudentName.Click    += PicStudentPhoto_Click;
 
             lblStudentMSSV.Dock      = DockStyle.Top;
             lblStudentMSSV.Height    = 20;
             lblStudentMSSV.Font      = new Font("Segoe UI", 9F);
             lblStudentMSSV.ForeColor = Color.FromArgb(55, 85, 120);
             lblStudentMSSV.Text      = "MSSV";
+            lblStudentMSSV.Click    += PicStudentPhoto_Click;
+
+            // Dropdown arrow
+            lblDropArrow.Location  = new Point(300, 16);
+            lblDropArrow.Size      = new Size(22, 22);
+            lblDropArrow.Text      = "▾";
+            lblDropArrow.Font      = new Font("Segoe UI", 12F);
+            lblDropArrow.ForeColor = Color.FromArgb(80, 110, 145);
+            lblDropArrow.TextAlign = ContentAlignment.MiddleCenter;
+            lblDropArrow.Cursor    = Cursors.Hand;
+            lblDropArrow.Click    += PicStudentPhoto_Click;
 
             // ── BODY ──────────────────────────────────────────
             pnlBody.Dock      = DockStyle.Fill;
@@ -201,7 +221,7 @@ namespace window_app
 
         private Panel pnlHeader, pnlHeaderRight, pnlDivider, pnlStudentInfo, pnlBody, pnlSidebar, contentPanel;
         private PictureBox picLogo, picBell, picStudentPhoto;
-        private Label lblSchoolName, lblStudentName, lblStudentMSSV, lblPersonalInfo;
+        private Label lblSchoolName, lblStudentName, lblStudentMSSV, lblPersonalInfo, lblDropArrow;
         private FlowLayoutPanel pnlMenuFlow;
         private Button btnCurriculum, btnClassSchedule, btnExamSchedule,
                        btnViewGrades, btnTuitionPayment, btnTuitionInvoices, btnScholarships;
