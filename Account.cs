@@ -241,45 +241,48 @@ namespace window_app
     /// <param name="year">Năm nhập học</param>
     /// <param name="department">Khoa</param>
     /// <returns>Trả về kết quả là một kiểu dữ Liệu Bảng (DataTable)</returns>
-    public DataTable GetFilteredStudentAccounts(string year, string department)
+    public DataTable GetFilteredStudentAccounts(string year, string department, string searchMSSV = "")
     {
         // Kết nối nhiều bảng với nhau bằng Query để ra thông tin cần thiết
         string query = @"
             SELECT 
-                acc.username AS Username, 
-                acc.email AS Email, 
-                COALESCE(NULLIF(stu.Name, ''), LTRIM(RTRIM(ISNULL(stu.Fname, '') + ' ' + ISNULL(stu.Lname, '')))) AS FullName,
-                SUBSTRING(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 3, 3) AS MajorCode,
-                CASE WHEN LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) LIKE '[0-9][0-9]' 
-                     THEN CAST('20' + LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) AS INT) 
-                     ELSE 0 END AS EnrollmentYear
-            FROM [Table] acc
-            LEFT JOIN Student stu ON (LTRIM(RTRIM(acc.studentID)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))) 
-                                  OR LTRIM(RTRIM(acc.username)) = LTRIM(RTRIM(CAST(stu.MSSV AS NVARCHAR(MAX)))))
-            WHERE acc.position = 1 and acc.valid = 1"; // position = 1 dành riêng cho sinh viên
+            acc.username AS Username, 
+            acc.email AS Email, 
+            COALESCE(NULLIF(stu.Name, ''), (ISNULL(stu.Fname, '') + ' ' + ISNULL(stu.Lname, ''))) AS FullName,
+            SUBSTRING(acc.username, 3, 3) AS MajorCode,
+            CAST('20' + LEFT(acc.username, 2) AS INT) AS EnrollmentYear
+        FROM [Table] acc
+        INNER JOIN Student stu ON acc.username = CAST(stu.MSSV AS NVARCHAR(MAX))
+        WHERE acc.position = 1 AND acc.valid = 1"; // position = 1 dành riêng cho sinh viên, valid = 1 để chỉ lấy những tài khoản đã được duyệt kích hoạt
 
-        // Nếu Admin chọn lọc bằng Year/ Major --> sẽ thêm các lệnh SQL vào query ban đầu
-        if (!string.IsNullOrEmpty(year))
-        {
-            query += " AND LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) = RIGHT(@year, 2)";
-        }
-        if (!string.IsNullOrEmpty(department))
-        {
-            query += " AND SUBSTRING(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 3, 3) = @department";
-        }
-        
+            // Nếu Admin chọn lọc bằng Year/ Major --> sẽ thêm các lệnh SQL vào query ban đầu
+            if (!string.IsNullOrEmpty(year) && year != "Tất cả")
+            {
+                query += " AND LEFT(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 2) = RIGHT(@year, 2)";
+            }
+            if (!string.IsNullOrEmpty(department) && department != "Tất cả" && department != "")
+            {
+                query += " AND SUBSTRING(ISNULL(NULLIF(LTRIM(RTRIM(acc.studentID)), ''), acc.username), 3, 3) = @department";
+            }
+            if (!string.IsNullOrEmpty(searchMSSV))
+            {
+                query += " AND acc.username LIKE @search";
+            }
 
-        // Nơi thực thi lệnh SQL
-        using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+
+            // Nơi thực thi lệnh SQL
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
         {
             if (!string.IsNullOrEmpty(year))
                 cmd.Parameters.AddWithValue("@year", year);
                 
             if (!string.IsNullOrEmpty(department))
                 cmd.Parameters.AddWithValue("@department", department);
-            
+             if (!string.IsNullOrEmpty(searchMSSV))
+                cmd.Parameters.AddWithValue("@search", "%" + searchMSSV + "%");
 
-            DataTable table = new DataTable();
+
+                DataTable table = new DataTable();
             try
             {
                 db.openConnection();

@@ -107,13 +107,14 @@ namespace window_app
                     selectedMajor = cboMajor.SelectedValue.ToString();
                 }
 
-                DataTable dt = acc.GetFilteredStudentAccounts(selectedYear, selectedMajor);
+                string searchMSSV = txtSearch.Text.Trim();
+
+                DataTable dt = acc.GetFilteredStudentAccounts(selectedYear, selectedMajor, searchMSSV);
                 if (dt != null)
                 {
                     // Xóa sạch các cột cũ nếu có và bật tính năng tự động tạo cột từ DataTable
-                    student_account_display.DataSource = null;
-                    student_account_display.Columns.Clear();
                     student_account_display.AutoGenerateColumns = true;
+                    student_account_display.DataSource = dt;
 
                     // Cài đặt thuộc tính cần thiết cho DataGridView
                     student_account_display.DataSource = dt;
@@ -162,13 +163,22 @@ namespace window_app
             if (result)
             {
                 MessageBox.Show("Đã chuyển sinh viên về Admission Review");
-
                 LoadFilteredData();
             }
             else
             {
                 MessageBox.Show("Thao tác thất bại.");
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            LoadFilteredData();
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            LoadFilteredData();
         }
     }
 }

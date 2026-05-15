@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             panel2 = new Panel();
+            txtSearch = new TextBox();
+            btnDelete = new Button();
             cboMajor = new ComboBox();
             cboYear = new ComboBox();
             panel4 = new Panel();
             panel1 = new Panel();
             panel3 = new Panel();
             student_account_display = new DataGridView();
-            btnDelete = new Button();
             panel2.SuspendLayout();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -45,6 +46,7 @@
             // panel2
             // 
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(txtSearch);
             panel2.Controls.Add(btnDelete);
             panel2.Controls.Add(cboMajor);
             panel2.Controls.Add(cboYear);
@@ -53,6 +55,24 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(227, 502);
             panel2.TabIndex = 3;
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(46, 42);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(151, 27);
+            txtSearch.TabIndex = 6;
+            txtSearch.TextChanged += txtSearch_TextChanged;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(46, 388);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(151, 49);
+            btnDelete.TabIndex = 5;
+            btnDelete.Text = "Delete Student";
+            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // cboMajor
             // 
@@ -109,16 +129,6 @@
             student_account_display.Size = new Size(495, 470);
             student_account_display.TabIndex = 2;
             // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(46, 388);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(151, 49);
-            btnDelete.TabIndex = 5;
-            btnDelete.Text = "Delete Student";
-            btnDelete.UseVisualStyleBackColor = true;
-            btnDelete.Click += btnDelete_Click;
-            // 
             // User4
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -130,6 +140,7 @@
             Padding = new Padding(15);
             Size = new Size(792, 532);
             panel2.ResumeLayout(false);
+            panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)student_account_display).EndInit();
@@ -145,5 +156,6 @@
         private Panel panel3;
         private DataGridView student_account_display;
         private Button btnDelete;
+        private TextBox txtSearch;
     }
 }
