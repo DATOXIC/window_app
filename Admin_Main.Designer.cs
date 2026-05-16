@@ -74,7 +74,7 @@ namespace window_app
             course_class_button.FlatStyle = FlatStyle.Flat;
             course_class_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             course_class_button.ForeColor = Color.FromArgb(200, 215, 235);
-            course_class_button.Location = new Point(0, 262);
+            course_class_button.Location = new Point(0, 310);
             course_class_button.Name = "course_class_button";
             course_class_button.Padding = new Padding(15, 0, 0, 0);
             course_class_button.Size = new Size(220, 48);
@@ -95,7 +95,7 @@ namespace window_app
             user_mangament_button.FlatStyle = FlatStyle.Flat;
             user_mangament_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             user_mangament_button.ForeColor = Color.FromArgb(200, 215, 235);
-            user_mangament_button.Location = new Point(0, 214);
+            user_mangament_button.Location = new Point(0, 262);
             user_mangament_button.Name = "user_mangament_button";
             user_mangament_button.Padding = new Padding(15, 0, 0, 0);
             user_mangament_button.Size = new Size(220, 48);
@@ -116,7 +116,7 @@ namespace window_app
             button3.FlatStyle = FlatStyle.Flat;
             button3.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             button3.ForeColor = Color.FromArgb(200, 215, 235);
-            button3.Location = new Point(0, 166);
+            button3.Location = new Point(0, 214);
             button3.Name = "button3";
             button3.Padding = new Padding(15, 0, 0, 0);
             button3.Size = new Size(220, 48);
@@ -137,7 +137,7 @@ namespace window_app
             add_student_button.FlatStyle = FlatStyle.Flat;
             add_student_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             add_student_button.ForeColor = Color.FromArgb(200, 215, 235);
-            add_student_button.Location = new Point(0, 118);
+            add_student_button.Location = new Point(0, 166);
             add_student_button.Name = "add_student_button";
             add_student_button.Padding = new Padding(15, 0, 0, 0);
             add_student_button.Size = new Size(220, 48);
@@ -159,7 +159,7 @@ namespace window_app
             approve_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             approve_button.ForeColor = Color.FromArgb(200, 215, 235);
             approve_button.ImageAlign = ContentAlignment.MiddleLeft;
-            approve_button.Location = new Point(0, 70);
+            approve_button.Location = new Point(0, 118);
             approve_button.Name = "approve_button";
             approve_button.Padding = new Padding(15, 0, 0, 0);
             approve_button.Size = new Size(220, 48);
@@ -180,9 +180,11 @@ namespace window_app
             dashboard_button.FlatStyle = FlatStyle.Flat;
             dashboard_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             dashboard_button.ForeColor = Color.White;
+            dashboard_button.Location = new Point(0, 70);
             dashboard_button.Name = "dashboard_button";
             dashboard_button.Padding = new Padding(15, 0, 0, 0);
             dashboard_button.Size = new Size(220, 48);
+            dashboard_button.TabIndex = 5;
             dashboard_button.Text = "📊  Dashboard";
             dashboard_button.TextAlign = ContentAlignment.MiddleLeft;
             dashboard_button.UseVisualStyleBackColor = false;
