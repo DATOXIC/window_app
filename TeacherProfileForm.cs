@@ -24,6 +24,13 @@ namespace window_app
         {
             _accountId = accountId;
             InitializeComponent();
+            // 1. Đăng ký sự kiện cho Form (Quan trọng nhất để sinh ID và Load dữ liệu)
+            this.Load += new System.EventHandler(this.TeacherProfileForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TeacherProfileForm_FormClosing);
+
+            // 2. Đăng ký sự kiện cho các nút bấm (Nếu bạn chưa làm ở bước trước)
+            this.btnComplete.Click += new System.EventHandler(this.btnComplete_Click);
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
         }
 
         // ── Load ──────────────────────────────────────────────────────
