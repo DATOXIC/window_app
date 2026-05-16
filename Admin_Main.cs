@@ -48,5 +48,14 @@ namespace window_app
             us.Dock = DockStyle.Fill;
             admin_content_panel.Controls.Add(us);
         }
+
+        private void course_class_button_Click(object sender, EventArgs e)
+        {
+            header_label.Text = "COURSE & CLASS MANAGEMENT";
+            admin_content_panel.Controls.Clear();
+            User5 us = new User5();
+            us.Dock = DockStyle.Fill;
+            admin_content_panel.Controls.Add(us);
+        }
     }
 }

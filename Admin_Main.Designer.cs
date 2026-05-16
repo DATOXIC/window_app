@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            course_class_button = new Button();
             user_mangament_button = new Button();
             button3 = new Button();
             add_student_button = new Button();
@@ -36,7 +37,6 @@
             pictureBox1 = new PictureBox();
             header_label = new TextBox();
             admin_content_panel = new Panel();
-            button1 = new Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -44,7 +44,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(32, 64, 113);
-            panel1.Controls.Add(button1);
+            panel1.Controls.Add(course_class_button);
             panel1.Controls.Add(user_mangament_button);
             panel1.Controls.Add(button3);
             panel1.Controls.Add(add_student_button);
@@ -55,6 +55,22 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(165, 603);
             panel1.TabIndex = 0;
+            // 
+            // course_class_button
+            // 
+            course_class_button.BackColor = Color.Transparent;
+            course_class_button.Dock = DockStyle.Top;
+            course_class_button.FlatAppearance.BorderSize = 0;
+            course_class_button.FlatStyle = FlatStyle.Flat;
+            course_class_button.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            course_class_button.ForeColor = Color.White;
+            course_class_button.Location = new Point(0, 224);
+            course_class_button.Name = "course_class_button";
+            course_class_button.Size = new Size(165, 42);
+            course_class_button.TabIndex = 5;
+            course_class_button.Text = "Course and Class";
+            course_class_button.UseVisualStyleBackColor = false;
+            course_class_button.Click += course_class_button_Click;
             // 
             // user_mangament_button
             // 
@@ -156,21 +172,6 @@
             admin_content_panel.Size = new Size(817, 553);
             admin_content_panel.TabIndex = 3;
             // 
-            // button1
-            // 
-            button1.BackColor = Color.Transparent;
-            button1.Dock = DockStyle.Top;
-            button1.FlatAppearance.BorderSize = 0;
-            button1.FlatStyle = FlatStyle.Flat;
-            button1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.ForeColor = Color.White;
-            button1.Location = new Point(0, 224);
-            button1.Name = "button1";
-            button1.Size = new Size(165, 42);
-            button1.TabIndex = 5;
-            button1.Text = "Course and Class";
-            button1.UseVisualStyleBackColor = false;
-            // 
             // Admin_Main
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -197,6 +198,6 @@
         private TextBox header_label;
         private Panel admin_content_panel;
         private Button user_mangament_button;
-        private Button button1;
+        private Button course_class_button;
     }
 }

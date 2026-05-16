@@ -27,7 +27,7 @@ namespace window_app
         // Constructor rỗng dùng khi chỉ cần gọi hàm GetData hoặc Delete
         public Course() { }
 
-        // 2. THỰC THI INTERFACE IBaseEntity
+        
 
         // Thêm khóa học mới
         public bool Insert()
