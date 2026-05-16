@@ -96,5 +96,14 @@ namespace window_app
             us.Dock = DockStyle.Fill;
             admin_content_panel.Controls.Add(us);
         }
+
+        private void teacher_button_Click(object sender, EventArgs e)
+        {
+            SetActiveButton(teacher_button, "Quản lý Giảng viên", "👨‍🏫");
+            admin_content_panel.Controls.Clear();
+            User6 us = new User6();
+            us.Dock = DockStyle.Fill;
+            admin_content_panel.Controls.Add(us);
+        }
     }
 }

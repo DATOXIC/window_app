@@ -30,6 +30,7 @@ namespace window_app
         {
             panel1 = new Panel();
             course_class_button = new Button();
+            teacher_button = new Button();
             user_mangament_button = new Button();
             button3 = new Button();
             add_student_button = new Button();
@@ -51,6 +52,7 @@ namespace window_app
             // 
             panel1.BackColor = Color.FromArgb(22, 50, 92);
             panel1.Controls.Add(course_class_button);
+            panel1.Controls.Add(teacher_button);
             panel1.Controls.Add(user_mangament_button);
             panel1.Controls.Add(button3);
             panel1.Controls.Add(add_student_button);
@@ -74,7 +76,7 @@ namespace window_app
             course_class_button.FlatStyle = FlatStyle.Flat;
             course_class_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             course_class_button.ForeColor = Color.FromArgb(200, 215, 235);
-            course_class_button.Location = new Point(0, 310);
+            course_class_button.Location = new Point(0, 358);
             course_class_button.Name = "course_class_button";
             course_class_button.Padding = new Padding(15, 0, 0, 0);
             course_class_button.Size = new Size(220, 48);
@@ -83,6 +85,27 @@ namespace window_app
             course_class_button.TextAlign = ContentAlignment.MiddleLeft;
             course_class_button.UseVisualStyleBackColor = false;
             course_class_button.Click += course_class_button_Click;
+            // 
+            // teacher_button
+            // 
+            teacher_button.BackColor = Color.Transparent;
+            teacher_button.Cursor = Cursors.Hand;
+            teacher_button.Dock = DockStyle.Top;
+            teacher_button.FlatAppearance.BorderSize = 0;
+            teacher_button.FlatAppearance.MouseDownBackColor = Color.FromArgb(41, 107, 191);
+            teacher_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 65, 115);
+            teacher_button.FlatStyle = FlatStyle.Flat;
+            teacher_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            teacher_button.ForeColor = Color.FromArgb(200, 215, 235);
+            teacher_button.Location = new Point(0, 310);
+            teacher_button.Name = "teacher_button";
+            teacher_button.Padding = new Padding(15, 0, 0, 0);
+            teacher_button.Size = new Size(220, 48);
+            teacher_button.TabIndex = 1;
+            teacher_button.Text = "👨‍🏫  Giảng viên";
+            teacher_button.TextAlign = ContentAlignment.MiddleLeft;
+            teacher_button.UseVisualStyleBackColor = false;
+            teacher_button.Click += teacher_button_Click;
             // 
             // user_mangament_button
             // 
@@ -99,7 +122,7 @@ namespace window_app
             user_mangament_button.Name = "user_mangament_button";
             user_mangament_button.Padding = new Padding(15, 0, 0, 0);
             user_mangament_button.Size = new Size(220, 48);
-            user_mangament_button.TabIndex = 1;
+            user_mangament_button.TabIndex = 2;
             user_mangament_button.Text = "👥  Quản lý SV";
             user_mangament_button.TextAlign = ContentAlignment.MiddleLeft;
             user_mangament_button.UseVisualStyleBackColor = false;
@@ -120,7 +143,7 @@ namespace window_app
             button3.Name = "button3";
             button3.Padding = new Padding(15, 0, 0, 0);
             button3.Size = new Size(220, 48);
-            button3.TabIndex = 2;
+            button3.TabIndex = 3;
             button3.Text = "🎓  Thêm Sinh viên";
             button3.TextAlign = ContentAlignment.MiddleLeft;
             button3.UseVisualStyleBackColor = false;
@@ -141,7 +164,7 @@ namespace window_app
             add_student_button.Name = "add_student_button";
             add_student_button.Padding = new Padding(15, 0, 0, 0);
             add_student_button.Size = new Size(220, 48);
-            add_student_button.TabIndex = 3;
+            add_student_button.TabIndex = 4;
             add_student_button.Text = "📋  Phê duyệt TS";
             add_student_button.TextAlign = ContentAlignment.MiddleLeft;
             add_student_button.UseVisualStyleBackColor = false;
@@ -158,12 +181,11 @@ namespace window_app
             approve_button.FlatStyle = FlatStyle.Flat;
             approve_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
             approve_button.ForeColor = Color.FromArgb(200, 215, 235);
-            approve_button.ImageAlign = ContentAlignment.MiddleLeft;
             approve_button.Location = new Point(0, 118);
             approve_button.Name = "approve_button";
             approve_button.Padding = new Padding(15, 0, 0, 0);
             approve_button.Size = new Size(220, 48);
-            approve_button.TabIndex = 4;
+            approve_button.TabIndex = 5;
             approve_button.Text = "🔐  Kiểm duyệt TK";
             approve_button.TextAlign = ContentAlignment.MiddleLeft;
             approve_button.UseVisualStyleBackColor = false;
@@ -184,7 +206,7 @@ namespace window_app
             dashboard_button.Name = "dashboard_button";
             dashboard_button.Padding = new Padding(15, 0, 0, 0);
             dashboard_button.Size = new Size(220, 48);
-            dashboard_button.TabIndex = 5;
+            dashboard_button.TabIndex = 6;
             dashboard_button.Text = "📊  Dashboard";
             dashboard_button.TextAlign = ContentAlignment.MiddleLeft;
             dashboard_button.UseVisualStyleBackColor = false;
@@ -200,7 +222,7 @@ namespace window_app
             logoPanel.Name = "logoPanel";
             logoPanel.Padding = new Padding(15, 12, 15, 12);
             logoPanel.Size = new Size(220, 70);
-            logoPanel.TabIndex = 5;
+            logoPanel.TabIndex = 7;
             // 
             // lblLogoSub
             // 
@@ -282,6 +304,7 @@ namespace window_app
             Controls.Add(admin_content_panel);
             Controls.Add(headerPanel);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "Admin_Main";
             StartPosition = FormStartPosition.CenterScreen;
@@ -301,15 +324,16 @@ namespace window_app
         private Panel logoPanel;
         private Label lblLogo;
         private Label lblLogoSub;
+        private Button dashboard_button;
         private Button approve_button;
         private Button add_student_button;
         private Button button3;
         private Button user_mangament_button;
+        private Button teacher_button;
         private Button course_class_button;
         private Panel headerPanel;
         private Label header_label;
         private Label headerIcon;
         private Panel admin_content_panel;
-        private Button dashboard_button;
     }
 }

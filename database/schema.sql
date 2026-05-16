@@ -75,3 +75,30 @@ BEGIN
     (N'Xác nhận đăng ký môn học thành công', N'Đã đăng ký 6 môn cho HK2.', N'Hệ thống', '2026-04-28 16:00:00', 'Personal', '24110147'),
     (N'Kết quả học bổng HK1 2025-2026', N'Chúc mừng đạt học bổng loại B.', N'Phòng CTSV', '2026-04-20 09:00:00', 'Personal', '24110147');
 END;
+
+-- =============================================
+-- Bảng Teacher (Giảng viên)
+-- =============================================
+IF OBJECT_ID(N'dbo.Teacher', N'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.Teacher (
+        Id          INT NOT NULL CONSTRAINT PK_Teacher PRIMARY KEY,  -- FK → [Table].id
+        TeacherID   NVARCHAR(20) NOT NULL,
+        Fname       NVARCHAR(100) NOT NULL,
+        Lname       NVARCHAR(50) NOT NULL,
+        Department  NVARCHAR(100) NOT NULL,  -- MajorCode từ bảng Majors
+        Email       NVARCHAR(255) NOT NULL,
+        Phone       NVARCHAR(20) NULL,
+        Dob         DATE NULL,
+        Gender      NVARCHAR(10) NULL
+    );
+END;
+
+IF NOT EXISTS (
+    SELECT 1
+    FROM sys.indexes
+    WHERE name = N'UX_Teacher_TeacherID' AND object_id = OBJECT_ID(N'dbo.Teacher')
+)
+BEGIN
+    CREATE UNIQUE INDEX UX_Teacher_TeacherID ON dbo.Teacher(TeacherID);
+END;

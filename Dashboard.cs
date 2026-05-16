@@ -26,6 +26,7 @@ namespace window_app
             cardsFlow.Controls.Clear();
 
             int totalStudents = GetCount("SELECT COUNT(*) FROM Student");
+            int totalTeachers = GetCount("SELECT COUNT(*) FROM Teacher");
             int pendingAdmissions = GetCount("SELECT COUNT(*) FROM AdmissionList WHERE IsAccountCreated = 0");
             int pendingAccounts = GetCount("SELECT COUNT(*) FROM [Table] WHERE valid = 0");
             int totalCourses = GetCount("SELECT COUNT(*) FROM Course");
@@ -36,21 +37,21 @@ namespace window_app
             AddCard("🎓", "Sinh viên", totalStudents.ToString(), "Đang hoạt động trong hệ thống",
                     Color.FromArgb(41, 107, 191), Color.FromArgb(225, 238, 255));
 
+            AddCard("👨‍🏫", "Giảng viên", totalTeachers.ToString(), "Tổng giảng viên trong hệ thống",
+                    Color.FromArgb(111, 66, 193), Color.FromArgb(240, 230, 255));
+
             AddCard("📋", "Chờ tuyển sinh", pendingAdmissions.ToString(), "Thí sinh đang chờ phê duyệt",
                     Color.FromArgb(230, 126, 34), Color.FromArgb(255, 243, 230));
 
+            // Row 2: 4 thẻ phụ
             AddCard("🔐", "Chờ duyệt TK", pendingAccounts.ToString(), "Tài khoản chờ Admin phê duyệt",
                     Color.FromArgb(220, 53, 69), Color.FromArgb(255, 230, 233));
 
-            // Row 2: 3 thẻ phụ
             AddCard("📚", "Khóa học", totalCourses.ToString(), "Tổng số khóa học hiện có",
                     Color.FromArgb(40, 167, 69), Color.FromArgb(230, 255, 237));
 
             AddCard("👤", "Tổng tài khoản", totalAccounts.ToString(), "Tất cả tài khoản trong hệ thống",
                     Color.FromArgb(108, 117, 125), Color.FromArgb(240, 242, 245));
-
-            AddCard("✅", "Đã tuyển sinh", approvedAdmissions.ToString(), "Thí sinh đã được cấp tài khoản",
-                    Color.FromArgb(23, 162, 184), Color.FromArgb(225, 248, 252));
         }
 
         /// <summary>
