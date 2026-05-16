@@ -182,5 +182,59 @@ namespace window_app
         {
             LoadFilteredData();
         }
+
+        private void btnResetPassword_Click(object sender, EventArgs e)
+        {
+            if (student_account_display.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn sinh viên cần reset mật khẩu!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string username = student_account_display.CurrentRow.Cells["Username"].Value?.ToString();
+            if (string.IsNullOrEmpty(username))
+            {
+                MessageBox.Show("Không tìm thấy MSSV!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Lấy tên sinh viên để hiện trong dialog (nếu có)
+            string fullName = "";
+            if (student_account_display.Columns["FullName"] != null)
+                fullName = student_account_display.CurrentRow.Cells["FullName"].Value?.ToString() ?? "";
+
+            string displayInfo = string.IsNullOrEmpty(fullName) ? username : $"{fullName} ({username})";
+
+            DialogResult confirm = MessageBox.Show(
+                $"Bạn có chắc muốn reset mật khẩu cho:\n\n{displayInfo}\n\nMật khẩu mới sẽ được đặt về mặc định = MSSV.",
+                "Xác nhận Reset mật khẩu",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes) return;
+
+            try
+            {
+                // Reset mật khẩu = username (MSSV), hàm ResetPassword sẽ tự hash SHA-256
+                bool result = acc.ResetPassword(username, username);
+
+                if (result)
+                {
+                    MessageBox.Show(
+                        $"Đã reset mật khẩu cho {displayInfo}.\n\nMật khẩu mới: {username}",
+                        "Thành công",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Không tìm thấy tài khoản này!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

@@ -282,7 +282,6 @@ namespace window_app
             Controls.Add(admin_content_panel);
             Controls.Add(headerPanel);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "Admin_Main";
             StartPosition = FormStartPosition.CenterScreen;
