@@ -17,6 +17,21 @@ namespace window_app
             InitializeComponent();
         }
 
+        private void Admin_Main_Load(object sender, EventArgs e)
+        {
+            // Mặc định hiện Dashboard khi mở app
+            dashboard_button_Click(dashboard_button, EventArgs.Empty);
+        }
+
+        private void dashboard_button_Click(object sender, EventArgs e)
+        {
+            SetActiveButton(dashboard_button, "Tổng quan Hệ thống", "📊");
+            admin_content_panel.Controls.Clear();
+            Dashboard db = new Dashboard();
+            db.Dock = DockStyle.Fill;
+            admin_content_panel.Controls.Add(db);
+        }
+
         /// <summary>
         /// Highlight nút đang active trên sidebar (đổi màu nền + chữ trắng sáng)
         /// </summary>

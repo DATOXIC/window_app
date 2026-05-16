@@ -34,6 +34,7 @@ namespace window_app
             button3 = new Button();
             add_student_button = new Button();
             approve_button = new Button();
+            dashboard_button = new Button();
             logoPanel = new Panel();
             lblLogoSub = new Label();
             lblLogo = new Label();
@@ -54,6 +55,7 @@ namespace window_app
             panel1.Controls.Add(button3);
             panel1.Controls.Add(add_student_button);
             panel1.Controls.Add(approve_button);
+            panel1.Controls.Add(dashboard_button);
             panel1.Controls.Add(logoPanel);
             panel1.Dock = DockStyle.Left;
             panel1.Location = new Point(0, 0);
@@ -167,6 +169,25 @@ namespace window_app
             approve_button.UseVisualStyleBackColor = false;
             approve_button.Click += approve_button_Click;
             // 
+            // dashboard_button
+            // 
+            dashboard_button.BackColor = Color.FromArgb(41, 107, 191);
+            dashboard_button.Cursor = Cursors.Hand;
+            dashboard_button.Dock = DockStyle.Top;
+            dashboard_button.FlatAppearance.BorderSize = 0;
+            dashboard_button.FlatAppearance.MouseDownBackColor = Color.FromArgb(41, 107, 191);
+            dashboard_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(30, 65, 115);
+            dashboard_button.FlatStyle = FlatStyle.Flat;
+            dashboard_button.Font = new Font("Segoe UI Semibold", 10F, FontStyle.Bold);
+            dashboard_button.ForeColor = Color.White;
+            dashboard_button.Name = "dashboard_button";
+            dashboard_button.Padding = new Padding(15, 0, 0, 0);
+            dashboard_button.Size = new Size(220, 48);
+            dashboard_button.Text = "📊  Dashboard";
+            dashboard_button.TextAlign = ContentAlignment.MiddleLeft;
+            dashboard_button.UseVisualStyleBackColor = false;
+            dashboard_button.Click += dashboard_button_Click;
+            // 
             // logoPanel
             // 
             logoPanel.BackColor = Color.FromArgb(16, 38, 72);
@@ -264,6 +285,7 @@ namespace window_app
             Name = "Admin_Main";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Admin Dashboard — Hệ thống Quản lý";
+            Load += Admin_Main_Load;
             panel1.ResumeLayout(false);
             logoPanel.ResumeLayout(false);
             logoPanel.PerformLayout();
@@ -287,5 +309,6 @@ namespace window_app
         private Label header_label;
         private Label headerIcon;
         private Panel admin_content_panel;
+        private Button dashboard_button;
     }
 }
