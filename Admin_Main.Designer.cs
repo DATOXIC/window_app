@@ -135,7 +135,6 @@
             approve_button.Size = new Size(165, 42);
             approve_button.TabIndex = 1;
             approve_button.Text = "Access Control";
-            approve_button.TextAlign = ContentAlignment.MiddleRight;
             approve_button.UseVisualStyleBackColor = false;
             approve_button.Click += approve_button_Click;
             // 

@@ -98,7 +98,7 @@
             remove_course_button.Name = "remove_course_button";
             remove_course_button.Size = new Size(94, 29);
             remove_course_button.TabIndex = 1;
-            remove_course_button.Text = "button1";
+            remove_course_button.Text = "DELETE";
             remove_course_button.UseVisualStyleBackColor = true;
             remove_course_button.Click += remove_course_button_Click;
             // 
@@ -108,7 +108,7 @@
             add_course_button.Name = "add_course_button";
             add_course_button.Size = new Size(94, 29);
             add_course_button.TabIndex = 0;
-            add_course_button.Text = "button1";
+            add_course_button.Text = "ADD";
             add_course_button.UseVisualStyleBackColor = true;
             add_course_button.Click += add_course_button_Click;
             // 

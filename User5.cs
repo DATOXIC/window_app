@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -44,7 +44,12 @@ namespace window_app
 
         private void add_course_button_Click(object sender, EventArgs e)
         {
-            
+            miniUser5 mUser5 = new miniUser5();
+            if (mUser5.ShowDialog() == DialogResult.OK)
+            {
+                // Reload danh sách sau khi thêm thành công
+                User5_Load(sender, e);
+            }
         }
     }
 }
