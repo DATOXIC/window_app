@@ -113,13 +113,20 @@ namespace window_app
         // LinkLabel dùng LinkClicked thay vì Click
         private void signup_button_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            MessageBox.Show("Đây là chức năng của Giảng viên và HR", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            this.Hide();
-            signup_form sg = new signup_form();
-            sg.ShowDialog();
-            this.Show();
+            DialogResult result = MessageBox.Show(
+        "Đây là chức năng dành cho bộ phận nhân sự. Bạn có muốn tiếp tục ?",
+        "Xác nhận",
+        MessageBoxButtons.OKCancel,
+        MessageBoxIcon.Information
+            );
+            if (result == DialogResult.OK)
+            {
+                this.Hide();
+                signup_form sg = new signup_form();
+                sg.ShowDialog();
+                this.Show();
+            }
         }
-
         private void cancel_button_Click(object sender, EventArgs e)
         {
             Application.Exit();
