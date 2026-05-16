@@ -44,13 +44,15 @@
             // 
             // createAccount_button
             // 
-            createAccount_button.BackColor = SystemColors.ActiveCaption;
-            createAccount_button.Font = new Font("Segoe UI", 13F);
-            createAccount_button.ForeColor = SystemColors.ButtonHighlight;
-            createAccount_button.Location = new Point(328, 401);
+            createAccount_button.BackColor = Color.FromArgb(41, 107, 191);
+            createAccount_button.Cursor = Cursors.Hand;
+            createAccount_button.FlatStyle = FlatStyle.Flat;
+            createAccount_button.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
+            createAccount_button.ForeColor = Color.White;
+            createAccount_button.Location = new Point(259, 401);
             createAccount_button.Margin = new Padding(3, 4, 3, 4);
             createAccount_button.Name = "createAccount_button";
-            createAccount_button.Size = new Size(262, 47);
+            createAccount_button.Size = new Size(402, 47);
             createAccount_button.TabIndex = 0;
             createAccount_button.Text = "Create account";
             createAccount_button.UseVisualStyleBackColor = false;
@@ -58,30 +60,30 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 10F);
+            label1.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             label1.Location = new Point(259, 193);
             label1.Name = "label1";
-            label1.Size = new Size(87, 23);
+            label1.Size = new Size(83, 21);
             label1.TabIndex = 1;
             label1.Text = "Username";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10F);
+            label2.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             label2.Location = new Point(259, 263);
             label2.Name = "label2";
-            label2.Size = new Size(80, 23);
+            label2.Size = new Size(79, 21);
             label2.TabIndex = 2;
             label2.Text = "Password";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10F);
+            label3.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             label3.Location = new Point(259, 332);
             label3.Name = "label3";
-            label3.Size = new Size(138, 23);
+            label3.Size = new Size(136, 21);
             label3.TabIndex = 3;
             label3.Text = "Retype password";
             // 
@@ -124,9 +126,10 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(328, 464);
+            label5.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
+            label5.Location = new Point(305, 463);
             label5.Name = "label5";
-            label5.Size = new Size(178, 20);
+            label5.Size = new Size(193, 21);
             label5.TabIndex = 8;
             label5.Text = "Already have an account?";
             // 
@@ -157,10 +160,10 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI", 10F);
+            label6.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
             label6.Location = new Point(259, 123);
             label6.Name = "label6";
-            label6.Size = new Size(51, 23);
+            label6.Size = new Size(48, 21);
             label6.TabIndex = 10;
             label6.Text = "Email";
             // 
@@ -168,6 +171,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(245, 247, 251);
             ClientSize = new Size(914, 600);
             Controls.Add(textBox4);
             Controls.Add(label6);
