@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,7 +8,8 @@ namespace window_app
     {
         Admin = 0,
         Student = 1,
-        HR = 2
+        Teacher = 2,
+        HR = 3
     }
     internal class Globals
     {

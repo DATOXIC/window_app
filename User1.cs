@@ -214,6 +214,9 @@ namespace window_app
                 case "student":
                     position = 1;
                     return true;
+                case "hr":
+                    position = 3;
+                    return true;
                 default:
                     position = -1;
                     return false;

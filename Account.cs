@@ -16,7 +16,7 @@ namespace window_app
         public string Password { get; private set; }  // NVARCHAR(MAX)
         public int Valid { get; private set; }        // 0 hoặc 1
         public string StudentID { get; private set; } // NCHAR(10) - Lưu MSSV kết nối
-        public int Position { get; private set; }     // 0: Admin, 1: Student, 2: HR
+        public int Position { get; private set; }     // 0: Admin, 1: Student, 2: Teacher, 3: HR
         public string Email { get; private set; }
 
         public enum LoginResult
@@ -179,7 +179,7 @@ namespace window_app
         /// Cập nhật quyền hạn (position) và trạng thái kích hoạt (valid) cho một tài khoản dựa trên tên đăng nhập.
         /// </summary>
         /// <param name="username">Tên đăng nhập (username) của tài khoản cần cập nhật.</param>
-        /// <param name="role">Giá trị số đại diện cho quyền hạn mới (ví dụ: 0: Admin, 1: Student, 2: HR).</param>
+        /// <param name="role">Giá trị số đại diện cho quyền hạn mới (ví dụ: 0: Admin, 1: Student, 2: Teacher, 3: HR).</param>
         /// <param name="status">Trạng thái kích hoạt (0: Chưa duyệt/Khóa, 1: Đã duyệt/Kích hoạt).</param>
         /// <returns>
         /// Trả về <c>true</c> nếu cập nhật thành công ít nhất một bản ghi; ngược lại trả về <c>false</c>.
@@ -275,6 +275,32 @@ namespace window_app
                 {
                     db.closeConnection();
                     return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Lấy Account Id từ username
+        /// </summary>
+        public int GetAccountId(string username)
+        {
+            string query = "SELECT id FROM [Table] WHERE username = @user";
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@user", username);
+                try
+                {
+                    db.openConnection();
+                    object result = cmd.ExecuteScalar();
+                    db.closeConnection();
+                    if (result != null && result != DBNull.Value)
+                        return Convert.ToInt32(result);
+                    return -1;
+                }
+                catch
+                {
+                    db.closeConnection();
+                    return -1;
                 }
             }
         }

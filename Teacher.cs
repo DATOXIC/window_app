@@ -190,26 +190,26 @@ namespace window_app
         /// <summary>
         /// Chèn giảng viên mới vào bảng Teacher (dùng khi GV tự điền profile)
         /// </summary>
-        public bool InsertTeacher(string tID, string fname, string lname, string dept, string email, string phone)
+        public bool InsertTeacher(string tID, string email)
         {
             this.TeacherID = tID;
-            this.Fname = fname;
-            this.Lname = lname;
-            this.Department = dept;
+            //this.Fname = fname;
+            //this.Lname = lname;
+            //this.Department = dept;
             this.Email = email;
-            this.Phone = phone;
+            //this.Phone = phone;
 
-            string sql = "INSERT INTO Teacher (TeacherID, Fname, Lname, Department, Email, Phone) " +
-                         "VALUES (@id, @fn, @ln, @dept, @email, @phone)";
+            string sql = "INSERT INTO Teacher (TeacherID, Email ) " +
+                         "VALUES (@id @email)";
 
             using (SqlCommand command = new SqlCommand(sql, db.getConnection()))
             {
                 command.Parameters.AddWithValue("@id", this.TeacherID);
-                command.Parameters.AddWithValue("@fn", this.Fname);
-                command.Parameters.AddWithValue("@ln", this.Lname);
-                command.Parameters.AddWithValue("@dept", this.Department);
+                //command.Parameters.AddWithValue("@fn", this.Fname);
+                //command.Parameters.AddWithValue("@ln", this.Lname);
+                //command.Parameters.AddWithValue("@dept", this.Department);
                 command.Parameters.AddWithValue("@email", this.Email);
-                command.Parameters.AddWithValue("@phone", this.Phone);
+                //command.Parameters.AddWithValue("@phone", this.Phone);
 
                 db.openConnection();
                 bool result = command.ExecuteNonQuery() == 1;

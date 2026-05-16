@@ -55,7 +55,31 @@ namespace window_app
                         Student_Main fstudent = new Student_Main();
                         fstudent.ShowDialog();
                     }
-                    else if (position == 2) // HR
+                    else if (position == 2) // Teacher
+                    {
+                        Teacher teacher = new Teacher();
+                        Account accHelper = new Account();
+                        int accountId = accHelper.GetAccountId(user);
+
+                        if (!teacher.HasTeacherProfile(accountId))
+                        {
+                            // Lần đăng nhập đầu → hiện form điền thông tin
+                            TeacherProfileForm profileForm = new TeacherProfileForm(accountId);
+                            DialogResult profileResult = profileForm.ShowDialog();
+
+                            // Nếu giáo viên chọn thoát mà không điền → quay về login
+                            if (profileResult != DialogResult.OK)
+                            {
+                                this.Show();
+                                return;
+                            }
+                        }
+
+                        // Sau khi hoàn thành profile → mở Teacher_Main
+                        Teacher_Main fTeacher = new Teacher_Main();
+                        fTeacher.ShowDialog();
+                    }
+                    else if (position == 3) // HR
                     {
                         HR_Main fHR = new HR_Main();
                         fHR.ShowDialog();

@@ -164,7 +164,7 @@ namespace window_app
             confirm_role_combobox.Font = new Font("Segoe UI", 10F);
             confirm_role_combobox.ForeColor = Color.FromArgb(50, 50, 50);
             confirm_role_combobox.FormattingEnabled = true;
-            confirm_role_combobox.Items.AddRange(new object[] { "Admin", "Teacher", "Student" });
+            confirm_role_combobox.Items.AddRange(new object[] { "Admin", "Teacher", "Student", "HR" });
             confirm_role_combobox.Location = new Point(0, 32);
             confirm_role_combobox.Name = "confirm_role_combobox";
             confirm_role_combobox.Size = new Size(189, 31);
@@ -204,7 +204,7 @@ namespace window_app
             comboBox2.Font = new Font("Segoe UI", 10F);
             comboBox2.ForeColor = Color.FromArgb(50, 50, 50);
             comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "Tất cả", "Admin", "Teacher", "Student" });
+            comboBox2.Items.AddRange(new object[] { "Tất cả", "Admin", "Teacher", "Student", "HR" });
             comboBox2.Location = new Point(0, 32);
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(189, 31);
