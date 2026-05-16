@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,10 +20,27 @@ namespace window_app
         {
             try
             {
-                // Lấy danh sách từ database
-                DataTable dt = acc.GetPendingAccounts();
+                DataTable dt;
 
-                // Gán vào DataGridView của bạn
+                // Lọc theo vai trò nếu có chọn
+                if (comboBox2.SelectedItem != null && comboBox2.SelectedItem.ToString() != "Tất cả")
+                {
+                    string selectedFilter = comboBox2.SelectedItem.ToString();
+                    if (TryMapRoleToPosition(selectedFilter, out int posFilter))
+                    {
+                        dt = acc.GetPendingAccounts(posFilter);
+                    }
+                    else
+                    {
+                        dt = acc.GetPendingAccounts();
+                    }
+                }
+                else
+                {
+                    dt = acc.GetPendingAccounts();
+                }
+
+                // Gán vào DataGridView
                 Display_Account_View.DataSource = dt;
                 Display_Account_View.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 Display_Account_View.MultiSelect = true;
@@ -40,7 +57,7 @@ namespace window_app
                     Display_Account_View.Columns["position"].HeaderText = "Quyền hạn dự kiến";
 
                 if (Display_Account_View.Columns["valid"] != null)
-                    Display_Account_View.Columns["valid"].HeaderText = "Chờ phê duyệt";
+                    Display_Account_View.Columns["valid"].HeaderText = "Trạng thái";
 
                 // Để bảng tự dãn rộng hết cỡ
                 Display_Account_View.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -54,16 +71,18 @@ namespace window_app
         {
             this.Dock = DockStyle.Fill;
             this.BringToFront();
+
+            // Mặc định chọn "Tất cả" cho bộ lọc
+            if (comboBox2.Items.Count > 0 && comboBox2.SelectedIndex == -1)
+                comboBox2.SelectedIndex = 0;
+
             RefreshAccountGrid();
         }
-        private void button2_Click(object sender, EventArgs e)
+
+        // Lọc danh sách theo vai trò
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
+            RefreshAccountGrid();
         }
 
         private void sellect_all_button_Click(object sender, EventArgs e)
@@ -76,20 +95,20 @@ namespace window_app
             // 1. Kiểm tra xem đã chọn Role chưa
             if (confirm_role_combobox.SelectedItem == null)
             {
-                MessageBox.Show("Vui lòng chọn vai trò (Role) trước khi duyệt!");
+                MessageBox.Show("Vui lòng chọn vai trò trước khi phê duyệt!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             string selectedRole = confirm_role_combobox.SelectedItem.ToString();
             if (!TryMapRoleToPosition(selectedRole, out int selectedPosition))
             {
-                MessageBox.Show("Vai trò không hợp lệ. Vui lòng chọn lại.");
+                MessageBox.Show("Vai trò không hợp lệ. Vui lòng chọn lại.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             var selectedRows = GetSelectedRows();
             if (selectedRows.Count == 0)
             {
-                MessageBox.Show("Vui lòng bôi đen dòng cần duyệt!");
+                MessageBox.Show("Vui lòng chọn tài khoản cần phê duyệt!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -97,28 +116,67 @@ namespace window_app
 
             foreach (DataGridViewRow row in selectedRows)
             {
-                // 3. SỬA TÊN CỘT: Dùng "username" (khớp với Designer của bạn)
                 if (row.Cells["username"] != null && row.Cells["username"].Value != null)
                 {
                     string username = row.Cells["username"].Value.ToString();
-
-                    // 4. CẬP NHẬT & TĂNG BIẾN ĐẾM
                     if (acc.UpdateStatus(username, selectedPosition, 1))
                     {
-                        successCount++; // QUAN TRỌNG: Phải tăng biến này lên
+                        successCount++;
                     }
                 }
             }
 
-            // 5. Thông báo kết quả
             if (successCount > 0)
             {
-                MessageBox.Show($"Đã phê duyệt thành công {successCount} tài khoản.");
-                RefreshAccountGrid(); // Nạp lại bảng để danh sách tự biến mất người đã duyệt
+                MessageBox.Show($"Đã phê duyệt thành công {successCount} tài khoản.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshAccountGrid();
             }
             else
             {
-                MessageBox.Show("Không có tài khoản nào được cập nhật. Hãy thử chọn lại các dòng cần duyệt.");
+                MessageBox.Show("Không có tài khoản nào được cập nhật.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        // Từ chối tài khoản — xóa khỏi hệ thống
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var selectedRows = GetSelectedRows();
+            if (selectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn tài khoản cần từ chối!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult confirm = MessageBox.Show(
+                $"Bạn có chắc muốn từ chối {selectedRows.Count} tài khoản đã chọn?\nTài khoản bị từ chối sẽ bị xóa khỏi hệ thống.",
+                "Xác nhận từ chối",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes) return;
+
+            int successCount = 0;
+
+            foreach (DataGridViewRow row in selectedRows)
+            {
+                if (row.Cells["username"] != null && row.Cells["username"].Value != null)
+                {
+                    string username = row.Cells["username"].Value.ToString();
+                    if (acc.RejectAccount(username))
+                    {
+                        successCount++;
+                    }
+                }
+            }
+
+            if (successCount > 0)
+            {
+                MessageBox.Show($"Đã từ chối và xóa {successCount} tài khoản.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshAccountGrid();
+            }
+            else
+            {
+                MessageBox.Show("Không có tài khoản nào bị xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

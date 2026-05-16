@@ -1,11 +1,10 @@
-﻿﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using System.IO;
 
 namespace window_app
 {
@@ -16,6 +15,7 @@ namespace window_app
         {
             InitializeComponent();
         }
+
         public void RefreshAdmissionGrid()
         {
             try
@@ -24,15 +24,19 @@ namespace window_app
                 Student stu = new Student();
                 DataTable dt = stu.GetPendingAdmissions();
 
-                // Gán vào DataGridView của bạn
+                // Gán vào DataGridView
                 admission_data_display.DataSource = dt;
                 admission_data_display.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                 admission_data_display.MultiSelect = true;
                 admission_data_display.ReadOnly = true;
-                admission_data_display.Columns["ProvisionalMSSV"].HeaderText = "MSSV Dự Kiến";
-                admission_data_display.Columns["ProvisionalMSSV"].DefaultCellStyle.ForeColor = Color.Blue;
-                admission_data_display.Columns["ProvisionalMSSV"].DefaultCellStyle.Font = new Font(admission_data_display.Font, FontStyle.Bold);
-                // Chỉnh sửa tiêu đề cột cho chuyên nghiệp
+
+                if (admission_data_display.Columns["ProvisionalMSSV"] != null)
+                {
+                    admission_data_display.Columns["ProvisionalMSSV"].HeaderText = "MSSV Dự Kiến";
+                    admission_data_display.Columns["ProvisionalMSSV"].DefaultCellStyle.ForeColor = Color.FromArgb(41, 107, 191);
+                    admission_data_display.Columns["ProvisionalMSSV"].DefaultCellStyle.Font = new Font(admission_data_display.Font, FontStyle.Bold);
+                }
+
                 if (admission_data_display.Columns["CandidateID"] != null)
                     admission_data_display.Columns["CandidateID"].HeaderText = "Mã hồ sơ";
 
@@ -54,12 +58,92 @@ namespace window_app
                 if (admission_data_display.Columns["Gender"] != null)
                     admission_data_display.Columns["Gender"].HeaderText = "Giới tính";
 
-                // Để bảng tự dãn rộng hết cỡ
                 admission_data_display.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // Cập nhật thống kê
+                UpdateStats(dt);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Không thể tải danh sách tài khoản: " + ex.Message);
+                MessageBox.Show("Không thể tải danh sách: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Cập nhật panel thống kê nhanh từ DataTable đã load
+        /// </summary>
+        private void UpdateStats(DataTable dt)
+        {
+            // Tổng số thí sinh
+            int total = dt.Rows.Count;
+            lblTotalCount.Text = total.ToString();
+
+            // Xóa các label cũ trong statsDetails
+            statsDetails.Controls.Clear();
+
+            if (total == 0)
+            {
+                Label emptyLabel = new Label
+                {
+                    Text = "Không có thí sinh nào.",
+                    Font = new Font("Segoe UI", 8.5F, FontStyle.Italic),
+                    ForeColor = Color.FromArgb(150, 160, 175),
+                    AutoSize = true,
+                    Dock = DockStyle.Top,
+                    Padding = new Padding(0, 5, 0, 0)
+                };
+                statsDetails.Controls.Add(emptyLabel);
+                return;
+            }
+
+            // Đếm theo ngành (MajorCode)
+            var majorGroups = new Dictionary<string, int>();
+            foreach (DataRow row in dt.Rows)
+            {
+                string major = row["MajorCode"]?.ToString() ?? "N/A";
+                if (majorGroups.ContainsKey(major))
+                    majorGroups[major]++;
+                else
+                    majorGroups[major] = 1;
+            }
+
+            // Tạo label cho từng ngành (thêm từ dưới lên vì Dock.Top ngược)
+            var sorted = new List<KeyValuePair<string, int>>(majorGroups);
+            sorted.Sort((a, b) => b.Value.CompareTo(a.Value)); // Sắp giảm dần
+
+            for (int i = sorted.Count - 1; i >= 0; i--)
+            {
+                var kvp = sorted[i];
+                Panel row = new Panel
+                {
+                    Dock = DockStyle.Top,
+                    Height = 24,
+                    BackColor = Color.White
+                };
+
+                Label lblMajor = new Label
+                {
+                    Text = $"Ngành {kvp.Key}",
+                    Font = new Font("Segoe UI", 8.5F),
+                    ForeColor = Color.FromArgb(70, 80, 100),
+                    AutoSize = true,
+                    Dock = DockStyle.Left,
+                    Padding = new Padding(0, 3, 0, 0)
+                };
+
+                Label lblCount = new Label
+                {
+                    Text = kvp.Value.ToString(),
+                    Font = new Font("Segoe UI Semibold", 9F, FontStyle.Bold),
+                    ForeColor = Color.FromArgb(41, 107, 191),
+                    AutoSize = true,
+                    Dock = DockStyle.Right,
+                    Padding = new Padding(0, 3, 0, 0)
+                };
+
+                row.Controls.Add(lblCount);
+                row.Controls.Add(lblMajor);
+                statsDetails.Controls.Add(row);
             }
         }
 
@@ -79,32 +163,18 @@ namespace window_app
         {
             try
             {
-                // 1. Kiểm tra ảnh có trống không
-                if (pictureboxStudent.Image == null)
-                {
-                    MessageBox.Show("Vui lòng chọn ảnh đại diện cho sinh viên trước khi phê duyệt!", "Thông báo");
-                    return;
-                }
-
-                // 2. Kiểm tra xem có sinh viên nào được chọn trong bảng không
+                // Kiểm tra xem có sinh viên nào được chọn không
                 if (admission_data_display.SelectedRows.Count == 0)
                 {
-                    MessageBox.Show("Vui lòng chọn ít nhất một sinh viên trong danh sách!", "Thông báo");
+                    MessageBox.Show("Vui lòng chọn ít nhất một sinh viên trong danh sách!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // 3. Xử lý ảnh an toàn
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    // Sử dụng định dạng chuẩn (ví dụ Png) thay vì RawFormat để tránh lỗi định dạng
-                    pictureboxStudent.Image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-
                 List<PendingStudentDTO> pendingStudents = new List<PendingStudentDTO>();
-                    foreach (DataGridViewRow row in admission_data_display.SelectedRows)
+                foreach (DataGridViewRow row in admission_data_display.SelectedRows)
+                {
+                    if (row.Cells["CandidateID"].Value != null)
                     {
-                        // Kiểm tra xem hàng có hợp lệ không (tránh hàng trống cuối bảng)
-                        if (row.Cells["CandidateID"].Value != null)
-                        {
                         pendingStudents.Add(new PendingStudentDTO
                         {
                             CandidateID = row.Cells["CandidateID"].Value.ToString().Trim(),
@@ -117,35 +187,81 @@ namespace window_app
                             Gender = row.Cells["Gender"].Value?.ToString() ?? "",
                             Dob = Convert.ToDateTime(row.Cells["Dob"].Value)
                         });
-                        }
                     }
+                }
 
                 if (pendingStudents.Count > 0)
+                {
+                    DialogResult confirm = MessageBox.Show(
+                        $"Bạn có chắc muốn phê duyệt {pendingStudents.Count} thí sinh?",
+                        "Xác nhận phê duyệt",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+
+                    if (confirm != DialogResult.Yes) return;
+
+                    Student stu = new Student();
+                    if (stu.ApproveBatchStudents(pendingStudents, null))
                     {
-                        Student stu = new Student();
-                    if (stu.ApproveBatchStudents(pendingStudents, ms))
-                        {
-                            MessageBox.Show("Phê duyệt thành công!");
-                            RefreshAdmissionGrid();
-                        }
+                        MessageBox.Show($"Phê duyệt thành công {pendingStudents.Count} thí sinh!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        RefreshAdmissionGrid();
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi chi tiết: " + ex.Message);
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnLoadImage_Click(object sender, EventArgs e)
+        // Từ chối thí sinh — xóa khỏi AdmissionList
+        private void button2_Click(object sender, EventArgs e)
         {
-            OpenFileDialog opf = new OpenFileDialog();
-
-            opf.Filter = "Select Image(*.jpg;*.png)|*.jpg;*.png";
-
-            if (opf.ShowDialog() == DialogResult.OK)
+            try
             {
-                pictureboxStudent.Image = Image.FromFile(opf.FileName);
+                if (admission_data_display.SelectedRows.Count == 0)
+                {
+                    MessageBox.Show("Vui lòng chọn ít nhất một thí sinh cần từ chối!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int count = admission_data_display.SelectedRows.Count;
+                DialogResult confirm = MessageBox.Show(
+                    $"Bạn có chắc muốn từ chối {count} thí sinh?\nThí sinh bị từ chối sẽ bị xóa khỏi danh sách tuyển sinh.",
+                    "Xác nhận từ chối",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (confirm != DialogResult.Yes) return;
+
+                int successCount = 0;
+                Student stuReject = new Student();
+
+                foreach (DataGridViewRow row in admission_data_display.SelectedRows)
+                {
+                    if (row.Cells["CandidateID"].Value != null)
+                    {
+                        string candidateId = row.Cells["CandidateID"].Value.ToString().Trim();
+                        if (stuReject.RejectCandidate(candidateId))
+                        {
+                            successCount++;
+                        }
+                    }
+                }
+
+                if (successCount > 0)
+                {
+                    MessageBox.Show($"Đã từ chối {successCount} thí sinh.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    RefreshAdmissionGrid();
+                }
+                else
+                {
+                    MessageBox.Show("Không có thí sinh nào bị xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -235,6 +235,50 @@ namespace window_app
             }
         }
 
+        /// <summary>
+        /// Lấy danh sách tài khoản chờ duyệt, lọc theo vai trò (position).
+        /// </summary>
+        public DataTable GetPendingAccounts(int positionFilter)
+        {
+            string query = "SELECT username, email, position, valid FROM [Table] WHERE valid = 0 AND position = @pos";
+
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@pos", positionFilter);
+                db.openConnection();
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                db.closeConnection();
+                return table;
+            }
+        }
+
+        /// <summary>
+        /// Từ chối tài khoản — xóa tài khoản đang chờ duyệt (valid = 0) khỏi hệ thống.
+        /// </summary>
+        public bool RejectAccount(string username)
+        {
+            string query = "DELETE FROM [Table] WHERE username = @user AND valid = 0";
+
+            using (SqlCommand cmd = new SqlCommand(query, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@user", username);
+                try
+                {
+                    db.openConnection();
+                    int result = cmd.ExecuteNonQuery();
+                    db.closeConnection();
+                    return result > 0;
+                }
+                catch
+                {
+                    db.closeConnection();
+                    return false;
+                }
+            }
+        }
+
     /// <summary>
     /// Hàm lọc sinh viên theo tiêu chí Year và Major
     /// </summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,14 +10,38 @@ namespace window_app
 {
     public partial class Admin_Main : Form
     {
+        private Button _activeButton = null;
+
         public Admin_Main()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Highlight nút đang active trên sidebar (đổi màu nền + chữ trắng sáng)
+        /// </summary>
+        private void SetActiveButton(Button btn, string headerText, string icon)
+        {
+            // Reset nút cũ
+            if (_activeButton != null)
+            {
+                _activeButton.BackColor = Color.Transparent;
+                _activeButton.ForeColor = Color.FromArgb(200, 215, 235);
+            }
+
+            // Highlight nút mới
+            _activeButton = btn;
+            _activeButton.BackColor = Color.FromArgb(41, 107, 191);
+            _activeButton.ForeColor = Color.White;
+
+            // Cập nhật header
+            header_label.Text = headerText;
+            headerIcon.Text = icon;
+        }
+
         private void approve_button_Click(object sender, EventArgs e)
         {
-            header_label.Text = "APPROVE MANAGEMENT ACCOUNTS";
+            SetActiveButton(approve_button, "Kiểm duyệt Tài khoản", "🔐");
             admin_content_panel.Controls.Clear();
             User1 us = new User1();
             admin_content_panel.Controls.Add(us);
@@ -25,7 +49,7 @@ namespace window_app
 
         private void add_student_button_Click(object sender, EventArgs e)
         {
-            header_label.Text = "VERIFY STUDENT ACCOUNTS";
+            SetActiveButton(add_student_button, "Phê duyệt Tuyển sinh", "📋");
             admin_content_panel.Controls.Clear();
             User2 us = new User2();
             admin_content_panel.Controls.Add(us);
@@ -33,7 +57,7 @@ namespace window_app
 
         private void button3_Click(object sender, EventArgs e)
         {
-            header_label.Text = "ADD STUDENT TO ADMISSION";
+            SetActiveButton(button3, "Thêm Sinh viên", "🎓");
             admin_content_panel.Controls.Clear();
             User3 us = new User3();
             us.Dock = DockStyle.Fill;
@@ -42,7 +66,7 @@ namespace window_app
 
         private void user_mangament_button_Click(object sender, EventArgs e)
         {
-            header_label.Text = "USER ACCOUNT MANAGEMENT";
+            SetActiveButton(user_mangament_button, "Quản lý Sinh viên", "👥");
             admin_content_panel.Controls.Clear();
             User4 us = new User4();
             us.Dock = DockStyle.Fill;
@@ -51,7 +75,7 @@ namespace window_app
 
         private void course_class_button_Click(object sender, EventArgs e)
         {
-            header_label.Text = "COURSE & CLASS MANAGEMENT";
+            SetActiveButton(course_class_button, "Quản lý Khóa học", "📚");
             admin_content_panel.Controls.Clear();
             User5 us = new User5();
             us.Dock = DockStyle.Fill;

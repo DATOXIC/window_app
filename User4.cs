@@ -1,13 +1,12 @@
-﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
-//
+
 namespace window_app
 {
     public partial class User4 : UserControl
@@ -112,11 +111,7 @@ namespace window_app
                 DataTable dt = acc.GetFilteredStudentAccounts(selectedYear, selectedMajor, searchMSSV);
                 if (dt != null)
                 {
-                    // Xóa sạch các cột cũ nếu có và bật tính năng tự động tạo cột từ DataTable
                     student_account_display.AutoGenerateColumns = true;
-                    student_account_display.DataSource = dt;
-
-                    // Cài đặt thuộc tính cần thiết cho DataGridView
                     student_account_display.DataSource = dt;
                     student_account_display.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
                     student_account_display.MultiSelect = false;
@@ -150,30 +145,37 @@ namespace window_app
         {
             if (student_account_display.CurrentRow == null)
             {
-                MessageBox.Show("Vui lòng chọn sinh viên.");
+                MessageBox.Show("Vui lòng chọn sinh viên cần xóa!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int mssv = Convert.ToInt32(
-                student_account_display.CurrentRow.Cells["Username"].Value
-            );
+            string mssvStr = student_account_display.CurrentRow.Cells["Username"].Value?.ToString();
+            if (string.IsNullOrEmpty(mssvStr))
+            {
+                MessageBox.Show("Không tìm thấy MSSV!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            DialogResult confirm = MessageBox.Show(
+                $"Bạn có chắc muốn xóa sinh viên MSSV: {mssvStr}?\nSinh viên sẽ được chuyển về Admission Review.",
+                "Xác nhận xóa",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes) return;
+
+            int mssv = Convert.ToInt32(mssvStr);
             bool result = stu.Delete(mssv);
 
             if (result)
             {
-                MessageBox.Show("Đã chuyển sinh viên về Admission Review");
+                MessageBox.Show("Đã chuyển sinh viên về Admission Review.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadFilteredData();
             }
             else
             {
-                MessageBox.Show("Thao tác thất bại.");
+                MessageBox.Show("Thao tác thất bại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            LoadFilteredData();
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)

@@ -1,4 +1,4 @@
-﻿﻿﻿﻿using Microsoft.Data.SqlClient;
+﻿﻿using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -394,6 +394,31 @@ namespace window_app
             }
         }
 
+        /// <summary>
+        /// Từ chối thí sinh — xóa khỏi AdmissionList (chỉ xóa thí sinh chưa được cấp tài khoản).
+        /// </summary>
+        public bool RejectCandidate(string candidateId)
+        {
+            string sql = "DELETE FROM AdmissionList WHERE CandidateID = @cid AND IsAccountCreated = 0";
+
+            using (SqlCommand cmd = new SqlCommand(sql, db.getConnection()))
+            {
+                cmd.Parameters.AddWithValue("@cid", candidateId);
+                try
+                {
+                    db.openConnection();
+                    int result = cmd.ExecuteNonQuery();
+                    db.closeConnection();
+                    return result > 0;
+                }
+                catch
+                {
+                    db.closeConnection();
+                    return false;
+                }
+            }
+        }
+
         // --- PHẦN 2: LOGIC PHÊ DUYỆT VÀ CẤP MSSV (Từ nhánh master) ---
         /// <summary>
         /// Tính toán số thứ tự (rank) để cấp MSSV cho một sinh viên trong đợt phê duyệt hiện tại.
@@ -442,7 +467,7 @@ namespace window_app
         /// <param name="selectedStudents">Danh sách các sinh viên đang chờ duyệt.</param>
         /// <param name="picture">Luồng dữ liệu ảnh đại diện mặc định sẽ được gán cho các sinh viên này.</param>
         /// <returns>Trả về <c>true</c> nếu toàn bộ quá trình phê duyệt thành công.</returns>
-        public bool ApproveBatchStudents(List<PendingStudentDTO> selectedStudents, MemoryStream picture)
+        public bool ApproveBatchStudents(List<PendingStudentDTO> selectedStudents, MemoryStream picture = null)
         {
             // Sắp xếp danh sách sinh viên theo tên để đảm bảo việc cấp MSSV (STT) đi theo đúng thứ tự bảng chữ cái
             var sortedStudents = selectedStudents.OrderBy(s => s.FullName).ToList();
@@ -503,7 +528,7 @@ namespace window_app
                             cmdStudent.Parameters.AddWithValue("@dob", dob);
                             cmdStudent.Parameters.AddWithValue("@gdr", gender);
                             cmdStudent.Parameters.AddWithValue("@adrs", address);
-                            cmdStudent.Parameters.AddWithValue("@pic", picture.ToArray());
+                            cmdStudent.Parameters.AddWithValue("@pic", picture != null ? (object)picture.ToArray() : DBNull.Value);
                             cmdStudent.Parameters.AddWithValue("@fn", firstName);
                             cmdStudent.Parameters.AddWithValue("@ln", lastName);
                             cmdStudent.ExecuteNonQuery();
