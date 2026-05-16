@@ -5,6 +5,15 @@ namespace window_app
         public login_form()
         {
             InitializeComponent();
+            // Căn giữa card khi form resize
+            this.Resize += (s, e) => CenterCard();
+            this.Load += (s, e) => CenterCard();
+        }
+
+        private void CenterCard()
+        {
+            cardPanel.Left = (this.ClientSize.Width - cardPanel.Width) / 2;
+            cardPanel.Top = (this.ClientSize.Height - cardPanel.Height) / 2;
         }
 
         private void login_button_Click(object sender, EventArgs e)
@@ -76,21 +85,26 @@ namespace window_app
                 MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void signup_button_Click(object sender, EventArgs e)
+
+        // LinkLabel dùng LinkClicked thay vì Click
+        private void signup_button_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();
             signup_form sg = new signup_form();
             sg.ShowDialog();
             this.Show();
         }
+
         private void cancel_button_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        private void forgetPassword_button_Click(object sender, EventArgs e)
+
+        // LinkLabel dùng LinkClicked thay vì Click
+        private void forgetPassword_button_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             ForgotPassForm fpf = new ForgotPassForm();
-            fpf.ShowDialog(); 
+            fpf.ShowDialog();
         }
     }
 }
