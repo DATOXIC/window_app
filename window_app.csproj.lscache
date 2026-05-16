@@ -58,8 +58,11 @@ Account.cs
 Admin.cs
 Admin_Main.cs
 Admin_Main.Designer.cs
+ChangePasswordForm.cs
 Contact.cs
 Course.cs
+Dashboard.cs
+Dashboard.Designer.cs
 EmailService.cs
 ForgotPassForm.cs
 ForgotPassForm.Designer.cs
@@ -68,6 +71,8 @@ HR_Main.cs
 HR_Main.Designer.cs
 login_form.cs
 login_form.Designer.cs
+miniUser5.cs
+miniUser5.Designer.cs
 MutualFunc.cs
 myDB.cs
 Notification.cs
@@ -87,6 +92,10 @@ Student.cs
 Student_Main.cs
 Student_Main.Designer.cs
 Teacher.cs
+TeacherProfileForm.cs
+TeacherProfileForm.Designer.cs
+Teacher_Main.cs
+Teacher_Main.Designer.cs
 User1.cs
 User1.Designer.cs
 User2.cs
@@ -95,9 +104,13 @@ User3.cs
 User3.Designer.cs
 User4.cs
 User4.Designer.cs
+User5.cs
+User5.Designer.cs
+User6.cs
+User6.Designer.cs
 
 [metadataReferences]
-<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.5/ref/net10.0/
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.8/ref/net10.0/
  Microsoft.CSharp.dll
  Microsoft.VisualBasic.Core.dll
  Microsoft.Win32.Primitives.dll
@@ -263,7 +276,7 @@ User4.Designer.cs
  System.Xml.XPath.dll
  System.Xml.XPath.XDocument.dll
  WindowsBase.dll
-<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.5/ref/net10.0/
+<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.8/ref/net10.0/
  Accessibility.dll
  Microsoft.VisualBasic.dll
  Microsoft.VisualBasic.Forms.dll
@@ -310,19 +323,19 @@ User4.Designer.cs
  system.identitymodel.tokens.jwt/8.16.0/lib/net10.0/System.IdentityModel.Tokens.Jwt.dll
 
 [analyzerReferences]
-<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.5/analyzers/dotnet/cs/
+<DOTNET>/packs/Microsoft.NETCore.App.Ref/10.0.8/analyzers/dotnet/cs/
  Microsoft.Interop.ComInterfaceGenerator.dll
  Microsoft.Interop.JavaScript.JSImportGenerator.dll
  Microsoft.Interop.LibraryImportGenerator.dll
  Microsoft.Interop.SourceGeneration.dll
  System.Text.Json.SourceGeneration.dll
  System.Text.RegularExpressions.Generator.dll
-<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.5/analyzers/dotnet/cs/
+<DOTNET>/packs/Microsoft.WindowsDesktop.App.Ref/10.0.8/analyzers/dotnet/cs/
  System.Windows.Forms.Analyzers.CodeFixes.CSharp.dll
  System.Windows.Forms.Analyzers.CSharp.dll
 <DOTNET>/
- packs/Microsoft.WindowsDesktop.App.Ref/10.0.5/analyzers/dotnet/System.Windows.Forms.Analyzers.dll
- sdk/10.0.300-preview.0.26177.108/Sdks/Microsoft.NET.Sdk/analyzers/
+ packs/Microsoft.WindowsDesktop.App.Ref/10.0.8/analyzers/dotnet/System.Windows.Forms.Analyzers.dll
+ sdk/10.0.300/Sdks/Microsoft.NET.Sdk/analyzers/
   Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll
   Microsoft.CodeAnalysis.NetAnalyzers.dll
 <NUGET>/
@@ -330,5 +343,5 @@ User4.Designer.cs
  microsoft.extensions.options/9.0.13/analyzers/dotnet/roslyn4.4/cs/Microsoft.Extensions.Options.SourceGeneration.dll
 
 [analyzerConfigFiles]
-<DOTNET>/sdk/10.0.300-preview.0.26177.108/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
+<DOTNET>/sdk/10.0.300/Sdks/Microsoft.NET.Sdk/analyzers/build/config/analysislevel_10_default.globalconfig
 obj/Debug/net10.0-windows/window_app.GeneratedMSBuildEditorConfig.editorconfig

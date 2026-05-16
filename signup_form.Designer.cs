@@ -28,183 +28,243 @@
         /// </summary>
         private void InitializeComponent()
         {
-            createAccount_button = new Button();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            label4 = new Label();
-            label5 = new Label();
-            button2 = new Button();
-            textBox4 = new TextBox();
-            label6 = new Label();
-            SuspendLayout();
+            this.cardPanel = new System.Windows.Forms.Panel();
+            this.lbl_title = new System.Windows.Forms.Label();
+            this.lbl_email = new System.Windows.Forms.Label();
+            this.txt_email = new System.Windows.Forms.TextBox();
+            this.line_email = new System.Windows.Forms.Panel();
+            this.lbl_username = new System.Windows.Forms.Label();
+            this.txt_username = new System.Windows.Forms.TextBox();
+            this.line_username = new System.Windows.Forms.Panel();
+            this.lbl_password = new System.Windows.Forms.Label();
+            this.txt_password = new System.Windows.Forms.TextBox();
+            this.line_password = new System.Windows.Forms.Panel();
+            this.lbl_repass = new System.Windows.Forms.Label();
+            this.txt_repass = new System.Windows.Forms.TextBox();
+            this.line_repass = new System.Windows.Forms.Panel();
+            this.btn_signup = new System.Windows.Forms.Button();
+            this.lnk_cancel = new System.Windows.Forms.LinkLabel();
+            this.cardPanel.SuspendLayout();
+            this.SuspendLayout();
             // 
-            // createAccount_button
+            // cardPanel
             // 
-            createAccount_button.BackColor = Color.FromArgb(41, 107, 191);
-            createAccount_button.Cursor = Cursors.Hand;
-            createAccount_button.FlatStyle = FlatStyle.Flat;
-            createAccount_button.Font = new Font("Segoe UI Semibold", 11F, FontStyle.Bold);
-            createAccount_button.ForeColor = Color.White;
-            createAccount_button.Location = new Point(259, 401);
-            createAccount_button.Margin = new Padding(3, 4, 3, 4);
-            createAccount_button.Name = "createAccount_button";
-            createAccount_button.Size = new Size(402, 47);
-            createAccount_button.TabIndex = 0;
-            createAccount_button.Text = "Create account";
-            createAccount_button.UseVisualStyleBackColor = false;
+            this.cardPanel.BackColor = System.Drawing.Color.White;
+            this.cardPanel.Controls.Add(this.lbl_title);
+            this.cardPanel.Controls.Add(this.lbl_email);
+            this.cardPanel.Controls.Add(this.txt_email);
+            this.cardPanel.Controls.Add(this.line_email);
+            this.cardPanel.Controls.Add(this.lbl_username);
+            this.cardPanel.Controls.Add(this.txt_username);
+            this.cardPanel.Controls.Add(this.line_username);
+            this.cardPanel.Controls.Add(this.lbl_password);
+            this.cardPanel.Controls.Add(this.txt_password);
+            this.cardPanel.Controls.Add(this.line_password);
+            this.cardPanel.Controls.Add(this.lbl_repass);
+            this.cardPanel.Controls.Add(this.txt_repass);
+            this.cardPanel.Controls.Add(this.line_repass);
+            this.cardPanel.Controls.Add(this.btn_signup);
+            this.cardPanel.Controls.Add(this.lnk_cancel);
+            this.cardPanel.Location = new System.Drawing.Point(175, 40);
+            this.cardPanel.Name = "cardPanel";
+            this.cardPanel.Size = new System.Drawing.Size(450, 560);
+            this.cardPanel.TabIndex = 0;
             // 
-            // label1
+            // lbl_title
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
-            label1.Location = new Point(259, 193);
-            label1.Name = "label1";
-            label1.Size = new Size(83, 21);
-            label1.TabIndex = 1;
-            label1.Text = "Username";
+            this.lbl_title.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lbl_title.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lbl_title.Location = new System.Drawing.Point(0, 25);
+            this.lbl_title.Name = "lbl_title";
+            this.lbl_title.Size = new System.Drawing.Size(450, 40);
+            this.lbl_title.TabIndex = 0;
+            this.lbl_title.Text = "ĐĂNG KÝ TÀI KHOẢN";
+            this.lbl_title.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label2
+            // lbl_email
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
-            label2.Location = new Point(259, 263);
-            label2.Name = "label2";
-            label2.Size = new Size(79, 21);
-            label2.TabIndex = 2;
-            label2.Text = "Password";
+            this.lbl_email.AutoSize = true;
+            this.lbl_email.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lbl_email.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lbl_email.Location = new System.Drawing.Point(40, 85);
+            this.lbl_email.Name = "lbl_email";
+            this.lbl_email.Size = new System.Drawing.Size(40, 17);
+            this.lbl_email.TabIndex = 1;
+            this.lbl_email.Text = "Email";
             // 
-            // label3
+            // txt_email
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
-            label3.Location = new Point(259, 332);
-            label3.Name = "label3";
-            label3.Size = new Size(136, 21);
-            label3.TabIndex = 3;
-            label3.Text = "Retype password";
+            this.txt_email.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_email.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txt_email.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txt_email.Location = new System.Drawing.Point(40, 110);
+            this.txt_email.Name = "txt_email";
+            this.txt_email.Size = new System.Drawing.Size(370, 20);
+            this.txt_email.TabIndex = 2;
             // 
-            // textBox1
+            // line_email
             // 
-            textBox1.Location = new Point(398, 193);
-            textBox1.Margin = new Padding(3, 4, 3, 4);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(263, 27);
-            textBox1.TabIndex = 4;
+            this.line_email.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.line_email.Location = new System.Drawing.Point(40, 135);
+            this.line_email.Name = "line_email";
+            this.line_email.Size = new System.Drawing.Size(370, 2);
+            this.line_email.TabIndex = 3;
             // 
-            // textBox2
+            // lbl_username
             // 
-            textBox2.Location = new Point(398, 261);
-            textBox2.Margin = new Padding(3, 4, 3, 4);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(263, 27);
-            textBox2.TabIndex = 5;
+            this.lbl_username.AutoSize = true;
+            this.lbl_username.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lbl_username.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lbl_username.Location = new System.Drawing.Point(40, 155);
+            this.lbl_username.Name = "lbl_username";
+            this.lbl_username.Size = new System.Drawing.Size(69, 17);
+            this.lbl_username.TabIndex = 4;
+            this.lbl_username.Text = "Username";
             // 
-            // textBox3
+            // txt_username
             // 
-            textBox3.Location = new Point(398, 331);
-            textBox3.Margin = new Padding(3, 4, 3, 4);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(263, 27);
-            textBox3.TabIndex = 6;
+            this.txt_username.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_username.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txt_username.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txt_username.Location = new System.Drawing.Point(40, 180);
+            this.txt_username.Name = "txt_username";
+            this.txt_username.Size = new System.Drawing.Size(370, 20);
+            this.txt_username.TabIndex = 5;
             // 
-            // label4
+            // line_username
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.ForeColor = SystemColors.Desktop;
-            label4.Location = new Point(408, 43);
-            label4.Name = "label4";
-            label4.Size = new Size(117, 40);
-            label4.TabIndex = 7;
-            label4.Text = "Sign up";
-            label4.TextAlign = ContentAlignment.MiddleCenter;
+            this.line_username.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.line_username.Location = new System.Drawing.Point(40, 205);
+            this.line_username.Name = "line_username";
+            this.line_username.Size = new System.Drawing.Size(370, 2);
+            this.line_username.TabIndex = 6;
             // 
-            // label5
+            // lbl_password
             // 
-            label5.AutoSize = true;
-            label5.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
-            label5.Location = new Point(305, 463);
-            label5.Name = "label5";
-            label5.Size = new Size(193, 21);
-            label5.TabIndex = 8;
-            label5.Text = "Already have an account?";
+            this.lbl_password.AutoSize = true;
+            this.lbl_password.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lbl_password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lbl_password.Location = new System.Drawing.Point(40, 225);
+            this.lbl_password.Name = "lbl_password";
+            this.lbl_password.Size = new System.Drawing.Size(66, 17);
+            this.lbl_password.TabIndex = 7;
+            this.lbl_password.Text = "Password";
             // 
-            // button2
+            // txt_password
             // 
-            button2.AllowDrop = true;
-            button2.BackColor = Color.Transparent;
-            button2.BackgroundImageLayout = ImageLayout.Stretch;
-            button2.FlatStyle = FlatStyle.System;
-            button2.ForeColor = Color.Transparent;
-            button2.Location = new Point(504, 459);
-            button2.Margin = new Padding(3, 4, 3, 4);
-            button2.Name = "button2";
-            button2.Size = new Size(86, 31);
-            button2.TabIndex = 9;
-            button2.Text = "Log In";
-            button2.UseVisualStyleBackColor = false;
-            button2.Click += BacktoLogInBtn_Click;
+            this.txt_password.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_password.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txt_password.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txt_password.Location = new System.Drawing.Point(40, 250);
+            this.txt_password.Name = "txt_password";
+            this.txt_password.PasswordChar = '●';
+            this.txt_password.Size = new System.Drawing.Size(370, 20);
+            this.txt_password.TabIndex = 8;
             // 
-            // textBox4
+            // line_password
             // 
-            textBox4.Location = new Point(398, 123);
-            textBox4.Margin = new Padding(3, 4, 3, 4);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(263, 27);
-            textBox4.TabIndex = 11;
+            this.line_password.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.line_password.Location = new System.Drawing.Point(40, 275);
+            this.line_password.Name = "line_password";
+            this.line_password.Size = new System.Drawing.Size(370, 2);
+            this.line_password.TabIndex = 9;
             // 
-            // label6
+            // lbl_repass
             // 
-            label6.AutoSize = true;
-            label6.Font = new Font("Segoe UI Semibold", 9.5F, FontStyle.Bold);
-            label6.Location = new Point(259, 123);
-            label6.Name = "label6";
-            label6.Size = new Size(48, 21);
-            label6.TabIndex = 10;
-            label6.Text = "Email";
+            this.lbl_repass.AutoSize = true;
+            this.lbl_repass.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lbl_repass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lbl_repass.Location = new System.Drawing.Point(40, 295);
+            this.lbl_repass.Name = "lbl_repass";
+            this.lbl_repass.Size = new System.Drawing.Size(111, 17);
+            this.lbl_repass.TabIndex = 10;
+            this.lbl_repass.Text = "Retype Password";
+            // 
+            // txt_repass
+            // 
+            this.txt_repass.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txt_repass.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txt_repass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txt_repass.Location = new System.Drawing.Point(40, 320);
+            this.txt_repass.Name = "txt_repass";
+            this.txt_repass.PasswordChar = '●';
+            this.txt_repass.Size = new System.Drawing.Size(370, 20);
+            this.txt_repass.TabIndex = 11;
+            // 
+            // line_repass
+            // 
+            this.line_repass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.line_repass.Location = new System.Drawing.Point(40, 345);
+            this.line_repass.Name = "line_repass";
+            this.line_repass.Size = new System.Drawing.Size(370, 2);
+            this.line_repass.TabIndex = 12;
+            // 
+            // btn_signup
+            // 
+            this.btn_signup.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.btn_signup.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btn_signup.FlatAppearance.BorderSize = 0;
+            this.btn_signup.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.btn_signup.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(120)))), ((int)(((byte)(210)))));
+            this.btn_signup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_signup.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.btn_signup.ForeColor = System.Drawing.Color.White;
+            this.btn_signup.Location = new System.Drawing.Point(40, 395);
+            this.btn_signup.Name = "btn_signup";
+            this.btn_signup.Size = new System.Drawing.Size(370, 45);
+            this.btn_signup.TabIndex = 13;
+            this.btn_signup.Text = "ĐĂNG KÝ TÀI KHOẢN  ✅";
+            this.btn_signup.UseVisualStyleBackColor = false;
+            // 
+            // lnk_cancel
+            // 
+            this.lnk_cancel.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.lnk_cancel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.lnk_cancel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.lnk_cancel.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.lnk_cancel.Location = new System.Drawing.Point(40, 465);
+            this.lnk_cancel.Name = "lnk_cancel";
+            this.lnk_cancel.Size = new System.Drawing.Size(370, 25);
+            this.lnk_cancel.TabIndex = 14;
+            this.lnk_cancel.TabStop = true;
+            this.lnk_cancel.Text = "Quay lại Đăng nhập";
+            this.lnk_cancel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // signup_form
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(245, 247, 251);
-            ClientSize = new Size(914, 600);
-            Controls.Add(textBox4);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(createAccount_button);
-            Controls.Add(button2);
-            Margin = new Padding(3, 4, 3, 4);
-            Name = "signup_form";
-            Text = "signup_form";
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(251)))));
+            this.ClientSize = new System.Drawing.Size(800, 650);
+            this.Controls.Add(this.cardPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.Name = "signup_form";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Đăng ký Hệ thống";
+            this.cardPanel.ResumeLayout(false);
+            this.cardPanel.PerformLayout();
+            this.ResumeLayout(false);
+
         }
 
         #endregion
 
-        private Button createAccount_button;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private Label label4;
-        private Label label5;
-        private Button button2;
-        private TextBox textBox4;
-        private Label label6;
+        private System.Windows.Forms.Panel cardPanel;
+        private System.Windows.Forms.Label lbl_title;
+        private System.Windows.Forms.Label lbl_email;
+        private System.Windows.Forms.TextBox txt_email;
+        private System.Windows.Forms.Panel line_email;
+        private System.Windows.Forms.Label lbl_username;
+        private System.Windows.Forms.TextBox txt_username;
+        private System.Windows.Forms.Panel line_username;
+        private System.Windows.Forms.Label lbl_password;
+        private System.Windows.Forms.TextBox txt_password;
+        private System.Windows.Forms.Panel line_password;
+        private System.Windows.Forms.Label lbl_repass;
+        private System.Windows.Forms.TextBox txt_repass;
+        private System.Windows.Forms.Panel line_repass;
+        private System.Windows.Forms.Button btn_signup;
+        private System.Windows.Forms.LinkLabel lnk_cancel;
     }
 }
