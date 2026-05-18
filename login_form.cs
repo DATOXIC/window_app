@@ -34,6 +34,20 @@ namespace window_app
             {
                 if (acc.LoginWithStatus(user, pass) == Account.LoginResult.Success)
                 {
+                    // ── XỬ LÝ TÍNH NĂNG REMEMBER ME (NÂNG CAO) ──
+                    if (remember_cb.Checked)
+                    {
+                        Properties.Settings.Default.SavedUsername = user_tb.Text.Trim();
+                        Properties.Settings.Default.IsRemembered = true;
+                    }
+                    else
+                    {
+                        // Nếu không tích chọn -> Xóa dữ liệu cũ đã lưu đi
+                        Properties.Settings.Default.SavedUsername = "";
+                        Properties.Settings.Default.IsRemembered = false;
+                    }
+                    Properties.Settings.Default.Save();
+
                     // 3. Lấy thêm thông tin quyền hạn và MSSV
                     int position = acc.GetUserPosition(user);
                     string mssv = acc.GetStudentID(user);

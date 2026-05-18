@@ -84,7 +84,9 @@ obj/Debug/net10.0-windows/
  window_app.GlobalUsings.g.cs
 Person.cs
 Program.cs
-Properties/Resources.Designer.cs
+Properties/
+ Resources.Designer.cs
+ Settings.Designer.cs
 Score.cs
 signup_form.cs
 signup_form.Designer.cs

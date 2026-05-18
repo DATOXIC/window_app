@@ -33,8 +33,10 @@ namespace window_app
             signup_button = new LinkLabel();
             forgetPassword_button = new LinkLabel();
             buttonsPanel = new Panel();
-            cancel_button = new Button();
             login_button = new Button();
+            cancel_button = new Button();
+            panel1 = new Panel();
+            remember_cb = new CheckBox();
             passFieldPanel = new Panel();
             passUnderline = new Panel();
             pass_tb = new TextBox();
@@ -50,6 +52,7 @@ namespace window_app
             cardPanel.SuspendLayout();
             linksPanel.SuspendLayout();
             buttonsPanel.SuspendLayout();
+            panel1.SuspendLayout();
             passFieldPanel.SuspendLayout();
             userFieldPanel.SuspendLayout();
             headerSection.SuspendLayout();
@@ -60,13 +63,14 @@ namespace window_app
             cardPanel.BackColor = Color.White;
             cardPanel.Controls.Add(linksPanel);
             cardPanel.Controls.Add(buttonsPanel);
+            cardPanel.Controls.Add(panel1);
             cardPanel.Controls.Add(passFieldPanel);
             cardPanel.Controls.Add(userFieldPanel);
             cardPanel.Controls.Add(headerSection);
             cardPanel.Location = new Point(100, 40);
             cardPanel.Name = "cardPanel";
             cardPanel.Padding = new Padding(40, 25, 40, 25);
-            cardPanel.Size = new Size(400, 420);
+            cardPanel.Size = new Size(400, 482);
             cardPanel.TabIndex = 0;
             // 
             // linksPanel
@@ -75,7 +79,7 @@ namespace window_app
             linksPanel.Controls.Add(signup_button);
             linksPanel.Controls.Add(forgetPassword_button);
             linksPanel.Dock = DockStyle.Top;
-            linksPanel.Location = new Point(40, 330);
+            linksPanel.Location = new Point(40, 383);
             linksPanel.Name = "linksPanel";
             linksPanel.Padding = new Padding(0, 8, 0, 0);
             linksPanel.Size = new Size(320, 40);
@@ -114,33 +118,14 @@ namespace window_app
             // buttonsPanel
             // 
             buttonsPanel.BackColor = Color.Transparent;
-            buttonsPanel.Controls.Add(cancel_button);
             buttonsPanel.Controls.Add(login_button);
+            buttonsPanel.Controls.Add(cancel_button);
             buttonsPanel.Dock = DockStyle.Top;
-            buttonsPanel.Location = new Point(40, 265);
+            buttonsPanel.Location = new Point(40, 286);
             buttonsPanel.Name = "buttonsPanel";
             buttonsPanel.Padding = new Padding(0, 12, 0, 5);
-            buttonsPanel.Size = new Size(320, 65);
+            buttonsPanel.Size = new Size(320, 97);
             buttonsPanel.TabIndex = 1;
-            // 
-            // cancel_button
-            // 
-            cancel_button.BackColor = Color.Transparent;
-            cancel_button.Cursor = Cursors.Hand;
-            cancel_button.Dock = DockStyle.Top;
-            cancel_button.FlatAppearance.BorderColor = Color.FromArgb(200, 205, 215);
-            cancel_button.FlatAppearance.BorderSize = 0;
-            cancel_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(245, 247, 251);
-            cancel_button.FlatStyle = FlatStyle.Flat;
-            cancel_button.Font = new Font("Segoe UI", 9F);
-            cancel_button.ForeColor = Color.FromArgb(150, 160, 175);
-            cancel_button.Location = new Point(0, 56);
-            cancel_button.Name = "cancel_button";
-            cancel_button.Size = new Size(320, 30);
-            cancel_button.TabIndex = 0;
-            cancel_button.Text = "Thoát ứng dụng";
-            cancel_button.UseVisualStyleBackColor = false;
-            cancel_button.Click += cancel_button_Click;
             // 
             // login_button
             // 
@@ -160,6 +145,47 @@ namespace window_app
             login_button.Text = "Đăng nhập";
             login_button.UseVisualStyleBackColor = false;
             login_button.Click += login_button_Click;
+            // 
+            // cancel_button
+            // 
+            cancel_button.BackColor = Color.Transparent;
+            cancel_button.Cursor = Cursors.Hand;
+            cancel_button.Dock = DockStyle.Bottom;
+            cancel_button.FlatAppearance.BorderColor = Color.FromArgb(200, 205, 215);
+            cancel_button.FlatAppearance.BorderSize = 0;
+            cancel_button.FlatAppearance.MouseOverBackColor = Color.FromArgb(245, 247, 251);
+            cancel_button.FlatStyle = FlatStyle.Flat;
+            cancel_button.Font = new Font("Segoe UI", 9F);
+            cancel_button.ForeColor = Color.FromArgb(150, 160, 175);
+            cancel_button.Location = new Point(0, 62);
+            cancel_button.Name = "cancel_button";
+            cancel_button.Size = new Size(320, 30);
+            cancel_button.TabIndex = 0;
+            cancel_button.Text = "Thoát ứng dụng";
+            cancel_button.UseVisualStyleBackColor = false;
+            cancel_button.Click += cancel_button_Click;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(remember_cb);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(40, 265);
+            panel1.Name = "panel1";
+            panel1.Padding = new Padding(11, 0, 0, 0);
+            panel1.Size = new Size(320, 21);
+            panel1.TabIndex = 5;
+            // 
+            // remember_cb
+            // 
+            remember_cb.AutoSize = true;
+            remember_cb.Dock = DockStyle.Left;
+            remember_cb.FlatStyle = FlatStyle.Flat;
+            remember_cb.Location = new Point(11, 0);
+            remember_cb.Name = "remember_cb";
+            remember_cb.Size = new Size(125, 21);
+            remember_cb.TabIndex = 0;
+            remember_cb.Text = "Remember me";
+            remember_cb.UseVisualStyleBackColor = true;
             // 
             // passFieldPanel
             // 
@@ -299,21 +325,22 @@ namespace window_app
             // lblIcon
             // 
             lblIcon.Dock = DockStyle.Top;
-            lblIcon.Font = new Font("Segoe UI", 32F);
+            lblIcon.Font = new Font("Segoe UI", 22.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblIcon.ForeColor = Color.FromArgb(41, 107, 191);
             lblIcon.Location = new Point(0, 5);
             lblIcon.Name = "lblIcon";
             lblIcon.Size = new Size(320, 50);
             lblIcon.TabIndex = 2;
             lblIcon.Text = "🔐";
-            lblIcon.TextAlign = ContentAlignment.MiddleCenter;
+            lblIcon.TextAlign = ContentAlignment.TopCenter;
             // 
             // login_form
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.FromArgb(235, 240, 248);
-            ClientSize = new Size(600, 500);
+            ClientSize = new Size(600, 565);
             Controls.Add(cardPanel);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -324,6 +351,8 @@ namespace window_app
             linksPanel.ResumeLayout(false);
             linksPanel.PerformLayout();
             buttonsPanel.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             passFieldPanel.ResumeLayout(false);
             passFieldPanel.PerformLayout();
             userFieldPanel.ResumeLayout(false);
@@ -354,5 +383,7 @@ namespace window_app
         private Panel linksPanel;
         private LinkLabel forgetPassword_button;
         private LinkLabel signup_button;
+        private Panel panel1;
+        private CheckBox remember_cb;
     }
 }
