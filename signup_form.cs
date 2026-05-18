@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace window_app
 {
@@ -51,9 +52,12 @@ namespace window_app
                 return;
             }
 
+
+
             Account acc = new Account(); // Khởi tạo lớp tài khoản
             try
-            {
+            {   
+                if(!ValidatePasswordStrength(pass)) return; // kiểm tra
                 if (acc.Register(user, pass, email)) // Gọi hàm đăng ký hệ thống
                 {
                     MessageBox.Show("Đăng ký thành công! Vui lòng chờ Admin phê duyệt.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -73,6 +77,29 @@ namespace window_app
             {
                 MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra độ mạnh mật khẩu
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private bool ValidatePasswordStrength(string password)
+        {
+            string passwordPattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$";
+            
+            if (!Regex.IsMatch(password, passwordPattern))
+            {
+                MessageBox.Show("Mật khẩu không đủ độ bảo mật an toàn!\n\nYêu cầu:\n" +
+                                "- Phải dài tối thiểu từ 8 ký tự trở lên.\n" +
+                                "- Phải chứa ít nhất 1 chữ cái viết HOA.\n" +
+                                "- Phải chứa ít nhất 1 chữ cái viết thường.\n" +
+                                "- Phải chứa ít nhất 1 chữ số.\n" +
+                                "- Phải chứa ít nhất 1 ký tự đặc biệt (@, $, !, %, *, ?, &).", 
+                                "Mật khẩu yếu", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false; // Mật khẩu không hợp lệ
+            }
+            return true; // Mật khẩu hợp lệ
         }
 
         private void lnk_cancel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
