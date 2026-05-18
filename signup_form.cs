@@ -57,7 +57,7 @@ namespace window_app
             Account acc = new Account(); // Khởi tạo lớp tài khoản
             try
             {   
-                // if(!ValidatePasswordStrength(pass)) return; // kiểm tra
+                if(!ValidatePasswordStrength(pass)) return; // kiểm tra
                 if (acc.Register(user, pass, email)) // Gọi hàm đăng ký hệ thống
                 {
                     MessageBox.Show("Đăng ký thành công! Vui lòng chờ Admin phê duyệt.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
