@@ -159,7 +159,7 @@ namespace window_app
             admission_data_display.SelectAll();
         }
 
-        private void btnApprove_Click(object sender, EventArgs e)
+        private async void btnApprove_Click(object sender, EventArgs e)
         {
             try
             {
@@ -201,7 +201,7 @@ namespace window_app
                     if (confirm != DialogResult.Yes) return;
 
                     Student stu = new Student();
-                    if (stu.ApproveBatchStudents(pendingStudents, null))
+                    if (await stu.ApproveBatchStudents(pendingStudents, null))
                     {
                         MessageBox.Show($"Phê duyệt thành công {pendingStudents.Count} thí sinh!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         RefreshAdmissionGrid();

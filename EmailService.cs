@@ -48,5 +48,27 @@ namespace window_app
 
             await client.SendMailAsync(message);
         }
+
+        // New method: send generated MSSV (student ID) via email
+        public async Task SendMssvAsync(string toEmail, string mssv)
+        {
+            var message = new MailMessage
+            {
+                From = new MailAddress(_senderEmail, "Window App"),
+                Subject = "Mã sinh viên của bạn",
+                Body = $"Chào bạn,\n\nMã sinh viên (MSSV) được cấp cho tài khoản của bạn là: {mssv}\n\nBạn có thể dùng MSSV này để đăng nhập vào hệ thống (Mật khẩu là MSSV).\n\nNếu có bất kỳ thắc mắc nào, vui lòng liên hệ quản trị viên.",
+                IsBodyHtml = false
+            };
+            message.To.Add(toEmail);
+
+            using var client = new SmtpClient("smtp.gmail.com", 587)
+            {
+                Credentials = new NetworkCredential(_senderEmail, _senderPassword),
+                EnableSsl = true,
+                Timeout = 30000
+            };
+
+            await client.SendMailAsync(message);
+        }
     }
 }

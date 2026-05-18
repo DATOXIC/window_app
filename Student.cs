@@ -1,8 +1,9 @@
-﻿﻿using Microsoft.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO; // Thêm dòng này để dùng MemoryStream
+using System.Threading.Tasks;
 
 namespace window_app
 {
@@ -34,6 +35,7 @@ namespace window_app
     internal class Student
     {
         private readonly myDB db = new myDB();
+private readonly EmailService emailService = new EmailService();
 
         // 1. Hàm Thêm sinh viên (Dành cho Admin nhập tay)
 
@@ -467,7 +469,7 @@ namespace window_app
         /// <param name="selectedStudents">Danh sách các sinh viên đang chờ duyệt.</param>
         /// <param name="picture">Luồng dữ liệu ảnh đại diện mặc định sẽ được gán cho các sinh viên này.</param>
         /// <returns>Trả về <c>true</c> nếu toàn bộ quá trình phê duyệt thành công.</returns>
-        public bool ApproveBatchStudents(List<PendingStudentDTO> selectedStudents, MemoryStream picture = null)
+        public async Task<bool> ApproveBatchStudents(List<PendingStudentDTO> selectedStudents, MemoryStream picture = null)
         {
             // Sắp xếp danh sách sinh viên theo tên để đảm bảo việc cấp MSSV (STT) đi theo đúng thứ tự bảng chữ cái
             var sortedStudents = selectedStudents.OrderBy(s => s.FullName).ToList();
@@ -581,6 +583,7 @@ namespace window_app
                         {
                             cmdUpdateAdm.Parameters.AddWithValue("@cid", cid);
                             cmdUpdateAdm.ExecuteNonQuery();
+await emailService.SendMssvAsync(email, mssvString);
                         }
                     }
 
