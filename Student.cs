@@ -60,8 +60,8 @@ namespace window_app
             }
         }
 
-        // 2. Hàm Cập nhật sinh viên (Đã sửa lại khớp với cấu trúc mới)
 
+        // 2. Hàm Cập nhật sinh viên (Đã sửa lại khớp với cấu trúc mới)
         public bool Update(studentModel student)
         {
             string sql = "UPDATE Student SET Fname=@fn, Lname=@ln, Dob=@dob, Gder=@gdr, Phone=@phn, Address=@adrs, Email=@email, Pture=@pic WHERE MSSV=@mssv";
@@ -497,10 +497,29 @@ namespace window_app
                         string mssvString = yearPrefix + majorCode + rank.ToString("D3");
 
                         // 3.1.5: Tách tên (Fname, Lname) từ FullName
-                        string[] names = fullName.Trim().Split(' ');
-                        string lastName = names[names.Length - 1];
-                        string firstName = string.Join(" ", names, 0, names.Length - 1);
+                        string[] names = fullName.Trim().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        string lastName = "";
+                        string firstName = "";
+                        if (names.Length == 0)
+                        {
+                            lastName = "Unknown";
+                            firstName = "Unknown";
+                        }
+                        else if (names.Length == 1)
+                        {
+                            // Nếu tên chỉ có 1 chữ, gán cả họ và tên để tránh lỗi DB
+                            lastName = names[0];
+                            firstName = names[0]; 
+                        }
+                        else
+                        {
+                            lastName = names[names.Length - 1];
+                            firstName = string.Join(" ", names, 0, names.Length - 1);
+                        }
 
+                        // Kiểm tra bảo mật lần cuối trước khi chèn vào DB
+                        if (string.IsNullOrWhiteSpace(firstName)) firstName = "Unknown";
+                        if (string.IsNullOrWhiteSpace(lastName)) lastName = "Unknown";
                         // 3.1: Chèn vào bảng [Table]
                         string sqlAccount = "INSERT INTO [Table] (username, password, valid, position, email) " +
                                             "VALUES (@user, @pass, 1, 1, @email); SELECT SCOPE_IDENTITY();"; // Dùng SCOPE_IDENTITY() để lấy ngay ID của tài khoản vừa tạo
@@ -528,9 +547,22 @@ namespace window_app
                             cmdStudent.Parameters.AddWithValue("@dob", dob);
                             cmdStudent.Parameters.AddWithValue("@gdr", gender);
                             cmdStudent.Parameters.AddWithValue("@adrs", address);
-                            cmdStudent.Parameters.AddWithValue("@pic", picture != null ? (object)picture.ToArray() : DBNull.Value);
+                            // cmdStudent.Parameters.AddWithValue("@pic", picture != null ? (object)picture.ToArray() : DBNull.Value);
                             cmdStudent.Parameters.AddWithValue("@fn", firstName);
                             cmdStudent.Parameters.AddWithValue("@ln", lastName);
+                            
+                            // Khai báo rõ ràng kiểu dữ liệu là Image cho SQL Server hiểu
+                            SqlParameter picParam = new SqlParameter("@pic", SqlDbType.Image);
+                            if (picture != null)
+                            {
+                                picParam.Value = picture.ToArray();
+                            }
+                            else
+                            {
+                                picParam.Value = DBNull.Value;
+                            }
+                            cmdStudent.Parameters.Add(picParam);
+
                             cmdStudent.ExecuteNonQuery();
                         }
 
