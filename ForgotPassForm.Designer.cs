@@ -28,311 +28,396 @@ namespace window_app
         /// </summary>
         private void InitializeComponent()
         {
-            lblTitle = new Label();
-            lblSubtitle = new Label();
-            returnPB = new PictureBox();
-            pnlStep1 = new Panel();
-            lblEmailHint = new Label();
-            btnSendOtp = new Button();
-            txtUsername = new TextBox();
-            lblUsername = new Label();
-            pnlStep2 = new Panel();
-            lnkResend = new LinkLabel();
-            btnVerifyOtp = new Button();
-            lblTimer = new Label();
-            txtOtp = new TextBox();
-            lblOtpLabel = new Label();
-            pnlStep3 = new Panel();
-            btnChangePass = new Button();
-            txtConfirmPass = new TextBox();
-            lblConfirmLabel = new Label();
-            txtNewPass = new TextBox();
-            lblNewPassLabel = new Label();
-            ((System.ComponentModel.ISupportInitialize)returnPB).BeginInit();
-            pnlStep1.SuspendLayout();
-            pnlStep2.SuspendLayout();
-            pnlStep3.SuspendLayout();
-            SuspendLayout();
+            this.cardPanel = new System.Windows.Forms.Panel();
+            this.lblTitle = new System.Windows.Forms.Label();
+            this.lblSubtitle = new System.Windows.Forms.Label();
+            this.returnPB = new System.Windows.Forms.LinkLabel();
+            
+            // Step 1
+            this.pnlStep1 = new System.Windows.Forms.Panel();
+            this.lblUsername = new System.Windows.Forms.Label();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.lineUsername = new System.Windows.Forms.Panel();
+            this.btnSendOtp = new System.Windows.Forms.Button();
+            
+            // Step 2
+            this.pnlStep2 = new System.Windows.Forms.Panel();
+            this.lblEmailHint = new System.Windows.Forms.Label();
+            this.lblOtp = new System.Windows.Forms.Label();
+            this.txtOtp = new System.Windows.Forms.TextBox();
+            this.lineOtp = new System.Windows.Forms.Panel();
+            this.lblTimer = new System.Windows.Forms.Label();
+            this.lnkResend = new System.Windows.Forms.LinkLabel();
+            this.btnVerifyOtp = new System.Windows.Forms.Button();
+            
+            // Step 3
+            this.pnlStep3 = new System.Windows.Forms.Panel();
+            this.lblNewPass = new System.Windows.Forms.Label();
+            this.txtNewPass = new System.Windows.Forms.TextBox();
+            this.lineNewPass = new System.Windows.Forms.Panel();
+            this.lblConfirmPass = new System.Windows.Forms.Label();
+            this.txtConfirmPass = new System.Windows.Forms.TextBox();
+            this.lineConfirmPass = new System.Windows.Forms.Panel();
+            this.btnChangePass = new System.Windows.Forms.Button();
+
+            this.cardPanel.SuspendLayout();
+            this.pnlStep1.SuspendLayout();
+            this.pnlStep2.SuspendLayout();
+            this.pnlStep3.SuspendLayout();
+            this.SuspendLayout();
+            // 
+            // cardPanel
+            // 
+            this.cardPanel.BackColor = System.Drawing.Color.White;
+            this.cardPanel.Controls.Add(this.lblSubtitle);
+            this.cardPanel.Controls.Add(this.lblTitle);
+            this.cardPanel.Controls.Add(this.pnlStep1);
+            this.cardPanel.Controls.Add(this.pnlStep2);
+            this.cardPanel.Controls.Add(this.pnlStep3);
+            this.cardPanel.Controls.Add(this.returnPB);
+            this.cardPanel.Location = new System.Drawing.Point(175, 40);
+            this.cardPanel.Name = "cardPanel";
+            this.cardPanel.Size = new System.Drawing.Size(450, 560);
+            this.cardPanel.TabIndex = 0;
             // 
             // lblTitle
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI Semibold", 17.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            lblTitle.ForeColor = SystemColors.Desktop;
-            lblTitle.Location = new Point(274, 40);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(189, 31);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "Forgot Password";
-            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lblTitle.Location = new System.Drawing.Point(0, 30);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(450, 40);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "KHÔI PHỤC TÀI KHOẢN";
+            this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblSubtitle
             // 
-            lblSubtitle.Font = new Font("Segoe UI", 10F);
-            lblSubtitle.ForeColor = Color.DimGray;
-            lblSubtitle.Location = new Point(21, 82);
-            lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(700, 19);
-            lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Enter your username to receive OTP";
-            lblSubtitle.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblSubtitle.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.lblSubtitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(120)))), ((int)(((byte)(135)))), ((int)(((byte)(160)))));
+            this.lblSubtitle.Location = new System.Drawing.Point(0, 70);
+            this.lblSubtitle.Name = "lblSubtitle";
+            this.lblSubtitle.Size = new System.Drawing.Size(450, 30);
+            this.lblSubtitle.TabIndex = 1;
+            this.lblSubtitle.Text = "Subtitle text here";
+            this.lblSubtitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // returnPB
+            // returnPB (Quay lại)
             // 
-            returnPB.Cursor = Cursors.Hand;
-            returnPB.Image = Properties.Resources.circle_arrow_left_solid_full;
-            returnPB.Location = new Point(10, 9);
-            returnPB.Margin = new Padding(3, 2, 3, 2);
-            returnPB.Name = "returnPB";
-            returnPB.Size = new Size(37, 23);
-            returnPB.SizeMode = PictureBoxSizeMode.Zoom;
-            returnPB.TabIndex = 2;
-            returnPB.TabStop = false;
-            returnPB.Click += returnPB_Click;
-            // 
-            // pnlStep1
-            // 
-            pnlStep1.Controls.Add(lblEmailHint);
-            pnlStep1.Controls.Add(btnSendOtp);
-            pnlStep1.Controls.Add(txtUsername);
-            pnlStep1.Controls.Add(lblUsername);
-            pnlStep1.Location = new Point(99, 120);
-            pnlStep1.Margin = new Padding(3, 2, 3, 2);
-            pnlStep1.Name = "pnlStep1";
-            pnlStep1.Size = new Size(525, 165);
-            pnlStep1.TabIndex = 3;
-            // 
-            // lblEmailHint
-            // 
-            lblEmailHint.AutoSize = true;
-            lblEmailHint.Font = new Font("Segoe UI", 9F, FontStyle.Italic);
-            lblEmailHint.ForeColor = Color.Gray;
-            lblEmailHint.Location = new Point(149, 109);
-            lblEmailHint.Name = "lblEmailHint";
-            lblEmailHint.Size = new Size(0, 15);
-            lblEmailHint.TabIndex = 3;
-            // 
-            // btnSendOtp
-            // 
-            btnSendOtp.BackColor = SystemColors.ActiveCaption;
-            btnSendOtp.Font = new Font("Segoe UI", 13F);
-            btnSendOtp.ForeColor = SystemColors.ButtonHighlight;
-            btnSendOtp.Location = new Point(149, 60);
-            btnSendOtp.Margin = new Padding(3, 2, 3, 2);
-            btnSendOtp.Name = "btnSendOtp";
-            btnSendOtp.Size = new Size(229, 35);
-            btnSendOtp.TabIndex = 2;
-            btnSendOtp.Text = "Send OTP";
-            btnSendOtp.UseVisualStyleBackColor = false;
-            btnSendOtp.Click += btnSendOtp_Click;
-            // 
-            // txtUsername
-            // 
-            txtUsername.Font = new Font("Segoe UI", 10F);
-            txtUsername.Location = new Point(175, 20);
-            txtUsername.Margin = new Padding(3, 2, 3, 2);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(231, 25);
-            txtUsername.TabIndex = 1;
+            this.returnPB.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(80)))), ((int)(((byte)(150)))));
+            this.returnPB.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.returnPB.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
+            this.returnPB.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.returnPB.Location = new System.Drawing.Point(40, 510);
+            this.returnPB.Name = "returnPB";
+            this.returnPB.Size = new System.Drawing.Size(370, 25);
+            this.returnPB.TabIndex = 14;
+            this.returnPB.TabStop = true;
+            this.returnPB.Text = "← Quay lại Đăng nhập";
+            this.returnPB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.returnPB.Click += new System.EventHandler(this.returnPB_Click);
+
+            // ==========================================
+            // pnlStep1: NHẬP USERNAME
+            // ==========================================
+            this.pnlStep1.Controls.Add(this.btnSendOtp);
+            this.pnlStep1.Controls.Add(this.lineUsername);
+            this.pnlStep1.Controls.Add(this.txtUsername);
+            this.pnlStep1.Controls.Add(this.lblUsername);
+            this.pnlStep1.Location = new System.Drawing.Point(0, 130);
+            this.pnlStep1.Name = "pnlStep1";
+            this.pnlStep1.Size = new System.Drawing.Size(450, 360);
+            this.pnlStep1.TabIndex = 2;
             // 
             // lblUsername
             // 
-            lblUsername.AutoSize = true;
-            lblUsername.Font = new Font("Segoe UI", 10F);
-            lblUsername.Location = new Point(44, 22);
-            lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(71, 19);
-            lblUsername.TabIndex = 0;
-            lblUsername.Text = "Username";
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lblUsername.Location = new System.Drawing.Point(40, 30);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(100, 17);
+            this.lblUsername.TabIndex = 1;
+            this.lblUsername.Text = "Tên đăng nhập";
             // 
-            // pnlStep2
+            // txtUsername
             // 
-            pnlStep2.Controls.Add(lnkResend);
-            pnlStep2.Controls.Add(btnVerifyOtp);
-            pnlStep2.Controls.Add(lblTimer);
-            pnlStep2.Controls.Add(txtOtp);
-            pnlStep2.Controls.Add(lblOtpLabel);
-            pnlStep2.Location = new Point(99, 120);
-            pnlStep2.Margin = new Padding(3, 2, 3, 2);
-            pnlStep2.Name = "pnlStep2";
-            pnlStep2.Size = new Size(525, 165);
-            pnlStep2.TabIndex = 4;
+            this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtUsername.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.txtUsername.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtUsername.Location = new System.Drawing.Point(40, 60);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(370, 22);
+            this.txtUsername.TabIndex = 2;
             // 
-            // lnkResend
+            // lineUsername
             // 
-            lnkResend.AutoSize = true;
-            lnkResend.Font = new Font("Segoe UI", 9F);
-            lnkResend.Location = new Point(226, 115);
-            lnkResend.Name = "lnkResend";
-            lnkResend.Size = new Size(70, 15);
-            lnkResend.TabIndex = 4;
-            lnkResend.TabStop = true;
-            lnkResend.Text = "Resend OTP";
-            lnkResend.Visible = false;
-            lnkResend.LinkClicked += lnkResend_LinkClicked;
+            this.lineUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.lineUsername.Location = new System.Drawing.Point(40, 85);
+            this.lineUsername.Name = "lineUsername";
+            this.lineUsername.Size = new System.Drawing.Size(370, 2);
+            this.lineUsername.TabIndex = 3;
             // 
-            // btnVerifyOtp
+            // btnSendOtp
             // 
-            btnVerifyOtp.BackColor = SystemColors.ActiveCaption;
-            btnVerifyOtp.Font = new Font("Segoe UI", 13F);
-            btnVerifyOtp.ForeColor = SystemColors.ButtonHighlight;
-            btnVerifyOtp.Location = new Point(149, 75);
-            btnVerifyOtp.Margin = new Padding(3, 2, 3, 2);
-            btnVerifyOtp.Name = "btnVerifyOtp";
-            btnVerifyOtp.Size = new Size(229, 35);
-            btnVerifyOtp.TabIndex = 3;
-            btnVerifyOtp.Text = "Confirm";
-            btnVerifyOtp.UseVisualStyleBackColor = false;
-            btnVerifyOtp.Click += btnVerifyOtp_Click;
+            this.btnSendOtp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.btnSendOtp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnSendOtp.FlatAppearance.BorderSize = 0;
+            this.btnSendOtp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSendOtp.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.btnSendOtp.ForeColor = System.Drawing.Color.White;
+            this.btnSendOtp.Location = new System.Drawing.Point(40, 150);
+            this.btnSendOtp.Name = "btnSendOtp";
+            this.btnSendOtp.Size = new System.Drawing.Size(370, 45);
+            this.btnSendOtp.TabIndex = 13;
+            this.btnSendOtp.Text = "Gửi mã OTP";
+            this.btnSendOtp.UseVisualStyleBackColor = false;
+            this.btnSendOtp.Click += new System.EventHandler(this.btnSendOtp_Click);
+
+            // ==========================================
+            // pnlStep2: NHẬP MÃ OTP
+            // ==========================================
+            this.pnlStep2.Controls.Add(this.btnVerifyOtp);
+            this.pnlStep2.Controls.Add(this.lnkResend);
+            this.pnlStep2.Controls.Add(this.lblTimer);
+            this.pnlStep2.Controls.Add(this.lineOtp);
+            this.pnlStep2.Controls.Add(this.txtOtp);
+            this.pnlStep2.Controls.Add(this.lblOtp);
+            this.pnlStep2.Controls.Add(this.lblEmailHint);
+            this.pnlStep2.Location = new System.Drawing.Point(0, 130);
+            this.pnlStep2.Name = "pnlStep2";
+            this.pnlStep2.Size = new System.Drawing.Size(450, 360);
+            this.pnlStep2.TabIndex = 3;
             // 
-            // lblTimer
+            // lblEmailHint
             // 
-            lblTimer.AutoSize = true;
-            lblTimer.Font = new Font("Segoe UI", 9F);
-            lblTimer.ForeColor = Color.Gray;
-            lblTimer.Location = new Point(175, 52);
-            lblTimer.Name = "lblTimer";
-            lblTimer.Size = new Size(0, 15);
-            lblTimer.TabIndex = 2;
+            this.lblEmailHint.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Italic);
+            this.lblEmailHint.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.lblEmailHint.Location = new System.Drawing.Point(40, 0);
+            this.lblEmailHint.Name = "lblEmailHint";
+            this.lblEmailHint.Size = new System.Drawing.Size(370, 25);
+            this.lblEmailHint.TabIndex = 0;
+            this.lblEmailHint.Text = "OTP đã gửi tới email...";
+            this.lblEmailHint.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblOtp
+            // 
+            this.lblOtp.AutoSize = true;
+            this.lblOtp.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblOtp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lblOtp.Location = new System.Drawing.Point(40, 45);
+            this.lblOtp.Name = "lblOtp";
+            this.lblOtp.Size = new System.Drawing.Size(126, 17);
+            this.lblOtp.TabIndex = 1;
+            this.lblOtp.Text = "Mã OTP (6 chữ số)";
             // 
             // txtOtp
             // 
-            txtOtp.Font = new Font("Segoe UI", 14F);
-            txtOtp.Location = new Point(175, 17);
-            txtOtp.Margin = new Padding(3, 2, 3, 2);
-            txtOtp.MaxLength = 6;
-            txtOtp.Name = "txtOtp";
-            txtOtp.Size = new Size(231, 32);
-            txtOtp.TabIndex = 1;
-            txtOtp.TextAlign = HorizontalAlignment.Center;
+            this.txtOtp.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtOtp.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.txtOtp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.txtOtp.Location = new System.Drawing.Point(40, 75);
+            this.txtOtp.MaxLength = 6;
+            this.txtOtp.Name = "txtOtp";
+            this.txtOtp.Size = new System.Drawing.Size(370, 25);
+            this.txtOtp.TabIndex = 2;
+            this.txtOtp.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // lblOtpLabel
+            // lineOtp
             // 
-            lblOtpLabel.AutoSize = true;
-            lblOtpLabel.Font = new Font("Segoe UI", 10F);
-            lblOtpLabel.Location = new Point(44, 22);
-            lblOtpLabel.Name = "lblOtpLabel";
-            lblOtpLabel.Size = new Size(70, 19);
-            lblOtpLabel.TabIndex = 0;
-            lblOtpLabel.Text = "OTP Code";
+            this.lineOtp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.lineOtp.Location = new System.Drawing.Point(40, 105);
+            this.lineOtp.Name = "lineOtp";
+            this.lineOtp.Size = new System.Drawing.Size(370, 2);
+            this.lineOtp.TabIndex = 3;
             // 
-            // pnlStep3
+            // lblTimer
             // 
-            pnlStep3.Controls.Add(btnChangePass);
-            pnlStep3.Controls.Add(txtConfirmPass);
-            pnlStep3.Controls.Add(lblConfirmLabel);
-            pnlStep3.Controls.Add(txtNewPass);
-            pnlStep3.Controls.Add(lblNewPassLabel);
-            pnlStep3.Location = new Point(99, 120);
-            pnlStep3.Margin = new Padding(3, 2, 3, 2);
-            pnlStep3.Name = "pnlStep3";
-            pnlStep3.Size = new Size(525, 188);
-            pnlStep3.TabIndex = 5;
+            this.lblTimer.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lblTimer.ForeColor = System.Drawing.Color.Gray;
+            this.lblTimer.Location = new System.Drawing.Point(40, 115);
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(200, 20);
+            this.lblTimer.TabIndex = 4;
+            this.lblTimer.Text = "Mã OTP hết hạn sau: 05:00";
             // 
-            // btnChangePass
+            // lnkResend
             // 
-            btnChangePass.BackColor = SystemColors.ActiveCaption;
-            btnChangePass.Font = new Font("Segoe UI", 13F);
-            btnChangePass.ForeColor = SystemColors.ButtonHighlight;
-            btnChangePass.Location = new Point(149, 101);
-            btnChangePass.Margin = new Padding(3, 2, 3, 2);
-            btnChangePass.Name = "btnChangePass";
-            btnChangePass.Size = new Size(229, 35);
-            btnChangePass.TabIndex = 4;
-            btnChangePass.Text = "Change password";
-            btnChangePass.UseVisualStyleBackColor = false;
-            btnChangePass.Click += btnChangePass_Click;
+            this.lnkResend.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.lnkResend.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
+            this.lnkResend.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.lnkResend.Location = new System.Drawing.Point(260, 115);
+            this.lnkResend.Name = "lnkResend";
+            this.lnkResend.Size = new System.Drawing.Size(150, 20);
+            this.lnkResend.TabIndex = 5;
+            this.lnkResend.TabStop = true;
+            this.lnkResend.Text = "Gửi lại mã";
+            this.lnkResend.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lnkResend.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkResend_LinkClicked);
             // 
-            // txtConfirmPass
+            // btnVerifyOtp
             // 
-            txtConfirmPass.Font = new Font("Segoe UI", 10F);
-            txtConfirmPass.Location = new Point(175, 58);
-            txtConfirmPass.Margin = new Padding(3, 2, 3, 2);
-            txtConfirmPass.Name = "txtConfirmPass";
-            txtConfirmPass.Size = new Size(231, 25);
-            txtConfirmPass.TabIndex = 3;
-            txtConfirmPass.UseSystemPasswordChar = true;
+            this.btnVerifyOtp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.btnVerifyOtp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnVerifyOtp.FlatAppearance.BorderSize = 0;
+            this.btnVerifyOtp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnVerifyOtp.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.btnVerifyOtp.ForeColor = System.Drawing.Color.White;
+            this.btnVerifyOtp.Location = new System.Drawing.Point(40, 160);
+            this.btnVerifyOtp.Name = "btnVerifyOtp";
+            this.btnVerifyOtp.Size = new System.Drawing.Size(370, 45);
+            this.btnVerifyOtp.TabIndex = 13;
+            this.btnVerifyOtp.Text = "Xác nhận OTP";
+            this.btnVerifyOtp.UseVisualStyleBackColor = false;
+            this.btnVerifyOtp.Click += new System.EventHandler(this.btnVerifyOtp_Click);
+
+            // ==========================================
+            // pnlStep3: ĐỔI MẬT KHẨU
+            // ==========================================
+            this.pnlStep3.Controls.Add(this.btnChangePass);
+            this.pnlStep3.Controls.Add(this.lineConfirmPass);
+            this.pnlStep3.Controls.Add(this.txtConfirmPass);
+            this.pnlStep3.Controls.Add(this.lblConfirmPass);
+            this.pnlStep3.Controls.Add(this.lineNewPass);
+            this.pnlStep3.Controls.Add(this.txtNewPass);
+            this.pnlStep3.Controls.Add(this.lblNewPass);
+            this.pnlStep3.Location = new System.Drawing.Point(0, 130);
+            this.pnlStep3.Name = "pnlStep3";
+            this.pnlStep3.Size = new System.Drawing.Size(450, 360);
+            this.pnlStep3.TabIndex = 4;
             // 
-            // lblConfirmLabel
+            // lblNewPass
             // 
-            lblConfirmLabel.AutoSize = true;
-            lblConfirmLabel.Font = new Font("Segoe UI", 10F);
-            lblConfirmLabel.Location = new Point(26, 60);
-            lblConfirmLabel.Name = "lblConfirmLabel";
-            lblConfirmLabel.Size = new Size(120, 19);
-            lblConfirmLabel.TabIndex = 2;
-            lblConfirmLabel.Text = "Confirm Password";
+            this.lblNewPass.AutoSize = true;
+            this.lblNewPass.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblNewPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lblNewPass.Location = new System.Drawing.Point(40, 20);
+            this.lblNewPass.Name = "lblNewPass";
+            this.lblNewPass.Size = new System.Drawing.Size(95, 17);
+            this.lblNewPass.TabIndex = 1;
+            this.lblNewPass.Text = "Mật khẩu mới";
             // 
             // txtNewPass
             // 
-            txtNewPass.Font = new Font("Segoe UI", 10F);
-            txtNewPass.Location = new Point(175, 20);
-            txtNewPass.Margin = new Padding(3, 2, 3, 2);
-            txtNewPass.Name = "txtNewPass";
-            txtNewPass.Size = new Size(231, 25);
-            txtNewPass.TabIndex = 1;
-            txtNewPass.UseSystemPasswordChar = true;
+            this.txtNewPass.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtNewPass.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtNewPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtNewPass.Location = new System.Drawing.Point(40, 50);
+            this.txtNewPass.Name = "txtNewPass";
+            this.txtNewPass.PasswordChar = '●';
+            this.txtNewPass.Size = new System.Drawing.Size(370, 20);
+            this.txtNewPass.TabIndex = 2;
             // 
-            // lblNewPassLabel
+            // lineNewPass
             // 
-            lblNewPassLabel.AutoSize = true;
-            lblNewPassLabel.Font = new Font("Segoe UI", 10F);
-            lblNewPassLabel.Location = new Point(26, 22);
-            lblNewPassLabel.Name = "lblNewPassLabel";
-            lblNewPassLabel.Size = new Size(98, 19);
-            lblNewPassLabel.TabIndex = 0;
-            lblNewPassLabel.Text = "New Password";
+            this.lineNewPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.lineNewPass.Location = new System.Drawing.Point(40, 75);
+            this.lineNewPass.Name = "lineNewPass";
+            this.lineNewPass.Size = new System.Drawing.Size(370, 2);
+            this.lineNewPass.TabIndex = 3;
             // 
-            // ForgotPassForm
+            // lblConfirmPass
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 375);
-            Controls.Add(pnlStep3);
-            Controls.Add(pnlStep2);
-            Controls.Add(pnlStep1);
-            Controls.Add(returnPB);
-            Controls.Add(lblSubtitle);
-            Controls.Add(lblTitle);
-            Margin = new Padding(3, 2, 3, 2);
-            Name = "ForgotPassForm";
-            Text = "Forgot Password";
-            Load += ForgotPassForm_Load;
-            ((System.ComponentModel.ISupportInitialize)returnPB).EndInit();
-            pnlStep1.ResumeLayout(false);
-            pnlStep1.PerformLayout();
-            pnlStep2.ResumeLayout(false);
-            pnlStep2.PerformLayout();
-            pnlStep3.ResumeLayout(false);
-            pnlStep3.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.lblConfirmPass.AutoSize = true;
+            this.lblConfirmPass.Font = new System.Drawing.Font("Segoe UI Semibold", 9.5F, System.Drawing.FontStyle.Bold);
+            this.lblConfirmPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(64)))), ((int)(((byte)(113)))));
+            this.lblConfirmPass.Location = new System.Drawing.Point(40, 100);
+            this.lblConfirmPass.Name = "lblConfirmPass";
+            this.lblConfirmPass.Size = new System.Drawing.Size(126, 17);
+            this.lblConfirmPass.TabIndex = 4;
+            this.lblConfirmPass.Text = "Xác nhận mật khẩu";
+            // 
+            // txtConfirmPass
+            // 
+            this.txtConfirmPass.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtConfirmPass.Font = new System.Drawing.Font("Segoe UI", 11F);
+            this.txtConfirmPass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.txtConfirmPass.Location = new System.Drawing.Point(40, 130);
+            this.txtConfirmPass.Name = "txtConfirmPass";
+            this.txtConfirmPass.PasswordChar = '●';
+            this.txtConfirmPass.Size = new System.Drawing.Size(370, 20);
+            this.txtConfirmPass.TabIndex = 5;
+            // 
+            // lineConfirmPass
+            // 
+            this.lineConfirmPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.lineConfirmPass.Location = new System.Drawing.Point(40, 155);
+            this.lineConfirmPass.Name = "lineConfirmPass";
+            this.lineConfirmPass.Size = new System.Drawing.Size(370, 2);
+            this.lineConfirmPass.TabIndex = 6;
+            // 
+            // btnChangePass
+            // 
+            this.btnChangePass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(107)))), ((int)(((byte)(191)))));
+            this.btnChangePass.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnChangePass.FlatAppearance.BorderSize = 0;
+            this.btnChangePass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnChangePass.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
+            this.btnChangePass.ForeColor = System.Drawing.Color.White;
+            this.btnChangePass.Location = new System.Drawing.Point(40, 195);
+            this.btnChangePass.Name = "btnChangePass";
+            this.btnChangePass.Size = new System.Drawing.Size(370, 45);
+            this.btnChangePass.TabIndex = 13;
+            this.btnChangePass.Text = "Cập nhật mật khẩu";
+            this.btnChangePass.UseVisualStyleBackColor = false;
+            this.btnChangePass.Click += new System.EventHandler(this.btnChangePass_Click);
+
+            // ==========================================
+            // FORGOT PASS FORM 
+            // ==========================================
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(247)))), ((int)(((byte)(251)))));
+            this.ClientSize = new System.Drawing.Size(800, 650);
+            this.Controls.Add(this.cardPanel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.Name = "ForgotPassForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Khôi phục Mật khẩu";
+            this.Load += new System.EventHandler(this.ForgotPassForm_Load);
+            this.cardPanel.ResumeLayout(false);
+            this.pnlStep1.ResumeLayout(false);
+            this.pnlStep1.PerformLayout();
+            this.pnlStep2.ResumeLayout(false);
+            this.pnlStep2.PerformLayout();
+            this.pnlStep3.ResumeLayout(false);
+            this.pnlStep3.PerformLayout();
+            this.ResumeLayout(false);
         }
 
         #endregion
 
-        private Label lblTitle;
-        private Label lblSubtitle;
-        private PictureBox returnPB;
+        private System.Windows.Forms.Panel cardPanel;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblSubtitle;
+        private System.Windows.Forms.LinkLabel returnPB;
+        
         // Step 1
-        private Panel pnlStep1;
-        private Label lblUsername;
-        private TextBox txtUsername;
-        private Button btnSendOtp;
-        private Label lblEmailHint;
+        private System.Windows.Forms.Panel pnlStep1;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.TextBox txtUsername;
+        private System.Windows.Forms.Panel lineUsername;
+        private System.Windows.Forms.Button btnSendOtp;
+        
         // Step 2
-        private Panel pnlStep2;
-        private Label lblOtpLabel;
-        private TextBox txtOtp;
-        private Label lblTimer;
-        private Button btnVerifyOtp;
-        private LinkLabel lnkResend;
+        private System.Windows.Forms.Panel pnlStep2;
+        private System.Windows.Forms.Label lblEmailHint;
+        private System.Windows.Forms.Label lblOtp;
+        private System.Windows.Forms.TextBox txtOtp;
+        private System.Windows.Forms.Panel lineOtp;
+        private System.Windows.Forms.Label lblTimer;
+        private System.Windows.Forms.LinkLabel lnkResend;
+        private System.Windows.Forms.Button btnVerifyOtp;
+        
         // Step 3
-        private Panel pnlStep3;
-        private Label lblNewPassLabel;
-        private TextBox txtNewPass;
-        private Label lblConfirmLabel;
-        private TextBox txtConfirmPass;
-        private Button btnChangePass;
+        private System.Windows.Forms.Panel pnlStep3;
+        private System.Windows.Forms.Label lblNewPass;
+        private System.Windows.Forms.TextBox txtNewPass;
+        private System.Windows.Forms.Panel lineNewPass;
+        private System.Windows.Forms.Label lblConfirmPass;
+        private System.Windows.Forms.TextBox txtConfirmPass;
+        private System.Windows.Forms.Panel lineConfirmPass;
+        private System.Windows.Forms.Button btnChangePass;
     }
 }
